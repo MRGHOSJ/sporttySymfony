@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Matériels</title>
+    <style>
+        /* Styles CSS pour le PDF */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+<h1>Liste des Matériels</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>Quantité</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for materiel in materiels %}
+        <tr>
+            <td>{{ materiel.getNom() }}</td>
+            <td>{{ materiel.getCategorie() }}</td>
+            <td>{{ materiel.getQte() }}</td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

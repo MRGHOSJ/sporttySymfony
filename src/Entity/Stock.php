@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\StockRepository;
 
 #[ORM\Entity(repositoryClass: StockRepository::class)]
@@ -15,15 +16,20 @@ class Stock
     private $id;
 
     #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $nom;
 
     #[ORM\Column(name: "quantite", type: "integer", nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 0, minMessage: "La quantité doit être un nombre positif ou nul.")]
     private $quantite;
 
     #[ORM\Column(name: "lieu", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $lieu;
 
     #[ORM\Column(name: "cordonnet", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $cordonnet;
 
     public function getId(): ?int
@@ -78,5 +84,8 @@ class Stock
 
         return $this;
     }
-
+    public function __toString(): string
+    {
+        return $this->nom;
+    }
 }

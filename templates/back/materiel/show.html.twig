@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<title>Materiel</title>
+
+{% block body %}
+    <h1>Materiel</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ materiel.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ materiel.nom }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ materiel.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Qte</th>
+                <td>{{ materiel.qte }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ materiel.image }}</td>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <td>{{ materiel.video }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_materiel_index') }}">back to list</a>
+
+    <a href="{{ path('app_materiel_edit', {'id': materiel.id}) }}">edit</a>
+
+
+{% endblock %}

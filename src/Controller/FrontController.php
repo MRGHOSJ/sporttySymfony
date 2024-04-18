@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\MaterielRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -47,5 +49,14 @@ class FrontController extends AbstractController
     public function singleBlog(): Response
     {
         return $this->render('front/pages/singleBlog.html.twig');
+    }
+    #[Route('/materiel', name: 'app_materiel_index_front', methods: ['GET'])]
+    public function indexMateriel(MaterielRepository $materielRepository, Request $request): Response
+    {
+        $materiels = $materielRepository->findAll();
+
+        return $this->render('front/pages/materiel/pricing.html.twig', [
+            'materiels' => $materiels,
+        ]);
     }
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<title>Stock index</title>
+
+{% block body %}
+    <h1>Stock index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Quantite</th>
+                <th>Lieu</th>
+                <th>Cordonnet</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.id }}</td>
+                <td>{{ stock.nom }}</td>
+                <td>{{ stock.quantite }}</td>
+                <td>{{ stock.lieu }}</td>
+                <td>{{ stock.cordonnet }}</td>
+                <td>
+                    <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
+                    <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stock_new') }}">Create new</a>
+{% endblock %}

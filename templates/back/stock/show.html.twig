@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<title>Stock</title>
+
+{% block body %}
+    <h1>Stock</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stock.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ stock.nom }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ stock.quantite }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ stock.lieu }}</td>
+            </tr>
+            <tr>
+                <th>Cordonnet</th>
+                <td>{{ stock.cordonnet }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stock_index') }}">back to list</a>
+
+    <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
+
+    {{ include('stock/_delete_form.html.twig') }}
+{% endblock %}

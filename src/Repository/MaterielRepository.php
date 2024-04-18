@@ -45,4 +45,35 @@ class MaterielRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    // Dans MaterielRepository.php
+
+    public function findAllSortedBy($sort)
+    {
+        $queryBuilder = $this->createQueryBuilder('materiel');
+
+        switch ($sort) {
+            case 'nom':
+                $queryBuilder->orderBy('materiel.nom', 'ASC');
+                break;
+            case 'quantite':
+                $queryBuilder->orderBy('materiel.qte', 'ASC');
+                break;
+            default:
+                // Si une option de tri non reconnue est fournie, tri par nom par défaut
+                $queryBuilder->orderBy('materiel.nom', 'ASC');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findBySearchTerm($searchTerm)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.nom LIKE :search')
+            ->setParameter('search', '%'.$searchTerm.'%')
+            ->orderBy('m.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
