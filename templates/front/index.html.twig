@@ -17,7 +17,7 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo" >
-                                    <a href="/" >
+                                    <a href="/index" >
                                         <img src="img/logo.png" style="width: 100px !important;" alt="">
                                     </a>
                                 </div>
@@ -26,8 +26,16 @@
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="/">home</a></li>
+                                            <li><a href="{{ path('home_users', { 'id': user.id }) }}">home</a></li>
                                             <li><a href="/about">about</a></li>
+                                            <li><a href="/">settings<i class="ti-angle-down"></i></a>
+                                                <ul class="submenu">
+                                                   <li><a href="{{ path('profile_users', { 'id': user.id }) }}">Profile</a></li>
+                                                     <li><a href="{{ path('profile_users', { 'id': user.id }) }}">edit Profile</a></li>
+                                                    <li><a href="/singleBlog">llo</a></li>
+                                                    <li><a href="/blog">change password</a></li>
+                                                </ul>
+                                            </li>
                                             <li><a href="/pricing">pricing</a></li>
                                             <li><a href="/gallery">gallery</a></li>
                                             <li><a href="/">pages <i class="ti-angle-down"></i></a>
@@ -38,11 +46,12 @@
                                             </li>
                                             <li><a href="/">blog <i class="ti-angle-down"></i></a>
                                                 <ul class="submenu">
-                                                    <li><a href="/blog">blog</a></li>
+                                                   <li><a href="/blog">blog</a></li>
                                                     <li><a href="/singleBlog">single-blog</a></li>
+                                                       <li><a href="{{path('moreEvent', { 'id': user.id })}}">Events</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="/contact">Contact</a></li>
+                                            <li><a href="{{path('new_reclamation', { 'id': user.id })}}">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -50,7 +59,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="Appointment">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="/">Join Us</a>
+                                        <a href="/login">Join Us</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +83,10 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-xl-12">
                             <div class="slider_text text-center">
+                                                 <h3> <p> {{ user.nom }}</p>
+    <p>{{ user.prenom }}</p></a></h3>
+
+     
                                 <span style="color: transparent;
                                 -webkit-text-stroke-width: 1px;
                                 -webkit-text-stroke-color: #19bcff;">Build Up Your</span>
@@ -207,6 +220,41 @@
     </div>
     <!-- features_area_end  -->
 
+<div class="priscing_area">
+    <!-- Lien "View More" -->
+    <a href="{{path('moreEvent', { 'id': user.id })}}" style="float: right; margin-top: 20px; color:#19bcff;">View More >> </a>
+    <div class="container">
+        <div class="col-xl-12">
+            <div class="section_title text-center mb-73">
+                <h3>Upcoming Events</h3>
+                <p>Stay tuned for our exciting upcoming events!</p>
+            </div>
+            </div>
+        <div class="row d-flex">
+            {% for event in events |slice(0, 3) %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="single_prising text-center">
+                    <div class="prising_header">
+                        <h3 style="font-size: 20px; margin-bottom: 10px;">{{ event.nomEvent }}</h3>
+                    </div>
+                    <div class="pricing_body">
+                        <ul style="font-size: 14px;">
+                            <li>{{ event.descriEvent }}</li>
+                            <li><strong>Category:</strong> {{ event.categorieEvent }}</li>
+                            <li><strong>Place:</strong> {{ event.lieuEvent }} | <strong>Date:</strong> {{ event.dateEvent|date('Y-m-d') }} | <strong>Time:</strong> {{ event.heureEvent|date('H:i')}}</li>
+                        </ul>
+                    </div>
+                    <div class="pricing_btn">
+                         <a href="{{ path('participate', {'id': event.idEvent}) }}" class="boxed-btn3">Participate</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
     <div class="offer_area offer_bg">
         <div class="container">
             <div class="row justify-content-end">
@@ -225,77 +273,45 @@
 
 
 
-    <div class="priscing_area">
-            <div class="container">
-                    <div class="row">
-                            <div class="col-xl-12">
-                                <div class="section_title text-center mb-73">
-                                    <h3>Our Pricing</h3>
-                                    <p>There are many variations of passages of lorem Ipsum available, but the majority <br> have suffered alteration.</p>
-                                </div>
-                            </div>
-                        </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Beginner</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Expert</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Pro</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
+   <div class="priscing_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="section_title text-center mb-73">
+                    <h3>Our subscriptions</h3>
+                    <p>There are many variations of passages of lorem Ipsum available, but the majority <br> have suffered alteration.</p>
                 </div>
             </div>
         </div>
+        <div class="row">
+    
+        {% for abonnement in abonnements %}
+        <div class="col-lg-4 col-md-6">
+       
+        
+           
+                 <div class="single_prising text-center">
+                 
+            <div class="prising_header">
+             <h3>{{ abonnement.getType() }}</h3>
+             <span>{{ abonnement.getPrix() }} </span>
+             </div>
+        <div class="pricing_body">
+            <p>{{ abonnement.getDescription() }}</p>
+        </div>
+        <div class="pricing_btn">
+             <a href="{{ path('register_for_abonnement', { 'idAbonnement': abonnement.getId() }) }}" class="boxed-btn3">Register</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+    </div>
+</div>
+
 
 
 
@@ -511,7 +527,7 @@
                                 <li><a href="/">Pricing</a></li>
                                 <li><a href="/">About</a></li>
                                 <li><a href="/"> Gallery</a></li>
-                                <li><a href="/"> Contact</a></li>
+                                <li><a href="{{path('new_reclamation')}}"> Contact</a></li>
                             </ul>
                         </div>
                     </div>

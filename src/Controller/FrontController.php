@@ -18,15 +18,16 @@ class FrontController extends AbstractController
     {
         return $this->render('front/pages/about.html.twig');
     }
-    #[Route('/blog', name: 'app_front_blog')]
+    #[Route('/front/evenements/moreEvent', name: 'app_front_blog')]
     public function blog(): Response
     {
-        return $this->render('front/pages/blog.html.twig');
+        return $this->render('front/evenements/viewMore.html.twig');
     }
-    #[Route('/contact', name: 'app_front_contact')]
+    #[Route('/front/reclamation/contact', name: 'app_front_contact')]
     public function contact(): Response
     {
-        return $this->render('front/pages/contact.html.twig');
+       /* return $this->render('front/pages/contact.html.twig');*/
+       return $this->render('front/reclamation/contact.html.twig');
     }
     #[Route('/elements', name: 'app_front_elements')]
     public function elements(): Response

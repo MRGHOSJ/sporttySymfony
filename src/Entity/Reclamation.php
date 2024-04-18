@@ -18,8 +18,9 @@ class Reclamation
     #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
     private $nom;
 
-    #[ORM\Column(name: "id_user", type: "integer", nullable: true)]
-    private $idUser;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "reclamations")]
+    #[ORM\JoinColumn(name: "id_user", referencedColumnName: "id")]
+    private ?User $user = null;
 
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
     private $description;
@@ -53,18 +54,18 @@ class Reclamation
         return $this;
     }
 
-    public function getIdUser(): ?int
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function setIdUser(?int $idUser): static
+    public function setUser(?User $user): static
     {
-        $this->idUser = $idUser;
+        $this->user = $user;
 
         return $this;
     }
-
+    
     public function getDescription(): ?string
     {
         return $this->description;

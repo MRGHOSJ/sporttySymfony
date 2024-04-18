@@ -1,0 +1,317 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Hello User!{% endblock %}
+
+{% block body %}
+    <body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="/back"><img src="images/logo.svg" class="mr-2" alt="Sportty"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/back"><img src="images/logo-mini.svg" alt="logo"/></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="icon-bell mx-0"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="ti-info-alt mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="ti-settings mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="images/faces/face28.jpg" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item">
+                <i class="ti-settings text-primary"></i>
+                Settings
+              </a>
+              <a class="dropdown-item">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              <i class="icon-ellipsis"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="/back">
+                    <i class="ti-layout-grid2 menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" data-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
+                    <i class="ti-user menu-icon "></i>
+                    <span class="menu-title">Users & Abonnements</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="users">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#stock" aria-expanded="false" aria-controls="stock">
+                    <i class="icon-box menu-icon"></i>
+                    <span class="menu-title">Stock & Materiels</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="stock">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/back/stocks">Stock</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/materiels">Materiels</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
+                    <i class="ti-basketball menu-icon"></i>
+                    <span class="menu-title">Gyms & Cabines</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="sales">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
+                    <i class="ti-notepad menu-icon"></i>
+                    <span class="menu-title">Programmes & Cours</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="programs">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/back/programmes">Programmes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/reclamation">
+                    <i class="ti-headphone-alt menu-icon"></i>
+                    <span class="menu-title">Reclamation</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/events">
+                    <i class="ti-ticket menu-icon"></i>
+                    <span class="menu-title">Events</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/produit">
+                    <i class="ti-package menu-icon"></i>
+                    <span class="menu-title">Produit</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/map">
+                    <i class="icon-map menu-icon"></i>
+                    <span class="menu-title">Map</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title mb-0">Users</p>
+                      <div class="add-items d-flex px-3 mb-0">
+
+
+
+                                   <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/add_user">ADD User</a></li>
+                                     </ul>
+            
+                        </div>
+
+                 </div>
+                 <div class="card-body">
+                                        <p class="card-title mb-0">New User</p>
+                                    <form action="{{ path('update_user', {'id': user.id}) }}" method="post" novalidate>
+                                            {{ form_start(form) }}
+                                            <div class="form-group">
+                                             <label for="YourLastNameName" class="form-label">Your LastName</label>
+                                               
+                                                {{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
+                                            
+                                            {% if form.nom.vars.errors|length > 0 %}
+                          <div class="invalid-feedback">{{ form.nom.vars.errors|first.message }}</div>
+                        {% endif %}
+                                            </div>
+                                            <div class="form-group">
+                                                 <label for="YourFirstName" class="form-label">Your FirstName</label>
+                                                {{ form_widget(form.prenom, { 'attr': {'class': 'form-control'} }) }}
+                                           {% if form.prenom.vars.errors|length > 0 %}
+                          <div class="invalid-feedback">{{ form.prenom.vars.errors|first.message }}</div>
+                        {% endif %}
+                                            </div>
+                                                                
+
+                                            <div class="form-group">
+                                                {{ form_label(form.email) }}
+                                                {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                                            {% if form.email.vars.errors|length > 0 %}
+                          <div class="invalid-feedback">{{ form.email.vars.errors|first.message }}</div>
+                        {% endif %}
+                                            </div>
+                                          
+                                            <div class="form-group">
+                                                {{ form_label(form.role) }}
+                                                {{ form_widget(form.role, { 'attr': {'class': 'form-control'} }) }}
+                                            </div>
+                                              <div class="form-group">
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                        {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
+                                       
+                                         {% if form.password.first.vars.errors|length > 0 %}
+                          <div class="invalid-feedback">{{ form.password.first.vars.errors|first.message }}</div>
+                        {% endif %}
+                      </div>
+                                    </div>
+
+                                     <div class="form-group">
+    <label for="yourConfirmPassword" class="form-label">Confirm Password</label>
+    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}, 'invalid_message': 'Please confirm your password!'}) }}
+    {% if form.password.second.vars.errors|length > 0 %}
+        <div class="invalid-feedback">{{ form.password.second.vars.errors|first.message }}</div>
+    {% endif %}
+</div>
+
+<div class="form-group">
+                                                     <button type="submit" class="btn btn-primary">Save</button>
+                                      
+                                                    </div>
+                                                  
+                                            {{ form_end(form) }}
+                                          
+                                             <div class="form-group">
+                                                <a href="{{ path('back_users') }}" class="btn btn-secondary">Cancel</a>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                </div>
+              </div>
+            </div>
+           
+         
+         
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+{% endblock %}
+ 

@@ -45,4 +45,12 @@ class EvenementsRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findNewEvents($limit = 3)
+{
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.dateEvent', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
 }
