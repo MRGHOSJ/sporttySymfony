@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,35 +23,41 @@ class ProduitController extends AbstractController
     }
 
     #[Route('/back/produits/add', name: 'app_back_produit_add')]
-    public function addProduit(ProduitRepository $produitRepository): Response
+    public function addProduit  (Request $request, ManagerRegistry $manager): Response
     {
+        $produit = new Produit();
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
 
-        return $this->render('back/produit/allProduit.html.twig',[
-            "produits"=>$produitRepository->findAll(),
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em=$manager->getManager();
+            $em->persist($produit);
+            $em->flush();
+            return $this->redirectToRoute('app_back_produit');
+        }
+
+        return $this->render('back/produit/formProduit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     #[Route('/back/produits/{id}/edit', name: 'update_product')]
-    public function edit(Produit $produit, Request $request)
+    public function edit(Request $request, ManagerRegistry $manager,ProduitRepository $produitRepository,int $id)
     {
-        // Handle the form submission for updating the product
-        // You can use Symfony forms to create and handle the update form
-        
-        // Example:
-        // $form = $this->createForm(ProduitType::class, $produit);
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $this->getDoctrine()->getManager()->flush();
-        //     return $this->redirectToRoute('app_back');
-        // }
+        $produit = $produitRepository->find($id);
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
 
-        // Render the update form template
-        // Example:
-        // return $this->render('back/produit/editProduit.html.twig', [
-        //     'form' => $form->createView(),
-        // ]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em=$manager->getManager();
+            $em->persist($produit);
+            $em->flush();
+            return $this->redirectToRoute('app_back_produit');
+        }
 
-        // Replace the above with your actual implementation
+        return $this->render('back/produit/formProduit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/back/produits/{id}/delete', name: 'delete_product')]
@@ -61,6 +68,17 @@ class ProduitController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_back');
+    }
+
+
+
+    
+    #[Route('/produit', name: 'app_front_produit')]
+    public function produitFront(ProduitRepository $produitRepository): Response
+    {
+        return $this->render('front/produit/pricing.html.twig',[
+            'produits'=>$produitRepository->findAll(),
+        ]);
     }
     
 }

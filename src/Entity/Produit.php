@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProduitRepository;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -15,18 +16,25 @@ class Produit
     private $id;
 
     #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
     private $nom;
 
     #[ORM\Column(name: "prix", type: "float", precision: 10, scale: 0, nullable: false)]
+    #[Assert\NotBlank]
     private $prix;
 
     #[ORM\Column(name: "qte", type: "integer", nullable: false)]
+    #[Assert\NotBlank]
     private $qte;
 
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
     private $description;
 
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $categorie;
 
     #[ORM\Column(name: "image", type: "string", length: 255, nullable: false)]

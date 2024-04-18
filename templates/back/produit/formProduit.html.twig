@@ -362,71 +362,22 @@
         </ul>
       </nav>
       <!-- partial -->
-      <div class="main-panel">
+      <div class="main-panel">        
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Produit Table</h4>
+                  <h4 class="card-title">Produit form</h4>
                   <p class="card-description">
-                    <a class="btn btn-primary text-white" href="/back/produits/add">Add Produit</a>
+                    Produit form layout
                   </p>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Nom</th>
-                              <th>Prix</th>
-                              <th>Quantite</th>
-                              <th>Description</th>
-                              <th>Categorie</th>
-                              <th>Tools</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for produit in produits %}
-                              <tr>
-                                  <td><strong>{{ produit.getNom() }}</strong></td>
-                                  <td>
-                                    <label class="badge badge-success">
-                                      {{ produit.getPrix() }} DT
-                                    </label>
-                                  </td>
-                                  <td>
-                                  {% if produit.getQte() > 10 %}
-                                    <label class="badge badge-success container">
-                                      In Stock ({{ produit.getQte() }})
-                                    </label>
-                                  {% elseif produit.getQte() == 0 %}
-                                    <label class="badge badge-danger container">
-                                      Out Of Stock ({{ produit.getQte() }})
-                                    </label>
-                                  {% elseif produit.getQte() < 10 %}
-                                    <label class="badge badge-warning container">
-                                      Out Of Stock Soon ({{ produit.getQte() }})
-                                    </label>
-                                  {% endif %}
-                                    
-                                  </td>
-                                  <td>
-                                      <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                          <strong>{{ produit.getDescription() }}</strong>
-                                      </p>
-                                  </td>                                  
-                                  <td>
-                                    <label class="badge badge-info">{{ produit.getCategorie() }}</label>
-                                  </td>
-                                  <td>
-                                      <a href="{{ path('update_product', {'id': produit.getId()}) }}">✏️</a>
-                                      <a href="{{ path('delete_product', {'id': produit.getId()}) }}">🗑️</a>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-
-                  </div>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
+                                
+                                
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                    <button class="btn btn-light mt-4 container">Cancel</button>
                 </div>
               </div>
             </div>

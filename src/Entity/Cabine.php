@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CabineRepository;
 
 #[ORM\Entity(repositoryClass: CabineRepository::class)]
@@ -15,18 +16,23 @@ class Cabine
     private $id;
 
     #[ORM\Column(name: "nom_cabine", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern:"/^[A-Z]/",message:"Le nom de la cabine doit commencer par une lettre majuscule.")]
     private $nomCabine;
 
     #[ORM\Column(name: "capacite", type: "integer", nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Range(min:0,minMessage:"La capacité doit être un nombre positif ou nul.")]
     private $capacite;
 
     #[ORM\Column(name: "has_vr", type: "boolean", nullable: false)]
     private $hasVr;
 
-    #[ORM\Column(name: "image", type: "string", length: 255, nullable: false)]
+    #[ORM\Column(name: "image", type: "string", length: 255, nullable: true)]
     private $image;
 
     #[ORM\ManyToOne(targetEntity: "SaleDeSport")]
+    #[ORM\JoinColumn(name:"id_salle", referencedColumnName:"id_salle", nullable:false)]
     private $idSalle;
 
     public function getId(): ?int
