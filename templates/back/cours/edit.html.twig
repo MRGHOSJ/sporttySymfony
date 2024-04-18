@@ -1,10 +1,10 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}Hello Produit!{% endblock %}
+{% block title %}Cours!{% endblock %}
 
 {% block body %}
 <body>
-  <div class="container-scroller">
+   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -322,7 +322,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item "active>
                 <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Programmes & Cours</span>
@@ -332,7 +332,6 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="/back/programmes">Programmes</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/cours">Add cours</a></li>
                     </ul>
                 </div>
             </li>
@@ -342,13 +341,13 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="/back/events">
                     <i class="ti-ticket menu-icon"></i>
                     <span class="menu-title">Events</span>
                 </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/back/produit">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
@@ -362,68 +361,74 @@
             </li>
         </ul>
       </nav>
-      <!-- partial -->
+      
+<!-- partial form -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Produit Table</h4>
-                  <p class="card-description">
-                    Add class <code>.table</code>
-                  </p>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Nom</th>
-                              <th>Prix</th>
-                              <th>Qte</th>
-                              <th>Description</th>
-                              <th>Categorie</th>
-                              <th>Tools</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for produit in produits %}
-                              <tr>
-                                  <td>{{ produit.getNom() }}</td>
-                                  <td>{{ produit.getPrix() }}</td>
-                                  <td>{{ produit.getQte() }}</td>
-                                  <td>
-                                      <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                          {{ produit.getDescription() }}
-                                      </p>
-                                  </td>                                  <td><label class="badge badge-info">{{ produit.getCategorie() }}</label></td>
-                                  <td>
-                                      <a href="{{ path('update_product', {'id': produit.getId()}) }}">✏️</a>
-                                      <a href="{{ path('delete_product', {'id': produit.getId()}) }}">🗑️</a>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-
+                  <h4 class="card-title">New Cours</h4>
+                  <p class="card-description">Form Cours</p>
+                  {{ form_start(form) }}
+                  <div class="form-group">
+                    {{ form_label(form.nom, 'Name Cours') }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
                   </div>
+                  <div class="form-group">
+                    {{ form_label(form.coach, 'Coach') }}
+                    {{ form_widget(form.coach, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  <div class="form-group">
+                    {{ form_label(form.jours, 'Days') }}
+                    {{ form_widget(form.jours, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  <div class="form-group">
+                    {{ form_label(form.duree, 'Duration') }}
+                    {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  <div class="form-group">
+                    {{ form_label(form.type, 'Type') }}
+                    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  
+                   <div class="form-group">
+                    {{ form_label(form.prix, 'Price') }}
+                    {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+
+                   <div class="form-group">
+                    {{ form_label(form.image, 'Image') }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+
+                   <div class="form-group">
+                    {{ form_label(form.lienvideo, 'Lien vidéo') }}
+                    {{ form_widget(form.lienvideo, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+
+                   <div class="form-group">
+                    {{ form_label(form.Programme, 'ID Programme') }}
+                    {{ form_widget(form.Programme, {'attr': {'class': 'form-control'}}) }}
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                   <a href="{{ path('app_cours_show') }}" class="btn btn-secondary">Cancel</a>
+                  {{ form_end(form) }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+        
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
 </body>
 {% endblock %}

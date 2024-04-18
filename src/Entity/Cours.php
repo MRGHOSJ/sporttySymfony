@@ -38,8 +38,14 @@ class Cours
     #[ORM\Column(name: "lienVideo", type: "string", length: 255, nullable: false)]
     private $lienvideo;
 
-    #[ORM\ManyToOne(targetEntity: "Programme")]
-    private $idProgramme;
+ 
+   /* #[ORM\ManyToOne(targetEntity: Programme::class, inversedBy: "cours")]
+    #[ORM\JoinColumn(name: "id_programme", referencedColumnName: "id")]
+    private ?Programme $programme = null;*/
+
+     #[ORM\ManyToOne(targetEntity: "Programme")]
+    #[ORM\JoinColumn(name: "id_programme")]
+    private $Programme;
 
     public function getIdCours(): ?int
     {
@@ -142,14 +148,14 @@ class Cours
         return $this;
     }
 
-    public function getIdProgramme(): ?Programme
+    public function getProgramme(): ?Programme
     {
-        return $this->idProgramme;
+        return $this->Programme;
     }
 
-    public function setIdProgramme(?Programme $idProgramme): static
+    public function setProgramme(?Programme $programme): static
     {
-        $this->idProgramme = $idProgramme;
+        $this->Programme= $programme;
 
         return $this;
     }

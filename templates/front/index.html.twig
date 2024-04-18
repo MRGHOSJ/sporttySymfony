@@ -40,6 +40,7 @@
                                                 <ul class="submenu">
                                                     <li><a href="/blog">blog</a></li>
                                                     <li><a href="/singleBlog">single-blog</a></li>
+                                                     
                                                 </ul>
                                             </li>
                                             <li><a href="/contact">Contact</a></li>
@@ -63,6 +64,7 @@
                 </div>
             </div>
         </div>
+        
     </header>
     <!-- header-end -->
 
@@ -225,77 +227,49 @@
 
 
 
-    <div class="priscing_area">
-            <div class="container">
-                    <div class="row">
-                            <div class="col-xl-12">
-                                <div class="section_title text-center mb-73">
-                                    <h3>Our Pricing</h3>
-                                    <p>There are many variations of passages of lorem Ipsum available, but the majority <br> have suffered alteration.</p>
-                                </div>
-                            </div>
-                        </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Beginner</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Expert</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_prising text-center">
-                            <div class="prising_header">
-                                    <h3>Pro</h3>
-                                    <span>$45/m</span>
-                            </div>
-                            <div class="pricing_body">
-                                <ul>
-                                    <li>24h unlimited access</li>
-                                    <li>Trainer Advice</li>
-                                    <li class="off-color">Locker + Bathroom</li>
-                                    <li class="off-color">Personal trainer</li>
-                                </ul>
-                            </div>
-                            <div class="pricing_btn">
-                                    <a href="/" class="boxed-btn3">Join Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  
+<div class="priscing_area">
+ <!-- Lien "View More" -->
+   <a href="moreEvent" style="float:  right; margin-top: 20px; color:#19bcff;">View More >> </a>
+    <div class="container">
+   
+      <div class="row d-flex">
+    {% for cour in cours |slice(0, 3) %}
+    <div class="col-lg-4 col-md-6">
+        <div class="single_prising text-center">
+            <div class="prising_header">
+                <h3 style="font-size: 20px;">{{ cour.nom }}</h3>
+            </div>
+            <div class="pricing_body">
+                <ul>
+              
+                    <li><strong>Jours:</strong> {{ cour.jours }} | <strong>Duration:</strong> {{cour.duree}} </li>
+                    <li><strong>Type:</strong> {{ cour.type}} </li>
+                </ul>
+            </div>
+            <div class="pricing_btn">
+                <a href="{{ path('CoursP', {'id': cour.idCours}) }}" class="boxed-btn3">  view  Program   </a>
+            
+              
             </div>
         </div>
+    </div>
+
+   
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -549,4 +523,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 </body>
+<link rel="stylesheet" href="/css/swiper-bundle.min.css">
+<script src="/js/swiper-bundle.min.js" ></script>
+<script src="/js/swiper.js" ></script>
 {% endblock %}

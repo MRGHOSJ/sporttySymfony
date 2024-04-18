@@ -10,6 +10,11 @@ use App\Repository\ProgrammeRepository;
 #[ORM\Table(name: "programme")]
 class Programme
 {
+    public function __toString(): string
+    {
+        return $this->nom; // Return the 'nom' property as string representation
+    }
+    
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "id", type: "integer", nullable: false)]

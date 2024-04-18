@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<title>Cours index</title>
+
+{% block body %}
+    <h1>Cours index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdCours</th>
+                <th>Nom</th>
+                <th>Coach</th>
+                <th>Jours</th>
+                <th>Duree</th>
+                <th>Type</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Lienvideo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cour in cours %}
+            <tr>
+                <td>{{ cour.idCours }}</td>
+                <td>{{ cour.nom }}</td>
+                <td>{{ cour.coach }}</td>
+                <td>{{ cour.jours }}</td>
+                <td>{{ cour.duree }}</td>
+                <td>{{ cour.type }}</td>
+                <td>{{ cour.prix }}</td>
+                <td>{{ cour.image }}</td>
+                <td>{{ cour.lienvideo }}</td>
+                <td>
+                    <a href="{{ path('app_cours_show', {'idCours': cour.idCours}) }}">show</a>
+                    <a href="{{ path('app_cours_edit', {'idCours': cour.idCours}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cours_new') }}">Create new</a>
+{% endblock %}
