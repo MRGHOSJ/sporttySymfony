@@ -6,10 +6,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name:"user")]
-class User
+
+
+#[UniqueEntity(fields: ['email'], message: 'Email already exists')]
+class User implements UserInterface
 {
     #[ORM\Column(name:"id", type:"integer", nullable:false)]
     #[ORM\Id]
@@ -17,15 +23,26 @@ class User
     private $id;
 
     #[ORM\Column(name:"nom", type:"string", length:255, nullable:false)]
+    #[Assert\NotBlank(message: "This value should not be blank.")]
+#[Assert\Length(min: 2, minMessage: "The Firstname must contain at least {{ limit }} characters.")]
     private $nom;
+  
+   
 
     #[ORM\Column(name:"prenom", type:"string", length:255, nullable:false)]
+
+    #[Assert\NotBlank(message: "This value should not be blank.")]
+#[Assert\Length(min: 2, minMessage: "The Lastname must contain at least {{ limit }} characters.")]
     private $prenom;
 
-    #[ORM\Column(name:"email", type:"string", length:255, nullable:false)]
+    #[Assert\Email]
+    #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
+   
+    //#[ORM\Column(name:"email", type:"string", length:255, nullable:false)]
     private $email;
 
     #[ORM\Column(name:"password", type:"string", length:255, nullable:false)]
+  #[Assert\NotBlank(message: "This value should not be blank.")]
     private $password;
 
     #[ORM\Column(name:"role", type:"string", length:255, nullable:true)]
@@ -34,8 +51,8 @@ class User
     #[ORM\Column(name:"image_user", type:"string", length:255, nullable:true)]
     private $imageUser;
 
-    #[ORM\ManyToMany(targetEntity:"Abonnement", mappedBy:"idUtilisateur")]
-    private $idAbonnement = array();
+    #[ORM\OneToMany(targetEntity: AbonnementUtilisateur::class, mappedBy: "utilisateur", cascade: ["persist"])]
+private $abonnements;
 
     /**
      * Constructor
@@ -43,6 +60,39 @@ class User
     public function __construct()
     {
         $this->idAbonnement = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+     /**
+     * @return Collection|AbonnementUtilisateur[]
+     */
+    public function getAbonnements(): Collection
+    {
+        return $this->abonnements;
+    }
+
+    public function addAbonnement(AbonnementUtilisateur $abonnement): self
+    {
+        if (!$this->abonnements->contains($abonnement)) {
+            $this->abonnements[] = $abonnement;
+            $abonnement->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbonnement(AbonnementUtilisateur $abonnement): self
+    {
+        if ($this->abonnements->removeElement($abonnement)) {
+            // set the owning side to null (unless already changed)
+            if ($abonnement->getUtilisateur() === $this) {
+                $abonnement->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+    public function getUsername(): string
+    {
+        return $this->email;
     }
 
     public function getId(): ?int
@@ -90,7 +140,7 @@ class User
     {
         return $this->password;
     }
-
+    
     public function setPassword(string $password): static
     {
         $this->password = $password;
@@ -102,10 +152,19 @@ class User
     {
         return $this->role;
     }
-
+    public function getRoles(): array
+    {
+        return [$this->role];
+    }
     public function setRole(?string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
@@ -148,5 +207,17 @@ class User
 
         return $this;
     }
+    public function getSalt(): ?string
+    {
+        // Vous pouvez retourner null si vous n'utilisez pas de sel pour le hachage du mot de passe
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Supprimer les informations sensibles du mot de passe
+        // Cette méthode est appelée après que l'authentification ait eu lieu pour effacer les informations sensibles.
+    }
+
 
 }

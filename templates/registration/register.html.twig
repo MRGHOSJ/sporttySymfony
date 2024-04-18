@@ -1,0 +1,75 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Hello Register!{% endblock %}
+
+{% block body %}
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="../../images/logos.svg" alt="logo">
+              </div>
+              <h4>New here?</h4>
+              <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+             
+                                {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+                                     <div class="col-12">
+                                        <label for="YourFirstName" class="form-label">Your FirstName</label>
+                                        {{ form_widget(form.prenom,{'attr':{'class':'form-control'}}) }}
+                                        <div class="invalid-feedback">Please enter YourFirst Name!</div>
+                                    </div>
+                                     <div class="col-12">
+                                        <label for="YourLastName" class="form-label">Your LastName</label>
+                                        {{ form_widget(form.nom,{'attr':{'class':'form-control'}}) }}
+                                        <div class="invalid-feedback">Please enter Your LastName!</div>
+                                    </div>
+
+                                 <div class="col-12">
+                                     <label for="yourEmail" class="form-label">Your Email</label>
+                                     {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+                                     {% if form.email.vars.errors|length > 0 %}
+                                        <div class="invalid-feedback">{{ form.email.vars.errors|first.message }}</div>
+                                         {% endif %}
+</div>
+
+
+                                    <div class="col-12">
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                        {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
+                                        <div class="invalid-feedback">Please enter a password with at least 6 characters!</div>
+                                    </div>
+
+                                <div class="col-12">
+                                    <label for="yourConfirmPassword" class="form-label">Confirm Password</label>
+                                    {{ form_widget(form.password.second,{'attr':{'class':'form-control','invalid_message': 'Please confirm your password!'}}) }}
+                                    <div class="invalid-feedback">Please confirm your password!</div>
+                                </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required="">
+                                            <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                                            <div class="invalid-feedback">You must agree before submitting.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Already have an account? <a href="{{ path('app_login') }}">Log in</a></p>
+                                    </div>
+                                {{ form_end(form) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+{% endblock %}

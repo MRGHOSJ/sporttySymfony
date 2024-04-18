@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// Assurez-vous d'importer la classe User si ce n'est pas déjà fait
+
+
 class BackController extends AbstractController
 {
     #[Route('/back', name: 'app_back')]
@@ -13,17 +16,10 @@ class BackController extends AbstractController
     {
         return $this->render('back/index.html.twig');
     }
-    #[Route('/login', name: 'app_login')]
-    public function login(): Response
-    {
-        return $this->render('back/pages/login.html.twig');
-    }
-    #[Route('/register', name: 'app_register')]
-    public function register(): Response
-    {
-        return $this->render('back/pages/register.html.twig');
-    }
-    #[Route('/back/basicElements', name: 'app_back_basicElements')]
+
+   
+ 
+   /* #[Route('/back/basicElements', name: 'app_back_basicElements')]
     public function basicElements(): Response
     {
         return $this->render('back/pages/basicElements.html.twig');
@@ -62,5 +58,5 @@ class BackController extends AbstractController
     public function typography(): Response
     {
         return $this->render('back/pages/typography.html.twig');
-    }
+    }*/
 }
