@@ -20,7 +20,27 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
-
+    public function countAllClients(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.role = :role')
+            ->setParameter('role', 'ADHERANT') // Remplacez 'ADHERANT' par le rôle réel des adhérents
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    public function hasSubscription($userId)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.abonnements', 'a')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    
+    
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

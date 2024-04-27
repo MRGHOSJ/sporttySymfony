@@ -21,37 +21,29 @@ class EmailController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/validate-email', name: 'validate_email', methods: ['POST'])]
+    #[Route('/validate-email', name: 'validate_email')]
     public function validateEmail(Request $request, MailerInterface $mailer): Response
     {
         $email = $request->request->get('email');
-
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => $email]);
-
-        if ($user instanceof User) {
-            // L'email est valide, générer un code de confirmation
-            $confirmationCode = substr(md5(uniqid(rand(), true)), 0, 6);
-
-            // Enregistrer le code de confirmation dans la session
-            $request->getSession()->set('confirmation_code', $confirmationCode);
-            // Enregistrer l'email dans la session pour la réinitialisation du mot de passe
-            $request->getSession()->set('reset_email', $email);
-
-            // Envoyer le code de confirmation par e-mail
-            $this->sendConfirmationEmail($email, $confirmationCode, $mailer);
-
-            return new Response('Confirmation code sent to the email address.');
-        } else {
-            return new Response('Invalid email address.', 400);
-        }
+    
+        // Supposons que vous vérifiez ici si l'e-mail est valide dans votre application
+    
+        $message = (new Email())
+            ->from('dinagharbi893@gmail.com')
+            ->to('montaazzouz2@gmail.com')
+            ->subject('Hello')
+            ->text('Bonjour');
+    
+        $mailer->send($message);
+    
+        return new Response('Message sent.');
     }
-
+    
     private function sendConfirmationEmail(string $email, string $confirmationCode, MailerInterface $mailer): void
     {
         $email = (new Email())
-            ->from('serviceclientsporty@gmail.com')
-            ->to($email)
+            ->from('dinagharbi893@gmail.com')
+            ->to('montaazzouz2@gmail.com')
             ->subject('Confirmation Code')
             ->text('Your confirmation code: ' . $confirmationCode);
 

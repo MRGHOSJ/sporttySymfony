@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 // Assurez-vous d'importer la classe User si ce n'est pas déjà fait
 
@@ -12,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class BackController extends AbstractController
 {
     #[Route('/back', name: 'app_back')]
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
-        return $this->render('back/index.html.twig');
+        $numberOfClients = $userRepository->countAllClients(); // Assumez que countAllClients est une méthode de votre repository qui compte tous les clients
+        return $this->render('back/index.html.twig', ['numberOfClients' => $numberOfClients]);
     }
 
-   
  
    /* #[Route('/back/basicElements', name: 'app_back_basicElements')]
     public function basicElements(): Response

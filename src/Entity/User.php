@@ -44,6 +44,9 @@ class User implements UserInterface
     #[ORM\Column(name:"password", type:"string", length:255, nullable:false)]
   #[Assert\NotBlank(message: "This value should not be blank.")]
     private $password;
+ 
+#[ORM\Column(name:"reset_token", type:"string", length:180, nullable:false)]
+private string $reset_token;
 
     #[ORM\Column(name:"role", type:"string", length:255, nullable:true)]
     private $role;
@@ -218,6 +221,23 @@ private $abonnements;
         // Supprimer les informations sensibles du mot de passe
         // Cette méthode est appelée après que l'authentification ait eu lieu pour effacer les informations sensibles.
     }
+
+     /**
+     * @return mixed
+     */
+    public function getResetToken()
+    {
+        return $this->reset_token;
+    }
+
+    /**
+     * @param mixed $reset_token
+     */
+    public function setResetToken($reset_token): void
+    {
+        $this->reset_token = $reset_token;
+    }
+
 
 
 }

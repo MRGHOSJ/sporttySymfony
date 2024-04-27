@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\UserType;
 use App\Form\UserAdminType;
 use App\Form\UserfrontType;
+use App\Repository\UserRepository;
 
 use App\Form\UserPasswordType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,16 +32,24 @@ class UserController extends AbstractController
    /**
      * @Route("/back/UserAbonnement/users", name="back_users")
      */
-    #[Route('/back/UserAbonnement/users', name: 'back_users')]
-    public function users(): Response
-    {   $entityManager = $this->getDoctrine()->getManager();
-        $userRepository = $entityManager->getRepository(User::class);
-        $users = $userRepository->findAll(); 
-        
-        dump('ddd');
-    return $this->render('back/UserAbonnement/users.html.twig', ['users' => $users]);
+   #[Route('/back/UserAbonnement/users', name: 'back_users')]
+   public function users(UserRepository $userRepository): Response
+{
+    $users = $userRepository->findAll();
 
+    $usersWithSubscription = [];
+    foreach ($users as $user) {
+        $hasSubscription = $userRepository->hasSubscription($user->getId());
+        $usersWithSubscription[$user->getId()] = $hasSubscription ? 'Completed' : 'Cancelled';
     }
+
+    return $this->render('back/UserAbonnement/users.html.twig', [
+        'users' => $users,
+        'usersWithSubscription' => $usersWithSubscription,
+    ]);
+}
+
+ 
     #[Route('/back/user/delete/{id}', name: 'delete_user')]
 public function deleteUser($id): Response
 {

@@ -1,4 +1,4 @@
-# config/packages/mailer.yaml
 framework:
     mailer:
-        dsn: 'smtps://serviceclientsporty%40gmail.com:dinanawelnour123@smtp.gmail.com:465'
+        dsn: '%env(MAILER_DSN)%'
+        message_bus: false

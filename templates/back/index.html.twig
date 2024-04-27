@@ -86,7 +86,7 @@
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-              <a class="dropdown-item">
+              <a href="{{ path('app_logout') }}" class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -442,14 +442,15 @@
                   </div>
                 </div>
                 <div class="col-md-6 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
+    <div class="card card-light-danger">
+        <div class="card-body">
+            <p class="mb-4">Number of Clients</p>
+            <p class="fs-30 mb-2">{{ numberOfClients }}</p>
+          
+        </div>
+    </div>
+</div>
+
               </div>
             </div>
           </div>
