@@ -45,4 +45,25 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function getReclamationCountByNom(): array
+    {
+        return $this->createQueryBuilder('r')
+        ->select('r.nom as nom, COUNT(r) as count')
+        ->groupBy('r.nom')
+        ->getQuery()
+        ->getResult();
+    }
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('r.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('r.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
 }

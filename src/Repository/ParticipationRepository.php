@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Participation;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +46,29 @@ class ParticipationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findEventsByUser(User $user)
+    {
+        return $this->createQueryBuilder('p')
+        ->join('p.event', 'e') // Join avec l'entité Evenements
+        ->andWhere('p.user = :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('p.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+      //  $qb->orderBy('p.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
 }

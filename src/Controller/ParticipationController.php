@@ -17,7 +17,7 @@ class ParticipationController extends AbstractController
 {
     #[Route('/participation', name: 'app_participation')]
     public function index(): Response
-    {
+    {     
         return $this->render('participation/index.html.twig', [
             'controller_name' => 'ParticipationController',
         ]);
@@ -102,17 +102,18 @@ public function participate(int $id, EntityManagerInterface $entityManager, Requ
 }
 
 #[Route('/back/showPart', name: 'listPart')]
-public function showPart(ParticipationRepository $participationRepository): Response
-{
-    // Récupérer les participations depuis le repository
-    $participations = $participationRepository->findAll();
+public function showPart(ParticipationRepository $participationRepository, Request $request): Response
+{     
+    $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
 
-    // Utiliser dump pour afficher les données
-    dump($participations);
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
 
+        $items = $participationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
     // Retourner la réponse avec la vue
     return $this->render('back/allParticipants.html.twig', [
-        'participations' => $participations,
+        'participations' => $items,
     ]);
 }
 

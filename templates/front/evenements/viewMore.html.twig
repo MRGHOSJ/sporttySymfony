@@ -162,66 +162,21 @@
                             </form>
                         </aside>
 
-                        <aside class="single_sidebar_widget post_category_widget">
-                            <h4 class="widget_title">Category</h4>
-                            <ul class="list cat-list">
-                                <li>
-            <a href="/" class="d-flex">
-                <p>Group training</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Fitness classes</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Yoga sessions</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Special events</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Dance classes</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Sports clinics</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Family activities</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Cycling</p>
-                <p>(10)</p>
-            </a>
-        </li>
-        <li>
-            <a href="/" class="d-flex">
-                <p>Challenges and competitions</p>
-                <p>(10)</p>
-            </a>
-        </li>
-    </ul>
-                        </aside>
-
+                         <aside class="single_sidebar_widget post_category_widget">
+                <h4 class="widget_title">Category</h4>
+                <ul class="list cat-list">
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Group training'}) }}" class="d-flex"><p>Group training</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Fitness classes'}) }}" class="d-flex"><p>Fitness classes</p><p>(10)</p></a></li>
+                   
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Yoga sessions'}) }}" class="d-flex"><p>Yoga sessions</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Special events'}) }}" class="d-flex"><p>Special events</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Dance classes'}) }}" class="d-flex"><p>Dance classes</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Sports clinicss'}) }}" class="d-flex"><p>Sports clinics</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Family activities'}) }}" class="d-flex"><p>Family activities</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'Cycling'}) }}" class="d-flex"><p>Cycling</p><p>(10)</p></a></li>
+                    <li><a href="{{ path('moreEvent', {'categorieEvent': 'challenges and competitions'}) }}" class="d-flex"><p>challenges and competitions</p><p>(10)</p></a></li>
+                </ul>
+            </aside>
                         
                         
                     </div>

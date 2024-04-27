@@ -21,12 +21,93 @@ use Symfony\Component\Security\Core\Security;
 
 class ReclamationController extends AbstractController
 {
-  
-    #[Route('/back/reclamation/showRec', name: 'listRec')]
-    public function show(ReclamationRepository $reclamationRepository): Response
+    #[Route('/admin/reservation', name: 'app_back_reservation')]
+    public function index(Request $request,ReclamationRepository $reclamationRepository): Response
     {
+        $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
+
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $reclamationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+
+
+       
+
+        return $this->render('back/pages/reservation/index.html.twig', [
+            "items" => $items,
+            
+        ]);
+    }
+   /* #[Route("/generate-pdf", name: "app_generate_pdf")]
+    public function generatePdf(Request $request): Response
+    {
+        // Récupérer la liste des matériels depuis la base de données
+        $materiels = $this->getDoctrine()->getRepository(Reclamation::class)->findAll();
+
+        // Créer une instance de Dompdf
+        $dompdf = new Dompdf();
+
+        // Construction du contenu HTML à partir du template twig
+        $html = $this->renderView('back/materiel/pdf.html.twig', [
+            'materiels' => $materiels,
+        ]);
+
+        // Charger le contenu HTML dans Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optionnel) Paramètres de la mise en page
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Rendu du PDF
+        $dompdf->render();
+
+        // Générer le nom du fichier PDF
+        $pdfFileName = 'liste_materiels.pdf';
+
+        // Créer une réponse avec le contenu du PDF
+        $response = new Response($dompdf->output());
+
+        // Ajouter les en-têtes pour indiquer au navigateur de télécharger le fichier
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $pdfFileName . '"');
+
+        // Retourner la réponse
+        return $response;
+    }*/
+    #[Route('/back/reclamation/stat', name: 'reclamation_stats')]
+    public function reclamationStats(ReclamationRepository $reclamationRepository): Response
+    {
+        // Récupérer les données des réclamations par nom
+        $reclamationCounts = $reclamationRepository->getReclamationCountByNom();
+        dump($reclamationCounts);
+    
+        // Préparer les données pour le graphique
+        $chartData = [];
+        foreach ($reclamationCounts as $reclamationCount) {
+            $chartData[] = [$reclamationCount['nom'], $reclamationCount['count']];
+        }
+    
+        // Rendre la vue Twig avec les données du graphique
+        return $this->render('back/reclamation/stat.html.twig', [
+            'chartData' => $chartData,
+        ]);
+    }
+
+    
+    #[Route('/back/reclamation/showRec', name: 'listRec')]
+    public function show(ReclamationRepository $reclamationRepository,Request $request): Response
+    {  $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
+
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $reclamationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+
         return $this->render('back/reclamation/allRec.html.twig', [
-            'reclamations' => $reclamationRepository->findAll(),
+            'reclamations' => $items,
         ]);
     }
 

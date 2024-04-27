@@ -1,0 +1,56 @@
+{# templates/calendar/index.html.twig #}
+
+{% extends 'front.base.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+
+    
+
+    {% block body %}
+    <h1>Calendar</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <main id="main" class="main">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88=" crossorigin="anonymous">
+
+        <div id="calendrier"></div>
+     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js" integrity="sha256-YicH/8aE660iEnJtgll3vT54dJApy3XkYmqNfGVFEzA=" crossorigin="anonymous"></script>
+
+        <style>
+            #calendrier {
+                width: 80%;
+                margin: auto;
+            }
+        </style>
+
+       <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let calendarElt = document.querySelector("#calendrier");
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+            initialView: 'dayGridMonth',
+            locale: 'en', // Change 'ang' to the correct language code, e.g., 'en'
+            timeZone: 'Europe/Paris',
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth timeGridWeek'
+            },
+            events: [
+                {% for participation in participatedEvents %}
+                    {
+                        title: '{{ participation.getEvenement().getNomEvent() }}',
+                        start: '{{ participation.getEvenement().getDateEvent() | date("Y-m-d") }}T{{ participation.getEvenement().getHeureEvent() | date("H:i") }}', // Inclure l'heure
+                        // Ajoutez d'autres propriétés d'événement si nécessaire
+                    },
+                {% endfor %}
+            ]
+        });
+
+        calendar.render();
+    });
+</script>
+    </main>
+{% endblock %}

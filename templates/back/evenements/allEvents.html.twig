@@ -380,6 +380,50 @@
     <a href="{{ path('newEvent') }}" class="btn btn-info" style="background-color: #5bc0de;">Add</a>
 </p>
                   <div class="table-responsive">
+                   <form class="mb-4 px-1" action="{{ path('listEvents') }}" method="get">
+                    <div class="row">
+                    
+                   <div class="col-lg-2">
+                          <label for="search_by" class="form-label">Search By:</label>
+                          <select class="form-control" id="search_by" name="search_by">
+                              <option value="nomEvent">Title</option>
+                              <option value="descriEvent">Description</option>
+                              <option value="categorieEvent">Category</option>
+                              <option value="dateEvent">Date</option>
+                              
+                              <option value="lieuEvent">Place</option>
+                              
+                          </select>
+                      </div>
+                      <div class="mt-4 col-lg-10">
+                        <div class="mt-1 input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+                        <button type="submit" class="btn btn-primary ml-4">Search</button>
+                        </div>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_by" class="form-label">Sort By:</label>
+                          <select class="form-control" id="sort_by" name="sort_by">
+                                <option value="nomEvent">Title</option>
+                              <option value="descriEvent">Description</option>
+                              <option value="categorieEvent">Category</option>
+                              <option value="dateEvent">Date</option>
+                             
+                              <option value="lieuEvent">Place</option>
+                              
+                          </select>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_order" class="form-label">Sort Order:</label>
+                          <select class="form-control" id="sort_order" name="sort_order">
+                              <option value="asc">Ascending</option>
+                              <option value="desc">Descending</option>
+                          </select>
+                      </div>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary mt-2">Sort</button>
+                  </form>
 
     <table class="table">
          <thead>

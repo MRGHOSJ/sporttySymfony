@@ -12,34 +12,52 @@ use App\Entity\Participation;
 use App\Form\EvenementsType;
 use App\Repository\EvenementsRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
 class EvenementsController extends AbstractController
-{ 
+{   
+   
+    #[Route('/front/evenements/search', name: 'evenement_search')]
+public function search(Request $request, EvenementsRepository $repository): JsonResponse
+{
+    // Récupérer les critères de recherche depuis la requête
+    $keyword = $request->query->get('keyword');
+    // Autres critères de recherche si nécessaire
+
+    // Effectuer la recherche dans la base de données
+    $results = $repository->search($keyword);
+    // Autres critères de recherche si nécessaire
+
+    // Retourner les résultats au format JSON
+    return new JsonResponse($results);
+}
+
+
+
+
     #[Route('/showFront', name: 'EventsF')]
     public function showF(EvenementsRepository $evenementsRepository): Response
     {
-        /*return $this->render('front/evenements/eventFront.html.twig', [
-            'events' => $evenementsRepository->findNewEvents(),
-        ]);*/
+        
         return $this->render('front/index.html.twig', [
             'events' => $evenementsRepository->findNewEvents(),
         ]);
     }
 
-   /* #[Route('/front/evenements/moreEvent', name: 'moreEvent')]
-    public function showMore(EvenementsRepository $evenementsRepository): Response
-    {
-        return $this->render('front/evenements/viewMore.html.twig', [
-            'events' => $evenementsRepository->findAll(),
-        ]);
-    }*/
+  
     #[Route('/front/evenements/moreEvent', name: 'moreEvent')]
-public function showMore(EvenementsRepository $evenementsRepository, EntityManagerInterface $entityManager): Response
-{
-    $events = $evenementsRepository->findAll();
+public function showMore(EvenementsRepository $evenementsRepository, EntityManagerInterface $entityManager,Request $request): Response
+{    // Récupérer la catégorie à filtrer depuis la requête
+    $category = $request->query->get('categorieEvent');
 
+    // Si une catégorie est spécifiée dans la requête, filtrez les événements par cette catégorie
+    if ($category) {
+        $events = $evenementsRepository->findByCategory($category);
+    }else{
+    $events = $evenementsRepository->findAll();
+        }
     // Récupérer l'utilisateur connecté
     $user = $this->getUser();
 
@@ -49,19 +67,30 @@ public function showMore(EvenementsRepository $evenementsRepository, EntityManag
         $participationExist = $entityManager->getRepository(Participation::class)->findOneBy(['user' => $user, 'event' => $event]);
         $participationExists[$event->getIdEvent()] = $participationExist !== null;
     }
+ // Récupérer les nombres d'événements pour chaque catégorie
+ $categoryCounts = $evenementsRepository->countEventsByCategory();
 
     return $this->render('front/evenements/viewMore.html.twig', [
         'events' => $events,
         'participationExists' => $participationExists,
+        'categoryCounts' => $categoryCounts,
     ]);
 }
 
 
     #[Route('/back/evenements/show', name: 'listEvents')]
-    public function show(EvenementsRepository $evenementsRepository): Response
+    public function show(EvenementsRepository $evenementsRepository, Request $request): Response
     {
+        $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'idEvent');
+
+        $sortBy = $request->query->get('sort_by', 'idEvent');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $evenementsRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+
         return $this->render('back/evenements/allEvents.html.twig', [
-            'evenements' => $evenementsRepository->findAll(),
+            'evenements' => $items,
         ]);
     }
 

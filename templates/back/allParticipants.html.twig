@@ -380,6 +380,25 @@
     
 </p>
                   <div class="table-responsive">
+                    
+                   <form class="mb-4 px-1" action="{{ path('listPart') }}" method="get">
+    <div class="row">
+        <div class="col-lg-2">
+            <label for="search_by" class="form-label">Search By:</label>
+            <select class="form-control" id="search_by" name="search_by">
+                <option value="user">User name</option>
+                <option value="event">Event name</option>
+            </select>
+        </div>
+        <div class="mt-4 col-lg-10">
+            <div class="mt-1 input-group">
+                <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+                <button type="submit" class="btn btn-primary ml-4">Search</button>
+            </div>
+        </div>
+        
+    <button type="submit" class="btn btn-primary mt-2">Sort</button>
+</form>
 
     <table class="table">
          <thead>

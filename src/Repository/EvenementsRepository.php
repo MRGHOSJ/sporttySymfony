@@ -53,4 +53,35 @@ public function findNewEvents($limit = 3)
         ->getQuery()
         ->getResult();
 }
+
+public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('e.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('e.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
+
+public function findByCategory(string $categorie): array
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.categorieEvent = :categorie')
+        ->setParameter('categorie', $categorie)
+        ->getQuery()
+        ->getResult();
+}
+public function countEventsByCategory()
+{
+    return $this->createQueryBuilder('e')
+        ->select('e.categorieEvent, COUNT(e.idEvent) as count')
+        ->groupBy('e.categorieEvent')
+        ->getQuery()
+        ->getResult();
+}
 }
