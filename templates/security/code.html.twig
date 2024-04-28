@@ -1,7 +1,6 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}
-Reset Password{% endblock %}
+{% block title %}Reset password{% endblock %}
 
 {% block body %}
 <body>
@@ -14,33 +13,24 @@ Reset Password{% endblock %}
               <div class="brand-logo">
                 <img src="../../images/logos.svg" alt="logo">
               </div>
-              <h4>Hello! let's reset your password </h4>
-              <h6 class="font-weight-light">Enter Your Email to reset your password.</h6>
-                 {% for danger in app.flashes('danger') %}
-                  <div class="alert alert-danger">
-                      {{ danger }}
-                  </div>
-              {% endfor %}
-               <form action="{{ path('validate_email') }}" method="post" novalidate>
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">put the code.</h6>
+                <form action="{{ path('reset_password') }}" method="post" novalidate>
                                     <div class="col-12">
-                                        <label for="yourEmail" class="form-label">Your Email</label>
-                                        <input type="email" id="yourEmail" name="email" class="form-control">
-                                        <div class="invalid-feedback">Please enter a valid email address!</div>
+                                        <label for="yourCode" class="form-label">Your Code</label>
+                                        <input type="code" id="yourCode" name="code" class="form-control">
+                                        <div class="invalid-feedback">Please enter a valid Codes!</div>
                                     </div>
 
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Send</button>
+                                        <button class="btn btn-primary w-100" type="submit">check</button>
                                     </div>
                                       <div class="col-12">
                                         <p class="small mb-0">Already have an account? <a href="{{ path('app_login') }}">Log in</a></p>
                                     </div>
                                 </form>
             
-            </div> {% for danger in app.flashes('danger') %}
-                  <div class="alert alert-danger">
-                      {{ danger }}
-                  </div>
-              {% endfor %}
+            </div>
           </div>
         </div>
       </div>

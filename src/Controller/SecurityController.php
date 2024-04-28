@@ -15,6 +15,8 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 
+
+
 use Swift_Message;
 
 
@@ -25,14 +27,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class SecurityController extends AbstractController
 {
-   /* #[Route('/security', name: 'app_security')]
-    public function index(): Response
-    {
-        return $this->render('security/index.html.twig', [
-            'controller_name' => 'SecurityController',
-        ]);
-    }
-*/
+   
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -59,82 +54,15 @@ class SecurityController extends AbstractController
     #[Route(path: '/forgot', name: 'forgot')]
     public function forgotPassword(Request $request, UserRepository $userRepository,MailerInterface  $mailer, TokenGeneratorInterface  $tokenGenerator)
     {
-
-/*
-        $form = $this->createForm(ForgotPasswordType::class);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $donnees = $form->getData();
-
-
-            $user = $userRepository->findOneBy(['email'=>$donnees]);
-            if(!$user) {
-                $this->addFlash('danger','cette adresse n\'existe pas');
-                return $this->redirectToRoute("forgot");
-
-            }
-            $token = $tokenGenerator->generateToken();
-
-            try{
-                $user->setResetToken($token);
-                $entityManger = $this->getDoctrine()->getManager();
-                $entityManger->persist($user);
-                $entityManger->flush();
-
-                dump('rrrr');
-
-
-            }catch(\Exception $exception) {
-                $this->addFlash('warning','une erreur est survenue :'.$exception->getMessage());
-                return $this->redirectToRoute("app_login");
-
-
-            }
-
-            $url = $this->generateUrl('app_reset_password',array('token'=>$token),UrlGeneratorInterface::ABSOLUTE_URL);
-
-            //BUNDLE MAILER
-            $message = (new Email())
-            ->from('montaazzouz2@gmail.com')
-            ->to($user->getEmail())
-            ->subject('Mot de passe oublié')
-            ->html("<p> Bonjour</p> une demande de réinitialisation de mot de passe a été effectuée. Veuillez cliquer sur le lien suivant : " . $url);
-
-        $mailer->send($message);
-        $this->addFlash('message', 'E-mail de réinitialisation du mot de passe envoyé.');
-    }*/
-
-
         return $this->render("security/forgotPassword.html.twig");
     }
-
-    #[Route(path: '/resetpassword/{token}', name: 'app_reset_password')]
-    public function resetpassword(Request $request,string $token, UserPasswordEncoderInterface  $passwordEncoder)
+    #[Route(path: '/code', name: 'code')]
+    public function code(Request $request, UserRepository $userRepository, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['reset_token'=>$token]);
-
-        if($user == null ) {
-            $this->addFlash('danger','TOKEN INCONNU');
-            return $this->redirectToRoute("app_login");
-
-        }
-
-        if($request->isMethod('POST')) {
-            $user->setResetToken(null);
-
-            $user->setPassword($passwordEncoder->encodePassword($user,$request->request->get('password')));
-            $entityManger = $this->getDoctrine()->getManager();
-            $entityManger->persist($user);
-            $entityManger->flush();
-
-            $this->addFlash('message','Mot de passe mis à jour :');
-            return $this->redirectToRoute("app_login");
-
-        }
-        else {
-            return $this->render("security/resetPassword.html.twig",['token'=>$token]);
-
-        }
+        $email = $request->getSession()->get('reset_email');
+        $code = $request->getSession()->get('confirmation_code');
+        return $this->render("security/code.html.twig", ['email' => $email, 'code' => $code]);
     }
- 
+    
+   
 }

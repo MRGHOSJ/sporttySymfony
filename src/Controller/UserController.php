@@ -33,7 +33,51 @@ class UserController extends AbstractController
      * @Route("/back/UserAbonnement/users", name="back_users")
      */
    #[Route('/back/UserAbonnement/users', name: 'back_users')]
-   public function users(UserRepository $userRepository): Response
+   #[Route('/back/UserAbonnement/users', name: 'back_users')]
+   public function users(UserRepository $userRepository, Request $request): Response
+   {
+       $roleFilter = $request->query->get('role', 'ALL');
+       $searchTerm = $request->query->get('search', '');
+       $criteria = $request->query->get('criteria', 'nom'); // Par défaut, le critère est 'nom'
+   
+       $users = [];
+   
+       if (!empty($searchTerm)) {
+           switch ($criteria) {
+               case 'nom':
+                   $users = $userRepository->findByUsernameStartingWith($searchTerm);
+                   break;
+               case 'prenom':
+                   $users = $userRepository->findByPrenomStartingWith($searchTerm);
+                   break;
+               case 'email':
+                   $users = $userRepository->findByEmailStartingWith($searchTerm);
+                   break;
+               // Ajoutez d'autres cas pour d'autres critères si nécessaire
+               default:
+                   $users = $userRepository->findByUsernameStartingWith($searchTerm);
+           }
+       } elseif ($roleFilter === 'ALL') {
+           $users = $userRepository->findAll();
+       } else {
+           $users = $userRepository->findBy(['role' => $roleFilter]);
+       }
+   
+       $usersWithSubscription = [];
+       foreach ($users as $user) {
+           $hasSubscription = $userRepository->hasSubscription($user->getId());
+           $usersWithSubscription[$user->getId()] = $hasSubscription ? 'Completed' : 'Cancelled';
+       }
+   
+       return $this->render('back/UserAbonnement/users.html.twig', [
+           'users' => $users,
+           'usersWithSubscription' => $usersWithSubscription,
+           'selectedRole' => $roleFilter,
+       ]);
+   }
+   
+   
+ /*  public function users(UserRepository $userRepository): Response
 {
     $users = $userRepository->findAll();
 
@@ -48,7 +92,7 @@ class UserController extends AbstractController
         'usersWithSubscription' => $usersWithSubscription,
     ]);
 }
-
+*/
  
     #[Route('/back/user/delete/{id}', name: 'delete_user')]
 public function deleteUser($id): Response

@@ -39,7 +39,39 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
     
+    public function findAllSortedByRole($order = 'asc')
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->leftJoin('u.roles', 'r') // Assurez-vous que 'roles' est le bon nom de votre relation
+            ->orderBy('r.name', $order); // Assurez-vous que 'name' est le champ que vous voulez utiliser pour le tri
     
+        return $qb->getQuery()->getResult();
+    }
+    public function findByUsernameStartingWith($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.nom LIKE :username')
+            ->setParameter('username', $username.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByPrenomStartingWith($prenom)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.prenom LIKE :prenom')
+            ->setParameter('prenom', $prenom.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByEmailStartingWith($email)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.email LIKE :email')
+            ->setParameter('email', $email.'%')
+            ->getQuery()
+            ->getResult();
+    }
     
 //    /**
 //     * @return User[] Returns an array of User objects

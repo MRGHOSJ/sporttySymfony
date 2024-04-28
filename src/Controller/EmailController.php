@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Repository\UserRepository;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 class EmailController extends AbstractController
 {
     private $entityManager;
@@ -25,92 +26,117 @@ class EmailController extends AbstractController
     public function validateEmail(Request $request, MailerInterface $mailer): Response
     {
         $email = $request->request->get('email');
+        if (empty($email)) {
+           
+            
+            $this->addFlash('danger', 'the field must not be empty!');
+            return $this->redirectToRoute('forgot');
+        }
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => $email]);
+        if (!$user) {
+            $this->addFlash('danger', 'Email not found, please enter a valid email address!');
+            return $this->redirectToRoute('forgot');
+        }    
+          // Générer un code de confirmation
+    $confirmationCode = substr(md5(uniqid(rand(), true)), 0, 6);
+
+    // Enregistrer le code de confirmation dans la session
+    $request->getSession()->set('confirmation_code', $confirmationCode);
+    dump('confirm');
+    // Enregistrer l'email dans la session pour la réinitialisation du mot de passe
+    $request->getSession()->set('reset_email', $email);
+    dump('reset');
+
+    // Envoyer le code de confirmation par e-mail
+    $this->sendConfirmationEmail($email, $confirmationCode, $mailer);
+    dump('confirm12');
     
         // Supposons que vous vérifiez ici si l'e-mail est valide dans votre application
     
-        $message = (new Email())
+      /*  $message = (new Email())
             ->from('dinagharbi893@gmail.com')
-            ->to('montaazzouz2@gmail.com')
+            ->to($email)
             ->subject('Hello')
-            ->text('Bonjour');
+            ->text('Bonjour12');
     
         $mailer->send($message);
     
-        return new Response('Message sent.');
+        return new Response('Message sent.');*/
+        return $this->redirectToRoute('code', ['email' => $email, 'code' => $confirmationCode]);
+
+        dump('code23');
     }
     
     private function sendConfirmationEmail(string $email, string $confirmationCode, MailerInterface $mailer): void
     {
         $email = (new Email())
             ->from('dinagharbi893@gmail.com')
-            ->to('montaazzouz2@gmail.com')
+            ->to($email)
             ->subject('Confirmation Code')
             ->text('Your confirmation code: ' . $confirmationCode);
 
         $mailer->send($email);
     }
 
-    #[Route('/confirm-code', name: 'confirm_code', methods: ['POST'])]
-    public function confirmCode(Request $request): Response
+   
+    #[Route('/reset-password', name: 'reset_password')]
+    public function resetPassword(Request $request): Response
     {
-        $enteredCode = $request->request->get('confirmation-code');
-        $storedCode = $request->getSession()->get('confirmation_code');
-
-        if ($enteredCode === $storedCode) {
-            // Code de confirmation correct, afficher une popup de réinitialisation du mot de passe
-            return new Response('Correct confirmation code.');
-        } else {
-            // Code de confirmation incorrect, afficher une erreur
-            return new Response('Incorrect confirmation code.', 400);
+        $code = $request->request->get('code');
+    
+        $session = $request->getSession();
+        $storedCode = $session->get('confirmation_code');
+        dump('fff1');
+        if ($code !== $storedCode) {
+          
+            $this->addFlash('danger', 'Invalid code, please try again!');
+            dump('fff2');
+            return $this->redirectToRoute('forgot');
+            dump('fff3');
         }
+        $email = $session->get('reset_email');
+        dump('Email récupéré de la session : ' . $email);
+        $response = $this->render('security/reset_password.html.twig', ['email' => $email]);
+    
+        // Inspectez la réponse
+        dump($response->getContent());
+        dump($response->getStatusCode());
+        dump($response->headers->all());
+    
+        return $response;
     }
-
-    #[Route('/reset-password', name: 'reset_password', methods: ['POST'])]
-    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
-    {
-        // Récupérer l'e-mail de réinitialisation depuis la session
-        $email = $request->getSession()->get('reset_email');
-
-        // Récupérer l'utilisateur correspondant à l'e-mail depuis la base de données
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => $email]);
-
-        // Vérifier si l'utilisateur existe
-        if ($user instanceof User) {
-            // Récupérer le nouveau mot de passe depuis le formulaire
-            $newPassword = $request->request->get('new-password');
-            $confirmNewPassword = $request->request->get('confirm-new-password');
-
-            // Vérifier si les mots de passe correspondent
-            if ($newPassword !== $confirmNewPassword) {
-                return new Response('Passwords do not match.', 400);
-            }
-
-            // Encoder le nouveau mot de passe avec bcrypt
-            $hashedPassword = $passwordEncoder->encodePassword($user, $newPassword);
-
-            // Mettre à jour le mot de passe de l'utilisateur
-            $user->setPassword($hashedPassword);
-
-            // Supprimer l'email de réinitialisation de la session
-            $request->getSession()->remove('reset_email');
-
-            // Enregistrer les modifications dans la base de données
-            $this->entityManager->flush();
-
-            // Retourner une réponse indiquant que le mot de passe a été réinitialisé avec succès
-            return new Response('Password reset successfully.');
-        } else {
-            // L'utilisateur avec cet e-mail n'existe pas, retourner une erreur
-            return new Response('User not found.', 404);
-        }
-    }
-    // src/Controller/EmailController.php
-
-#[Route('/show-validate-email-form', name: 'show_validate_email_form')]
-public function showValidateEmailForm(): Response
+    
+    #[Route('/new-password', name: 'new_password', methods: ['POST'])]
+public function newPassword(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
 {
-    return $this->render('validate_email.html.twig');
+    $email = $request->getSession()->get('reset_email');
+    $user = $userRepository->findOneBy(['email' => $email]);
+
+    if (!$user) {
+        $this->addFlash('danger', 'User not found for email: ' . $email);
+        return $this->redirectToRoute('forgot');
+    }
+
+    $newPassword = $request->request->get('newPassword');
+    $confirmPassword = $request->request->get('confirmPassword');
+
+    if ($newPassword !== $confirmPassword) {
+        $this->addFlash('danger', 'Passwords do not match!');
+        return $this->redirectToRoute('forgot');
+    }
+
+    $encodedPassword = hash('sha256', $newPassword);
+
+    $user->setPassword($encodedPassword);
+
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_login');
 }
 
+
+    
+    
 }
