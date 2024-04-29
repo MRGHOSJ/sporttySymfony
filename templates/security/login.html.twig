@@ -16,8 +16,7 @@
               <h4>Hello! let's get started</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form action="{{ path('app_login') }}" method="post" novalidate>
-              <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 {% if error %}
                   <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
@@ -25,14 +24,15 @@
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
                 <label for="inputPassword">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <!-- Ajouter le champ reCAPTCHA -->
+               <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
                 <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-               <div class="col-12">
-                                        <p class="small mb-0">Don't Have an account? <a href="{{ path('registration') }}">Sign up</a></p>
-                                    </div>
-                                     <div class="col-12">
-                                        <p class="small mb-0">forgot your password? <a href="{{ path('forgot') }}">reset password</a></p>
-                                    </div>
+                <div class="col-12">
+                  <p class="small mb-0">Don't Have an account? <a href="{{ path('registration') }}">Sign up</a></p>
+                </div>
+                <div class="col-12">
+                  <p class="small mb-0">Forgot your password? <a href="{{ path('forgot') }}">Reset password</a></p>
+                </div>
               </form>
             </div>
           </div>
@@ -43,4 +43,9 @@
     <!-- page-body-wrapper ends -->
   </div>
 </body>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
