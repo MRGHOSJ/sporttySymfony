@@ -373,7 +373,8 @@
                     Cabine form layout
                   </p>
                     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
-                    {{ form_widget(form) }}
+                    {{ form_widget(form) }}                
+                    <p style="color:red !important">{{ form_errors(form) }}</p>
                     {{ form_end(form) }}
                     <button class="btn btn-light mt-4 container">Cancel</button>
                 </div>

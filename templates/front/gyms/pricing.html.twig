@@ -78,18 +78,17 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single_prising text-center">
                             <div class="prising_header">
-                            <img 
-                                src="https://img.freepik.com/vecteurs-libre/illustration-gym-domicile-degrade_23-2148819450.jpg" 
-                                style="width:150px;"/>
-
+                           <img style="width: 300px" src="{{ asset('/images/' ~ gym.image) }}" alt="image"/>
                                     <h3>{{ gym.nomSalle }}</h3>
                                     <span>{{ gym.descr }}</span>
                             </div>
                             <div class="pricing_body">
                                 <ul>
                                     <li>{{ gym.lieuSalle }}</li>
+                                    <img style="width:100px" src="{{ qrCodes[loop.index0] }}" alt="QR Code pour la vidéo {{ gym.getlienvideo() }}">
                                     <li>{{ gym.numSalle }}</li>
                                 </ul>
+                                
                             </div>
                             <div class="pricing_btn">
                                     <a href="/gyms/{{ gym.idSalle }}/cabine" class="boxed-btn3">Cabine</a>

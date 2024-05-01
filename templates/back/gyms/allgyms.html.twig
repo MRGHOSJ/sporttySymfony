@@ -369,17 +369,60 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">gym Table</h4>
-                  <p class="card-description">
+                  <p class="card-description p-4">
                     <a class="btn btn-primary text-white" href="/back/gyms/add">Add gym</a>
+                    <a href="{{ path('app_generate_pdf_gyms') }}" class="btn btn-primary">Imprimer en PDF</a>
                   </p>
+                  
                   <div class="table-responsive">
+                  
+                  <form class="mb-4 px-4" action="{{ path('app_back_gyms') }}" method="get">
+                    <div class="row">
+                    
+                      <div class="col-lg-2">
+                          <label for="search_by" class="form-label">Search By:</label>
+                          <select class="form-control" id="search_by" name="search_by">
+                              <option value="nomSalle">Nom Sale</option>
+                              <option value="descr">Description</option>
+                              <option value="lieuSalle">Lieu</option>
+                              <option value="numSalle">N° Sale</option>
+                              <option value="location">Location</option>
+                          </select>
+                      </div>
+                      <div class="mt-4 col-lg-10">
+                        <div class="mt-1 input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_by" class="form-label">Sort By:</label>
+                          <select class="form-control" id="sort_by" name="sort_by">
+                              <option value="nomSalle">Nom Sale</option>
+                              <option value="descr">Description</option>
+                              <option value="lieuSalle">Lieu</option>
+                              <option value="numSalle">N° Sale</option>
+                              <option value="location">Location</option>
+                          </select>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_order" class="form-label">Sort Order:</label>
+                          <select class="form-control" id="sort_order" name="sort_order">
+                              <option value="asc">Ascending</option>
+                              <option value="desc">Descending</option>
+                          </select>
+                      </div>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary mt-2">Sort</button>
+                  </form>
                     <table class="table">
                       <thead>
                           <tr>
-                              <th>Nom</th>
+                              <th>Nom Sale</th>
                               <th>Description</th>
                               <th>Lieu</th>
-                              <th>Numero</th>
+                              <th>N° Sale</th>
                               <th>Lien Video</th>
                               <th>Gym Image</th>
                               <th>Location</th>
@@ -405,8 +448,12 @@
                                     <label>{{ gym.getLienvideo() }}</label>
                                   </td>                                  
                                   <td>
-                                    <label>{{ gym.getImage() }}</label>
-                                  </td>                                  
+                                                        {% if gym.getImage() %}
+                                                            <img src="{{ asset('images/' ~ gym.getImage()) }}" alt="Image de la salle ">
+                                                        {% else %}
+                                                            <span>Aucune image disponible</span>
+                                                        {% endif %}
+                                                    </td>                                 
                                   <td>
                                     <label>{{ gym.getLocation() }}</label>
                                   </td>

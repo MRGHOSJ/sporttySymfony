@@ -375,6 +375,7 @@
                     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
                                 
                                 
+                    <span style="color:red !important">{{ form_errors(form) }}</span>
                     {{ form_widget(form) }}
                     {{ form_end(form) }}
                     <button class="btn btn-light mt-4 container">Cancel</button>
