@@ -14,12 +14,13 @@ use Dompdf\Dompdf;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class CabineController extends AbstractController
 {
     #[Route('/back/cabines', name: 'app_back_cabine')]
-    public function index(Request $request,CabineRepository $CabineRepository): Response
+    public function index(Request $request,CabineRepository $CabineRepository,PaginatorInterface $paginator): Response
     {
         
         $searchQuery = $request->query->get('search');
@@ -29,9 +30,16 @@ class CabineController extends AbstractController
         $sortOrder = $request->query->get('sort_order', 'asc');
 
         $items = $CabineRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+        
+        $pagination = $paginator->paginate(
+            $items,
+            $request->query->getInt('page', 1),
+            5
+        );
 
         return $this->render('back/cabines/allcabine.html.twig',[
             "cabines"=>$items,
+            "pagination"=>$pagination,
         ]);
     }
 
@@ -92,7 +100,7 @@ class CabineController extends AbstractController
 }
 
     #[Route('/back/cabines/{id}/delete', name: 'delete_cabine')]
-    public function delete(CabineRepository $cabineRepository,ManagerRegistry $mr): Response
+    public function delete(int $id,CabineRepository $cabineRepository,ManagerRegistry $mr): Response
     {
         $cabine = $cabineRepository->find($id);
         $entityManager = $mr->getManager();

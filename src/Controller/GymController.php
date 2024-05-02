@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile; 
 use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\BuilderInterface;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 class GymController extends AbstractController
 {
     #[Route('/back/gyms', name: 'app_back_gyms')]
-    public function index(Request $request,SaleDeSportRepository $SaleDeSportRepository): Response
+    public function index(Request $request,SaleDeSportRepository $SaleDeSportRepository,PaginatorInterface $paginator): Response
     {
         
         
@@ -33,9 +33,15 @@ class GymController extends AbstractController
         $sortOrder = $request->query->get('sort_order', 'asc');
 
         $items = $SaleDeSportRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+        $pagination = $paginator->paginate(
+            $items,
+            $request->query->getInt('page', 1),
+            5
+        );
 
         return $this->render('back/gyms/allgyms.html.twig',[
             "gyms"=>$items,
+            "pagination"=>$pagination,
         ]); 
         
     }

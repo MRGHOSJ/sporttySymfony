@@ -45,4 +45,18 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('p.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('p.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
 }

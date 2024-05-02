@@ -34,7 +34,6 @@ class CabineRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
 //    /**
 //     * @return Cabine[] Returns an array of Cabine objects
 //     */

@@ -1,14 +1,16 @@
-<?php
-
+<?php 
 namespace App\Entity;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AbonnementRepository;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: AbonnementRepository::class)]
 #[ORM\Table(name: "abonnement")]
+
+
+#[UniqueEntity(fields: ['type'], message: 'Type already exists')]
 class Abonnement
 {
     #[ORM\Id]
@@ -16,107 +18,101 @@ class Abonnement
     #[ORM\Column(name: "id", type: "integer", nullable: false)]
     private $id;
 
-    #[ORM\Column(name: "type", type: "string", length: 255, nullable: false)]
+
+ 
+    #[ORM\Column(name: "type", type: "string", length: 255, unique: true)]
     private $type;
 
-    #[ORM\Column(name: "prix", type: "float", precision: 10, scale: 0, nullable: false)]
+    #[ORM\Column(name: "prix", type: "float", nullable: false)]
+    #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
+#[Assert\GreaterThan(value: 0, message: "Le prix doit être supérieur à zéro.")]
     private $prix;
 
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: "User")]
-    private $idUser;
+    #[ORM\OneToMany(targetEntity: AbonnementUtilisateur::class, mappedBy: "abonnement")]
+    private $utilisateurs;
 
-    #[ORM\ManyToMany(targetEntity: "User", mappedBy: "idAbonnement")]
-    private $idUtilisateur;
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->idUtilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getPrix(): ?float
     {
         return $this->prix;
     }
-
-    public function setPrix(float $prix): static
+    
+    public function setPrix(float $prix): self
     {
         $this->prix = $prix;
-
+    
         return $this;
     }
+    public function getType(): ?string
+{
+    return $this->type;
+}
+public function getDescription(): ?string
+{
+    return $this->description;
+}
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+public function setDescription(string $description): self
+{
+    $this->description = $description;
 
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
+    return $this;
+}
+public function setType(string $type): self
+{
+    $this->type = $type;
 
-        return $this;
-    }
-
-    public function getIdUser(): ?User
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?User $idUser): static
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
+    return $this;
+}
 
     /**
-     * @return Collection<int, User>
+     * @return Collection|AbonnementUtilisateur[]
      */
-    public function getIdUtilisateur(): Collection
+    public function getUtilisateurs(): Collection
     {
-        return $this->idUtilisateur;
+        return $this->utilisateurs;
     }
 
-    public function addIdUtilisateur(User $idUtilisateur): static
+    public function addUtilisateur(AbonnementUtilisateur $utilisateur): self
     {
-        if (!$this->idUtilisateur->contains($idUtilisateur)) {
-            $this->idUtilisateur->add($idUtilisateur);
-            $idUtilisateur->addIdAbonnement($this);
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+            $utilisateur->setAbonnement($this);
         }
 
         return $this;
     }
 
-    public function removeIdUtilisateur(User $idUtilisateur): static
+    public function removeUtilisateur(AbonnementUtilisateur $utilisateur): self
     {
-        if ($this->idUtilisateur->removeElement($idUtilisateur)) {
-            $idUtilisateur->removeIdAbonnement($this);
+        if ($this->utilisateurs->removeElement($utilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($utilisateur->getAbonnement() === $this) {
+                $utilisateur->setAbonnement(null);
+            }
         }
 
         return $this;
     }
+    public function hasSubscription(Abonnement $abonnement): bool
+    {
+        foreach ($this->abonnements as $abonnementUtilisateur) {
+            if ($abonnementUtilisateur->getAbonnement() === $abonnement) {
+                return true;
+            }
+        }
 
+        return false;
+    }
 }

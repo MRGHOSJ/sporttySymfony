@@ -21,6 +21,21 @@ class ProgrammeRepository extends ServiceEntityRepository
         parent::__construct($registry, Programme::class);
     }
 
+    
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('p.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('p.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Programme[] Returns an array of Programme objects
 //     */

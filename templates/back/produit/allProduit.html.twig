@@ -275,6 +275,7 @@
       </div>
       <!-- partial -->
       <!-- partial:../../partials/_sidebar.html -->
+      
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -291,8 +292,8 @@
                 </a>
                 <div class="collapse" id="users">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/abonnements">Abonnements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
                     </ul>
                 </div>
             </li>
@@ -341,11 +342,19 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/back/events">
-                    <i class="ti-ticket menu-icon"></i>
-                    <span class="menu-title">Events</span>
+            
+           <li class="nav-item"{% if app.request.attributes.get('_route') starts with 'listEvents' %}active{% endif %}>
+                <a class="nav-link" data-toggle="collapse" href="#participation" aria-expanded="false" aria-controls="participation">
+                    <i class="ti-notepad menu-icon"></i>
+                    <span class="menu-title">Events & Participation</span>
+                    <i class="menu-arrow"></i>
                 </a>
+                <div class="collapse" id="participation">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item" ><a class="nav-link" href="{{ path('listEvents') }}">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{path('listPart')}}">Participation</a></li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/back/produits">
@@ -373,6 +382,47 @@
                     <a class="btn btn-primary text-white" href="/back/produits/add">Add Produit</a>
                   </p>
                   <div class="table-responsive">
+                  
+                  <form class="mb-4 px-1" action="{{ path('app_back_produit') }}" method="get">
+                    <div class="row">
+                    
+                      <div class="col-lg-2">
+                          <label for="search_by" class="form-label">Search By:</label>
+                          <select class="form-control" id="search_by" name="search_by">
+                              <option value="nom">Nom</option>
+                              <option value="prix">Prix</option>
+                              <option value="qte">Quantite</option>
+                              <option value="description">Description</option>
+                              <option value="categorie">Categorie</option>
+                          </select>
+                      </div>
+                      <div class="mt-4 col-lg-10">
+                        <div class="mt-1 input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+                        <button type="submit" class="btn btn-primary ml-4">Search</button>
+                        </div>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_by" class="form-label">Sort By:</label>
+                          <select class="form-control" id="sort_by" name="sort_by">
+                              <option value="nom">Nom</option>
+                              <option value="prix">Prix</option>
+                              <option value="qte">Quantite</option>
+                              <option value="description">Description</option>
+                              <option value="categorie">Categorie</option>
+                          </select>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_order" class="form-label">Sort Order:</label>
+                          <select class="form-control" id="sort_order" name="sort_order">
+                              <option value="asc">Ascending</option>
+                              <option value="desc">Descending</option>
+                          </select>
+                      </div>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary mt-2">Sort</button>
+                  </form>
                     <table class="table">
                       <thead>
                           <tr>
@@ -385,7 +435,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          {% for produit in produits %}
+                          {% for produit in pagination %}
                               <tr>
                                   <td><strong>{{ produit.getNom() }}</strong></td>
                                   <td>
@@ -402,7 +452,8 @@
                                     <label class="badge badge-danger container">
                                       Out Of Stock ({{ produit.getQte() }})
                                     </label>
-                                  {% elseif produit.getQte() < 10 %}
+                                  {% elseif produit.getQte() <= 10 %}
+
                                     <label class="badge badge-warning container">
                                       Out Of Stock Soon ({{ produit.getQte() }})
                                     </label>
@@ -426,6 +477,25 @@
                       </tbody>
                   </table>
 
+                <div class="navigation" style="display:flex;margin-lef:auto;margin-right:auto">
+                    {% if pagination.currentPageNumber != 1 %}
+                        <a href="{{ path('app_back_produit', {'page': 1}) }}" class="page-link">&laquo; First</a>
+                        <a href="{{ path('app_back_produit', {'page': pagination.currentPageNumber - 1}) }}" class="page-link">&lsaquo; Previous</a>
+                    {% endif %}
+
+                    {% for page in 1..pagination.pageCount %}
+                        {% if page == pagination.currentPageNumber %}
+                            <span class="page-link current">{{ page }}</span>
+                        {% else %}
+                            <a href="{{ path('app_back_produit', {'page': page}) }}" class="page-link">{{ page }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if pagination.currentPageNumber != pagination.pageCount %}
+                        <a href="{{ path('app_back_produit', {'page': pagination.currentPageNumber + 1}) }}" class="page-link">Next &rsaquo;</a>
+                        <a href="{{ path('app_back_produit', {'page': pagination.pageCount}) }}" class="page-link">Last &raquo;</a>
+                    {% endif %}
+                </div>
                   </div>
                 </div>
               </div>

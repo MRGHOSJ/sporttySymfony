@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\ReclamationRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,9 +11,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class BackController extends AbstractController
 {
     #[Route('/back', name: 'app_back')]
-    public function index(): Response
+    public function index(ReclamationRepository $reclamationRepository,UserRepository $userRepository): Response
     {
-        return $this->render('back/index.html.twig');
+        flash()->addSuccess('Connected As An Administrator Successfully');
+
+       // Récupérer les statistiques par type de réclamation
+       $statistics = $reclamationRepository->countReclamationsByType();
+       // Calculer le total des réclamations
+      $totalReclamations = array_sum($statistics);
+
+        $numberOfClients = $userRepository->countAllClients(); // Assumez que countAllClients est une méthode de votre repository qui compte tous les clients
+        return $this->render('back/index.html.twig', ['numberOfClients' => $numberOfClients,
+        'statistics' => $statistics,
+        'totalReclamations' => $totalReclamations,]);
     }
     #[Route('/login', name: 'app_login')]
     public function login(): Response

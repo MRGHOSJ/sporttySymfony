@@ -34,6 +34,19 @@ class SaleDeSportRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('s.'.$searchBy.' LIKE :searchQuery') 
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('s.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
 //    /**
 //     * @return SaleDeSport[] Returns an array of SaleDeSport objects
 //     */

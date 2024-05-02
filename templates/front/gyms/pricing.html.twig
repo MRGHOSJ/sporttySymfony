@@ -78,7 +78,11 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single_prising text-center">
                             <div class="prising_header">
-                           <img style="width: 300px" src="{{ asset('/images/' ~ gym.image) }}" alt="image"/>
+                                {% if 'http://' in gym.image or 'https://' in gym.image %}
+                                    <img style="width: 300px" src="{{ gym.image }}" alt="image"/>
+                                {% else %}
+                                    <img style="width: 300px" src="{{ asset('/images/' ~ gym.image) }}" alt="image"/>
+                                {% endif %}       
                                     <h3>{{ gym.nomSalle }}</h3>
                                     <span>{{ gym.descr }}</span>
                             </div>

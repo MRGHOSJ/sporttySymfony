@@ -21,6 +21,21 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
+    
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('c.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('c.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Cours[] Returns an array of Cours objects
 //     */
@@ -45,4 +60,32 @@ class CoursRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function countCoursByType(): array
+    {
+        $types = [
+            'Individuel',
+            'groupe',
+            
+        ];
+
+        $counts = [];
+
+        foreach ($types as $type) {
+            $counts[$type] = $this->createQueryBuilder('c')
+                ->select('COUNT(c.idCours)')
+                ->where('c.type = :type')
+                ->setParameter('type', $type)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+
+        return $counts;
+    }
+
+
+
+
+
+
 }
