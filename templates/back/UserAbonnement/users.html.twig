@@ -26,8 +26,8 @@
     <div class="input-group">
         <input type="text" class="form-control mr-3" id="navbar-search-input" name="search" placeholder="Search now" aria-label="search" aria-describedby="search">
         <select class="custom-select" name="criteria">
-            <option value="nom">Nom</option>
-            <option value="prenom">Prénom</option>
+            <option value="nom">First Name</option>
+            <option value="prenom">Last Name</option>
             <option value="email">Email</option>
             <!-- Ajoutez d'autres options pour d'autres critères si nécessaire -->
         </select>
@@ -271,7 +271,7 @@
                                                             <th>role</th>
                                                             <th>Abonnements</th>
                                                             <th>Action</th>
-                                                            
+                                                              <th>Image</th>
                                                           </tr>  
                                                    </thead>
                                                     <tbody>
@@ -283,12 +283,20 @@
                                                                             <td>{{ user.password }}</td>
                                                                            <td>{{ user.role }}</td>
                                                                            <td>
+                                                                         
             {% if user.abonnements is not empty %}
                 <div class="badge badge-success">subscriber</div>
             {% else %}
                 <div class="badge badge-danger">Cancelled</div>
             {% endif %}
         </td>
+         <td>
+                                                        {% if user.getImageUser() %}
+                                                            <img src="{{ asset('images/' ~ user.getImageUser()) }}" alt="Image de user ">
+                                                        {% else %}
+                                                            <span>Aucune image disponible</span>
+                                                        {% endif %}
+                                                    </td>  
                                                                                   <td>  <a href="{{ path('delete_user', {'id': user.id}) }}">🗑️ </a> 
                                                                                       <a href="{{ path('update_user', {'id': user.id}) }}"> ✏️</a>
                                                                                 

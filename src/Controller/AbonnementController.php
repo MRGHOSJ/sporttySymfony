@@ -11,7 +11,17 @@ use App\Form\AbonnementType;
 use Symfony\Component\HttpFoundation\Request;
 
 class AbonnementController extends AbstractController
-{
+{#[Route('/back/stat1', name: 'stat1')]
+    public function showStatistics(ReclamationRepository $reclamationRepository): Response
+   {
+       // Récupérer les statistiques par type de réclamation
+       $statistics = $reclamationRepository->countReclamationsByType();
+
+       // Rendre la vue avec les statistiques
+       return $this->render('back/index.html.twig', [
+           'statistics' => $statistics,
+       ]);
+   }
 
     #[Route('/back/UserAbonnement/abonnements', name: 'back_abonnement')]
     public function abonnemets(): Response

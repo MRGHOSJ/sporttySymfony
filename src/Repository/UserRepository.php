@@ -25,7 +25,7 @@ class UserRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->select('COUNT(u.id)')
             ->where('u.role = :role')
-            ->setParameter('role', 'ADHERANT') // Remplacez 'ADHERANT' par le rôle réel des adhérents
+            ->setParameter('role', 'ADHERANT')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -42,8 +42,9 @@ class UserRepository extends ServiceEntityRepository
     public function findAllSortedByRole($order = 'asc')
     {
         $qb = $this->createQueryBuilder('u');
-        $qb->leftJoin('u.roles', 'r') // Assurez-vous que 'roles' est le bon nom de votre relation
-            ->orderBy('r.name', $order); // Assurez-vous que 'name' est le champ que vous voulez utiliser pour le tri
+        $qb->leftJoin('u.roles', 'r') 
+        
+            ->orderBy('r.name', $order); 
     
         return $qb->getQuery()->getResult();
     }

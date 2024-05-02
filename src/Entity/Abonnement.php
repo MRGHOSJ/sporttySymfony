@@ -105,5 +105,14 @@ public function setType(string $type): self
 
         return $this;
     }
+    public function hasSubscription(Abonnement $abonnement): bool
+    {
+        foreach ($this->abonnements as $abonnementUtilisateur) {
+            if ($abonnementUtilisateur->getAbonnement() === $abonnement) {
+                return true;
+            }
+        }
 
+        return false;
+    }
 }

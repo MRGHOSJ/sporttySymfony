@@ -32,7 +32,7 @@ class UserController extends AbstractController
    /**
      * @Route("/back/UserAbonnement/users", name="back_users")
      */
-   #[Route('/back/UserAbonnement/users', name: 'back_users')]
+  
    #[Route('/back/UserAbonnement/users', name: 'back_users')]
    public function users(UserRepository $userRepository, Request $request): Response
    {
@@ -77,22 +77,7 @@ class UserController extends AbstractController
    }
    
    
- /*  public function users(UserRepository $userRepository): Response
-{
-    $users = $userRepository->findAll();
-
-    $usersWithSubscription = [];
-    foreach ($users as $user) {
-        $hasSubscription = $userRepository->hasSubscription($user->getId());
-        $usersWithSubscription[$user->getId()] = $hasSubscription ? 'Completed' : 'Cancelled';
-    }
-
-    return $this->render('back/UserAbonnement/users.html.twig', [
-        'users' => $users,
-        'usersWithSubscription' => $usersWithSubscription,
-    ]);
-}
-*/
+ 
  
     #[Route('/back/user/delete/{id}', name: 'delete_user')]
 public function deleteUser($id): Response
@@ -248,10 +233,9 @@ public function profile(Request $request, Security $security, $id): Response
     $userRepository = $entityManager->getRepository(User::class);
     $user = $userRepository->find($id);
 
-    // Créer le formulaire en utilisant le UserType que vous avez créé
+
     $form = $this->createForm(UserfrontType::class, $user);
 
-    // Traiter le formulaire soumis
     $form->handleRequest($request);
 
     
@@ -260,7 +244,7 @@ public function profile(Request $request, Security $security, $id): Response
         $user->setPassword(hash('sha256', $user->getPassword())); // Hacher le mot de passe avec SHA-256
         $entityManager->flush();
 
-        // Rediriger l'utilisateur vers une autre page, par exemple son profil
+        // Rediriger l'utilisateur vers  son profil
         return $this->redirectToRoute('home_users', ['id' => $user->getId()]);
     }
 

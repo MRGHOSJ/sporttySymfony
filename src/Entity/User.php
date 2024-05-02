@@ -238,6 +238,10 @@ private $abonnements;
         $this->reset_token = $reset_token;
     }
 
-
+    public function hasSubscription(): bool
+    {
+        return !$this->abonnements->isEmpty();
+    }
+    
 
 }
