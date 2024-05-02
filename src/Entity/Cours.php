@@ -38,6 +38,7 @@ class Cours
     #[ORM\Column(name: "lienVideo", type: "string", length: 255, nullable: false)]
     private $lienvideo;
 
+<<<<<<< Updated upstream
  
    /* #[ORM\ManyToOne(targetEntity: Programme::class, inversedBy: "cours")]
     #[ORM\JoinColumn(name: "id_programme", referencedColumnName: "id")]
@@ -46,6 +47,11 @@ class Cours
      #[ORM\ManyToOne(targetEntity: "Programme")]
     #[ORM\JoinColumn(name: "id_programme")]
     private $Programme;
+=======
+    #[ORM\ManyToOne(targetEntity: "Programme")]
+    #[ORM\JoinColumn(name:"id_programme", referencedColumnName:"id", nullable:false)]
+    private $idProgramme;
+>>>>>>> Stashed changes
 
     public function getIdCours(): ?int
     {

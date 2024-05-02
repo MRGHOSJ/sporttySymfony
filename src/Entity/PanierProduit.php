@@ -11,12 +11,11 @@ class PanierProduit
 {
     #[ORM\Id]
     #[ORM\Column(name: "panier_id", type: "integer", nullable: false)]
-    #[ORM\GeneratedValue(strategy: "NONE")]
+
     private $panierId;
 
     #[ORM\Id]
     #[ORM\Column(name: "produit_id", type: "integer", nullable: false)]
-    #[ORM\GeneratedValue(strategy: "NONE")]
     private $produitId;
 
     #[ORM\Column(name: "quantite", type: "integer", nullable: false)]
@@ -26,6 +25,13 @@ class PanierProduit
     {
         return $this->panierId;
     }
+    
+    public function setPanierId(?int $panierId)
+    {
+        $this->panierId = $panierId;
+
+    }
+    
 
     public function getProduitId(): ?int
     {
@@ -42,5 +48,11 @@ class PanierProduit
         $this->quantite = $quantite;
 
         return $this;
+    }
+
+    public function setProduitId(int $produitId)
+    {
+        $this->produitId = $produitId;
+
     }
 }

@@ -11,7 +11,6 @@ use App\Repository\PanierRepository;
 class Panier
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "id", type: "integer", nullable: false)]
     private $id;
 
@@ -21,6 +20,13 @@ class Panier
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getIdUser(): ?int

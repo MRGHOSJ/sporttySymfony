@@ -1,10 +1,10 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}Program!{% endblock %}
+{% block title %}Hello Cours!{% endblock %}
 
 {% block body %}
 <body>
-   <div class="container-scroller">
+  <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -317,12 +317,12 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item "active>
+            <li class="nav-item active">
                 <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Programmes & Cours</span>
@@ -331,7 +331,7 @@
                 <div class="collapse" id="programs">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="/back/programmes">Programmes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="/back/cours">Cours</a></li>
                     </ul>
                 </div>
             </li>
@@ -341,14 +341,14 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="/back/events">
                     <i class="ti-ticket menu-icon"></i>
                     <span class="menu-title">Events</span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="/back/produit">
+            <li class="nav-item">
+                <a class="nav-link" href="/back/produits">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
                 </a>
@@ -361,64 +361,147 @@
             </li>
         </ul>
       </nav>
-      
- <!-- partial form -->
+      <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-<<<<<<< Updated upstream:templates/back/programme/edit.html.twig
-                  <h4 class="card-title">New Program</h4>
-                  <p class="card-description">Form Program</p>
-                  {{ form_start(form) }}
-                  <div class="form-group">
-                    {{ form_label(form.nom, 'Name ') }}
-                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                  </div>
-                  <div class="form-group">
-                    {{ form_label(form.description, 'Description') }}
-                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                  </div>
-                  
-                  <div class="form-group">
-                    {{ form_label(form.duree, 'Duration') }}
-                    {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
-                 
-                 
-
-                  
-
-
-                 
-                  <button type="submit" class="btn btn-primary">Save</button>
-                   <a href="{{ path('app_programme_show') }}" class="btn btn-secondary">Cancel</a>
-                  {{ form_end(form) }}
-=======
-                  <h4 class="card-title">Cabine form</h4>
+                  <h4 class="card-title">Cours Table</h4>
                   <p class="card-description">
-                    Cabine form layout
+                    <a class="btn btn-primary text-white" href="/back/Cours/add">Add Cours</a>
+                    <a class="btn btn-primary text-white" href="/back/pdf">Generate PDF</a
                   </p>
-                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                    <button class="btn btn-light mt-4 container">Cancel</button>
->>>>>>> Stashed changes:templates/back/cabines/formcabine.html.twig
+                  <div class="table-responsive">
+                  
+                  <form class="mb-4 px-1" action="{{ path('app_back_Cours') }}" method="get">
+                    <div class="row">
+                    
+                      <div class="col-lg-2">
+                          <label for="search_by" class="form-label">Search By:</label>
+                          <select class="form-control" id="search_by" name="search_by">
+                              <option value="nom">Nom</option>
+                              <option value="coach">Coach</option>
+                              <option value="jours">Jours</option>
+                              <option value="duree">Duree</option>
+                              <option value="type">Type</option>
+                              <option value="prix">Prix</option>
+                          </select>
+                      </div>
+                      <div class="mt-4 col-lg-10">
+                        <div class="mt-1 input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
+                        <button type="submit" class="btn btn-primary ml-4">Search</button>
+                        </div>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_by" class="form-label">Sort By:</label>
+                          <select class="form-control" id="sort_by" name="sort_by">
+                              <option value="nom">Nom</option>
+                              <option value="coach">Coach</option>
+                              <option value="jours">Jours</option>
+                              <option value="duree">Duree</option>
+                              <option value="type">Type</option>
+                              <option value="prix">Prix</option>
+                          </select>
+                      </div>
+                      <div class="mt-2 col-lg-2">
+                          <label for="sort_order" class="form-label">Sort Order:</label>
+                          <select class="form-control" id="sort_order" name="sort_order">
+                              <option value="asc">Ascending</option>
+                              <option value="desc">Descending</option>
+                          </select>
+                      </div>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary mt-2">Sort</button>
+                  </form>
+                    <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+  
+                              <th>Coach</th>
+                              <th>Days</th>
+                              <th>Duration</th>
+                                  <th>Type</th>
+                              <th>Price</th>
+                            
+                              <th>N° Programme </th>
+                              <th>Image</th>
+                                 <th>linkVideo</th>
+                              <th>Tools</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for cour in Cours %}
+                              <tr>
+                                  <td><strong>{{ cour.nom }}</strong></td>
+                                
+                                  <td>
+                                      <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                          <strong>{{ cour.coach }}</strong>
+                                      </p>
+                                  </td>                                  
+                                  <td>
+                                    <label class="badge badge-info">{{ cour.jours }}</label>
+                                  </td>                       
+                                  <td>
+                                    <label class="badge badge-info">{{ cour.duree }}</label>
+
+                                  </td> 
+                                   <td>
+                                    <label class="badge badge-info">{{ cour.type }}</label>
+                                  </td>        
+                                    <td>
+                                    <label class="badge badge-success">
+                                      {{ cour.prix }} DT
+                                    </label>
+                                  </td>
+                                 <td>
+                                   {% if cour.idProgramme is not null %}
+                <label class="badge badge-info">{{ cour.idProgramme.nom }}</label>
+            {% else %}
+                <label class="badge badge-danger">No Program</label>
+            {% endif %}
+                                  </td>   
+
+                                  <td>
+                                    <label class="badge badge-info">{{ cour.image }}</label>
+                                  </td>   
+                                  <td>
+                                    <label class="badge badge-info">{{ cour.lienVideo }}</label>
+                                  </td>
+                                  <td>
+                                      <a href="{{ path('update_Cours', {'id': cour.idCours }) }}">✏️</a>
+                                      <a href="{{ path('delete_Cours', {'id': cour.idCours }) }}">🗑️</a>
+                                  </td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
+        <!-- partial -->
       </div>
+      <!-- main-panel ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
 </body>
 {% endblock %}
+

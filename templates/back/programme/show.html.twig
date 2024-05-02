@@ -370,6 +370,7 @@
                 <div class="card-body">
                  <h4 class="card-title">Program</h4>
                   <p class="card-description">
+<<<<<<< Updated upstream:templates/back/programme/show.html.twig
     <a href="{{ path('app_programme_new') }}" class="btn btn-info" style="background-color: #5bc0de;">Add</a>
 </p>
                   <div class="table-responsive">
@@ -408,6 +409,16 @@
                   </table>
 
      </div>
+=======
+                    Gym form layout
+                  </p>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
+                                
+                                
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                    <button class="btn btn-light mt-4 container">Cancel</button>
+>>>>>>> Stashed changes:templates/back/gyms/formgyms.html.twig
                 </div>
               </div>
             </div>
