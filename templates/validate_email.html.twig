@@ -1,0 +1,17 @@
+{# templates/validate_email.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Email</title>
+</head>
+<body>
+    <form action="{{ path('validate_email') }}" method="post">
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Validate Email</button>
+    </form>
+</body>
+</html>

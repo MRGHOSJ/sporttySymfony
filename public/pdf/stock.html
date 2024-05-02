@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            margin: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="headerSection">
+                <div class="logoAndName">
+                    <h1>Restaurant KoolArt</h1>
+                </div>
+                <div class="reservationDetails">
+                    <h2>Reservation</h2>
+                    <p>{today}</p>
+                </div>
+            </div>
+            <hr />
+            <div class="headerSection">
+                <div>
+                    <h3>Reservation for</h3>
+                    <p>
+                        <b>Customer Name</b><br>
+                        123 Main Street<br>
+                        Anytown, USA 12345<br>
+                        <a href="mailto:customer@example.com">customer@example.com</a><br>
+                        555.123.4567
+                    </p>
+                </div>
+                <div>
+                    <h3>Date & Time</h3>
+                    <p><b>{dateReservation}</b></p>
+                    <h3>Party Size</h3>
+                    <p><b>{nbrPerson} people</b></p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Table Description</th>
+                        <th>Number of People</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b>Table for {nbrPerson}</b><br>
+                            A comfortable booth by the window.
+                        </td>
+                        <td>{nbrPerson}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <a href="https://restaurantKoolArt.com">restaurantKoolArt.com</a><br>
+            <a href="mailto:info@restaurantKoolArt.com">info@restaurantKoolArt.com</a><br>
+            <span>555.789.0123</span><br>
+            <span>123 Main Street, Anytown, USA 12345</span>
+        </div>
+    </footer>
+</body>
+</html>
