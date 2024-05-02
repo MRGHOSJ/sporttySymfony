@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+
 class CabineController extends AbstractController
 {
     #[Route('/back/cabines', name: 'app_back_cabine')]
@@ -29,7 +30,6 @@ class CabineController extends AbstractController
         $sortOrder = $request->query->get('sort_order', 'asc');
 
         $items = $CabineRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
-
         
         $pagination = $paginator->paginate(
             $items,

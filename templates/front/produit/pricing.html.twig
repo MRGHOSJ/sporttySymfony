@@ -132,6 +132,7 @@
             <br/>
                 <div class="row">
                     {% for produit in pagination %}
+
                         <div class="col-lg-4 col-md-6">
                             <div class="single_prising text-center">
                                 <div class="prising_header">
@@ -150,6 +151,7 @@
                                     </center>
                                     <br/>
                                     <p >{{produit.getDescription()}}</p>
+
                                     <p class="pt-4">Category: <strong>{{ produit.getCategorie() }}</strong></p>
                                 </div>
                                 <div class="pricing_btn">
@@ -157,6 +159,7 @@
                                         <a class="badge badge-danger text-white" style="padding:20px 40px;">Out Of Stock</a>
                                     {% else %}
                                         <a href="/produit/panier/add/{{produit.getId()}}" class="boxed-btn3">Buy Now</a>
+
                                     {% endif %}
                                     
                                 </div>

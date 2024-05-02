@@ -21,7 +21,6 @@ class CabineRepository extends ServiceEntityRepository
         parent::__construct($registry, Cabine::class);
     }
 
-
     public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
     {
         $qb = $this->createQueryBuilder('c');

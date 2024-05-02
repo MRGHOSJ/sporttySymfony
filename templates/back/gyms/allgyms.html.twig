@@ -275,7 +275,6 @@
       </div>
       <!-- partial -->
       <!-- partial:../../partials/_sidebar.html -->
-      
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -294,6 +293,7 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
+
                     </ul>
                 </div>
             </li>
@@ -355,6 +355,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{path('listPart')}}">Participation</a></li>
                     </ul>
                 </div>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/back/produits">
@@ -440,6 +441,7 @@
                       </thead>
                       <tbody>
                           {% for gym in pagination %}
+
                               <tr>
                                   <td><strong>{{ gym.getNomSalle() }}</strong></td>
                                   <td>
@@ -494,6 +496,7 @@
                         <a href="{{ path('app_back_gyms', {'page': pagination.pageCount}) }}" class="page-link">Last &raquo;</a>
                     {% endif %}
                 </div>
+
                   </div>
                 </div>
               </div>

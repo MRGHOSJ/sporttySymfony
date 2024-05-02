@@ -33,6 +33,7 @@ class Produit
 
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Length(min: 3)]
     private $description;
 
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: false)]

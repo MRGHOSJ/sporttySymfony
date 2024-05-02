@@ -296,5 +296,16 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_front_produit');
     }
+
+
+
+    
+    #[Route('/produit', name: 'app_front_produit')]
+    public function produitFront(ProduitRepository $produitRepository): Response
+    {
+        return $this->render('front/produit/pricing.html.twig',[
+            'produits'=>$produitRepository->findAll(),
+        ]);
+    }
     
 }

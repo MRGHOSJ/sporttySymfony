@@ -33,8 +33,6 @@ class GymController extends AbstractController
         $sortOrder = $request->query->get('sort_order', 'asc');
 
         $items = $SaleDeSportRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
-        
-        
         $pagination = $paginator->paginate(
             $items,
             $request->query->getInt('page', 1),
