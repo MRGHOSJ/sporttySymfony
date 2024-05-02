@@ -309,7 +309,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" data-toggle="collapse" href="#sales" aria-expanded="false" aria-controls="sales">
                     <i class="ti-basketball menu-icon"></i>
                     <span class="menu-title">Gyms & Cabines</span>
@@ -317,7 +317,7 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
@@ -347,7 +347,7 @@
                     <span class="menu-title">Events</span>
                 </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/back/produits">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
@@ -362,71 +362,21 @@
         </ul>
       </nav>
       <!-- partial -->
-      <div class="main-panel">
+      <div class="main-panel">        
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Produit Table</h4>
+                  <h4 class="card-title">Cabine form</h4>
                   <p class="card-description">
-                    <a class="btn btn-primary text-white" href="/back/produits/add">Add Produit</a>
+                    Cabine form layout
                   </p>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Nom</th>
-                              <th>Prix</th>
-                              <th>Quantite</th>
-                              <th>Description</th>
-                              <th>Categorie</th>
-                              <th>Tools</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for produit in produits %}
-                              <tr>
-                                  <td><strong>{{ produit.getNom() }}</strong></td>
-                                  <td>
-                                    <label class="badge badge-success">
-                                      {{ produit.getPrix() }} DT
-                                    </label>
-                                  </td>
-                                  <td>
-                                  {% if produit.getQte() > 10 %}
-                                    <label class="badge badge-success container">
-                                      In Stock ({{ produit.getQte() }})
-                                    </label>
-                                  {% elseif produit.getQte() == 0 %}
-                                    <label class="badge badge-danger container">
-                                      Out Of Stock ({{ produit.getQte() }})
-                                    </label>
-                                  {% elseif produit.getQte() < 10 %}
-                                    <label class="badge badge-warning container">
-                                      Out Of Stock Soon ({{ produit.getQte() }})
-                                    </label>
-                                  {% endif %}
-                                    
-                                  </td>
-                                  <td>
-                                      <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                          <strong>{{ produit.getDescription() }}</strong>
-                                      </p>
-                                  </td>                                  
-                                  <td>
-                                    <label class="badge badge-info">{{ produit.getCategorie() }}</label>
-                                  </td>
-                                  <td>
-                                      <a href="{{ path('update_product', {'id': produit.getId()}) }}">✏️</a>
-                                      <a href="{{ path('delete_product', {'id': produit.getId()}) }}">🗑️</a>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-
-                  </div>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
+                    {{ form_widget(form) }}                
+                    <p style="color:red !important">{{ form_errors(form) }}</p>
+                    {{ form_end(form) }}
+                    <button class="btn btn-light mt-4 container">Cancel</button>
                 </div>
               </div>
             </div>

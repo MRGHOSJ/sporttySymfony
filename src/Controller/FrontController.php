@@ -22,7 +22,7 @@ class FrontController extends AbstractController
     public function blog(): Response
     {
         return $this->render('front/pages/blog.html.twig');
-    }
+    }       
     #[Route('/contact', name: 'app_front_contact')]
     public function contact(): Response
     {

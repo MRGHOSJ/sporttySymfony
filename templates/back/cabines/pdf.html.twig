@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des cabines </title>
+    <style>
+        /* Styles CSS pour le PDF */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+<h1>Liste des cabines</h1>
+<table>
+    <thead>
+    <tr>
+        <th>nomCabine</th>
+        <th>capacite</th>
+        <th>hasVr</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for cabine in cabine  %}
+        <tr>
+            <td>{{ cabine.getNomCabine()}}</td>
+            <td>{{ cabine.getCapacite()}}</td>
+            <td>{{ cabine.isHasVr()}}</td>
+
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
