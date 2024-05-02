@@ -117,7 +117,7 @@ public function deleteEvent(ProgrammeRepository $programmeRepository, EntityMana
 }
 =======
 use App\Form\ProgrammeType;
-use App\service\TwilioService;
+
 use App\Repository\ProgrammeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -215,7 +215,7 @@ class ProgrammeController extends AbstractController
     }
 
 
-
+/*
     #[Route('/front/Programme/sendSms/{id}', name: 'app_front_Programme_sendSms')]
     public function sendSMS(int $id, ProgrammeRepository $programmeRepository): Response
     {
@@ -231,7 +231,7 @@ class ProgrammeController extends AbstractController
             return $this->redirectToRoute('app_front_Programme');
         } else {
             return new Response('Failed to send SMS.');
-        }
+        }*/
     }
 
     
