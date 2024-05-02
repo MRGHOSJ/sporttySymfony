@@ -45,6 +45,7 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+<<<<<<< Updated upstream
 public function getReclamationCountByNom(): array
     {
         return $this->createQueryBuilder('r')
@@ -53,6 +54,44 @@ public function getReclamationCountByNom(): array
         ->getQuery()
         ->getResult();
     }
+=======
+/*
+public function countReclamationsByType(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.nom, COUNT(r.id) as count')
+            ->groupBy('r.nom')
+            ->getQuery()
+            ->getResult();
+    }*/
+    public function countReclamationsByType(): array
+    {
+        $types = [
+            'Payment Issue',
+            'Equipment Problem',
+            'Discomfort in Facilities',
+            'Security Issue',
+            'Reservation Issue',
+            'Capacity Issue in Class',
+            'Improvement Suggestions',
+            'Others'
+        ];
+
+        $counts = [];
+
+        foreach ($types as $type) {
+            $counts[$type] = $this->createQueryBuilder('r')
+                ->select('COUNT(r.id)')
+                ->where('r.nom = :type')
+                ->setParameter('type', $type)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+
+        return $counts;
+    }
+    
+>>>>>>> Stashed changes
     public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
     {
         $qb = $this->createQueryBuilder('r');

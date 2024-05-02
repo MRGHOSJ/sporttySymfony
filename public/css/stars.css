@@ -1,0 +1,11 @@
+/* Style for all stars */
+.star {
+    color: gray; /* Default color of stars */
+    cursor: pointer;
+}
+
+/* Change color when hovering over a star or any preceding star */
+.star:hover,
+.star:hover ~ .star {
+    color: gold; /* Color of stars during hover */
+}

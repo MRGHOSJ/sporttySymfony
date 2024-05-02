@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
+<<<<<<< Updated upstream
+=======
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+>>>>>>> Stashed changes
 
 
 class ReclamationFrontType extends AbstractType
@@ -49,6 +53,7 @@ class ReclamationFrontType extends AbstractType
                     ]) 
                 ]
                 ])
+<<<<<<< Updated upstream
                 ->add('nbrEtoile', ChoiceType::class, [
                     'choices' => [
                         'Rate Us 1/5' => 'Rate Us 1/5',
@@ -69,6 +74,13 @@ class ReclamationFrontType extends AbstractType
                         $stars = str_repeat('★', $rating) . str_repeat('☆', 5 - $rating);
                         return $stars;
                     },
+=======
+                ->add('nbrEtoile', TextType::class, [
+                    'label' => 'Rate Us',
+                    'constraints' => [
+                        new NotBlank(['message' => 'Please select a rating.']),
+                    ],
+>>>>>>> Stashed changes
                 ]);
                 
                 

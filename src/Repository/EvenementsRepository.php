@@ -68,6 +68,21 @@ public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder
         return $qb->getQuery()->getResult();
     }
 
+<<<<<<< Updated upstream
+=======
+    public function findBySearch($searchQuery)
+{
+    $qb = $this->createQueryBuilder('e');
+
+    if ($searchQuery) {
+        $qb->andWhere('e.nomEvent LIKE :searchQuery')
+           ->setParameter('searchQuery', '%'.$searchQuery.'%');
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
+>>>>>>> Stashed changes
 public function findByCategory(string $categorie): array
 {
     return $this->createQueryBuilder('e')

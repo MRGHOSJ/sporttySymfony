@@ -87,6 +87,7 @@
     <!-- ================ contact section start ================= -->
     <section class="contact-section">
             <div class="container">
+<<<<<<< Updated upstream
                 <div class="d-none d-sm-block mb-5 pb-4">
                     <div id="map" style="height: 480px; position: relative; overflow: hidden;"> </div>
                     <script>
@@ -129,6 +130,8 @@
                 </div>
     
     
+=======
+>>>>>>> Stashed changes
                 <div class="row">
                     <div class="col-12">
                         <h2 class="contact-title">Get in Touch</h2>
@@ -153,6 +156,7 @@
                    {% endif %}
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="col-md-6">
         <div class="form-group">
             <label for="Category" class="form-label">Rate Us </label>
@@ -171,6 +175,51 @@
 </div>
 {{ form_end(form) }}
 
+=======
+     <div class="col-md-6">
+        <div class="form-group">
+            <label for="Category" class="form-label">Rate Us</label>
+            <div class="rating" id="star-rating">
+                <!-- Affichage des étoiles -->
+                <div class="stars" data-rating="{{ form.nbrEtoile.vars.value }}">
+                    <i class="star fas fa-star" data-index="1"></i>
+                    <i class="star fas fa-star" data-index="2"></i>
+                    <i class="star fas fa-star" data-index="3"></i>
+                    <i class="star fas fa-star" data-index="4"></i>
+                    <i class="star fas fa-star" data-index="5"></i>
+                </div>
+                <!-- Affichage de la notation -->
+                <span id="rating-label">Rate Us {{ form.nbrEtoile.vars.value }}/5</span>
+                <!-- Champ caché pour stocker la valeur -->
+                {{ form_widget(form.nbrEtoile, {'attr': {'style': 'display: none;'}})|raw }}
+            </div>
+        </div>
+                <div class="form-group mt-3">
+            <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+        </div>
+
+    </div>
+</div>
+{{ form_end(form) }}
+<!-- Script pour gérer la notation par étoiles -->
+<script>
+    const stars = document.querySelectorAll('.stars .star');
+
+    stars.forEach(star => {
+        star.addEventListener('click', (event) => {
+            const selectedIndex = parseInt(event.target.getAttribute('data-index'));
+            const starsContainer = event.target.parentNode;
+            starsContainer.setAttribute('data-rating', selectedIndex);
+
+            const hiddenInput = document.querySelector('#{{ form.nbrEtoile.vars.id }}');
+            hiddenInput.value = selectedIndex; // Enregistrer la valeur sélectionnée dans le champ caché
+
+            const ratingLabel = document.querySelector('#rating-label');
+            ratingLabel.textContent = `Rate Us ${selectedIndex}/5`; // Mettre à jour le libellé de la notation
+        });
+    });
+</script>
+>>>>>>> Stashed changes
 
 
 

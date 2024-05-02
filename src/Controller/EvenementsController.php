@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class EvenementsController extends AbstractController
 {   
    
+<<<<<<< Updated upstream
     #[Route('/front/evenements/search', name: 'evenement_search')]
 public function search(Request $request, EvenementsRepository $repository): JsonResponse
 {
@@ -37,6 +38,8 @@ public function search(Request $request, EvenementsRepository $repository): Json
 
 
 
+=======
+>>>>>>> Stashed changes
     #[Route('/showFront', name: 'EventsF')]
     public function showF(EvenementsRepository $evenementsRepository): Response
     {
