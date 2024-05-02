@@ -215,7 +215,7 @@ class ProgrammeController extends AbstractController
     }
 
 
-/*
+
     #[Route('/front/Programme/sendSms/{id}', name: 'app_front_Programme_sendSms')]
     public function sendSMS(int $id, ProgrammeRepository $programmeRepository): Response
     {
@@ -224,14 +224,14 @@ class ProgrammeController extends AbstractController
         $recipient = '+21651252843';
         $message = 'Reminder you have a reservation at Program: ';
 
-        $twilioService = new TwilioService('AC7e7550dbac39a38fa598c162d7d14166', '4dedcfbb5cbf770959e024fecc70afbc', '+13375141925');
-        $isSent = $twilioService->sendSMS($recipient, $message);
+       // $twilioService = new TwilioService('AC7e7550dbac39a38fa598c162d7d14166', '4dedcfbb5cbf770959e024fecc70afbc', '+13375141925');
+       // $isSent = $twilioService->sendSMS($recipient, $message);
 
         if ($isSent) {
             return $this->redirectToRoute('app_front_Programme');
         } else {
             return new Response('Failed to send SMS.');
-        }*/
+        }
     }
 
     
