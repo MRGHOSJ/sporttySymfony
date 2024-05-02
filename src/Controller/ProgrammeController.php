@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Programme;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 use App\Form\Programme1Type;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\ProgrammeRepository;
@@ -118,6 +119,10 @@ public function deleteEvent(ProgrammeRepository $programmeRepository, EntityMana
 =======
 use App\Form\ProgrammeType;
 
+=======
+use App\Form\ProgrammeType;
+use App\service\TwilioService;
+>>>>>>> Stashed changes
 use App\Repository\ProgrammeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -225,7 +230,11 @@ class ProgrammeController extends AbstractController
         $message = 'Reminder you have a reservation at Program: ';
 
        // $twilioService = new TwilioService('AC7e7550dbac39a38fa598c162d7d14166', '4dedcfbb5cbf770959e024fecc70afbc', '+13375141925');
+<<<<<<< Updated upstream
        // $isSent = $twilioService->sendSMS($recipient, $message);
+=======
+      //  $isSent = $twilioService->sendSMS($recipient, $message);
+>>>>>>> Stashed changes
 
         if ($isSent) {
             return $this->redirectToRoute('app_front_Programme');
@@ -235,5 +244,8 @@ class ProgrammeController extends AbstractController
     }
 
     
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 =======
+=======
+>>>>>>> Stashed changes
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Cours;
@@ -28,11 +31,15 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
 class CoursController extends AbstractController
 {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     #[Route('/show', name: 'app_cours_index')]
     public function index(CoursRepository $coursRepository): Response
@@ -89,6 +96,8 @@ class CoursController extends AbstractController
             'cour' => $cour,
             'form' => $form,
 =======
+=======
+>>>>>>> Stashed changes
     #[Route('/back/cours', name: 'app_back_Cours')]
     public function index(Request $request,CoursRepository $CoursRepository): Response
     {
@@ -168,11 +177,15 @@ class CoursController extends AbstractController
     {
         return $this->render('front/Cours/pricing.html.twig',[
             'Cours'=>$CoursRepository->findAll(),
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         ]);
     }
     
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
     #[Route('/back/cours/show', name: 'app_cours_show')]
@@ -231,6 +244,8 @@ class CoursController extends AbstractController
 
 }
 =======
+=======
+>>>>>>> Stashed changes
   
  
   
@@ -333,5 +348,9 @@ class CoursController extends AbstractController
 
     }
 
+<<<<<<< Updated upstream
+    
+>>>>>>> Stashed changes
+=======
     
 >>>>>>> Stashed changes

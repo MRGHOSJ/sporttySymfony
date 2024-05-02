@@ -5,7 +5,10 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     dossier_images: '%kernel.project_dir%/public/images'
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 

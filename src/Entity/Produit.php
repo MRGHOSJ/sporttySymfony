@@ -53,6 +53,9 @@ class Produit
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/^[A-Z][a-zA-Z]*$/', message: 'The value must start with a capital letter')]
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     private $categorie;
 

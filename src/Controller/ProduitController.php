@@ -10,6 +10,9 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\PanierProduitRepository;
 use App\Repository\PanierRepository;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 use App\Repository\ProduitRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,6 +26,7 @@ class ProduitController extends AbstractController
 {
     #[Route('/back/produits', name: 'app_back_produit')]
     public function index(Request $request, ProduitRepository $produitRepository): Response
+<<<<<<< Updated upstream
     {
         $searchQuery = $request->query->get('search');
         $searchBy = $request->query->get('search_by', 'id');
@@ -39,10 +43,19 @@ class ProduitController extends AbstractController
 
     #[Route('/back/produits/add', name: 'app_back_produit_add')]
     public function addProduit(ProduitRepository $produitRepository): Response
+=======
+>>>>>>> Stashed changes
     {
+        $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
+
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $produitRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
         return $this->render('back/produit/allProduit.html.twig',[
-            "produits"=>$produitRepository->findAll(),
+            "produits"=>$items,
         ]);
     }
 
@@ -180,6 +193,9 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_front_produit');
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     
 }

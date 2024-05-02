@@ -1,15 +1,15 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}Hello Cours!{% endblock %}
+{% block title %}Hello BackController!{% endblock %}
 
 {% block body %}
-<body>
+    <body>
   <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
+    <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="../../index.html"><img src="../../images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="/back"><img src="images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/back"><img src="images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -78,7 +78,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="../../images/faces/face28.jpg" alt="profile"/>
+              <img src="images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
@@ -104,7 +104,7 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_settings-panel.html -->
+      <!-- partial:partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
         <div id="theme-settings" class="settings-panel">
@@ -218,7 +218,7 @@
             </div>
             <ul class="chat-list">
               <li class="list active">
-                <div class="profile"><img src="../../images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Thomas Douglas</p>
                   <p>Available</p>
@@ -226,7 +226,7 @@
                 <small class="text-muted my-auto">19 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="../../images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
                 <div class="info">
                   <div class="wrapper d-flex">
                     <p>Catherine</p>
@@ -237,7 +237,7 @@
                 <small class="text-muted my-auto">23 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="../../images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Daniel Russell</p>
                   <p>Available</p>
@@ -245,7 +245,7 @@
                 <small class="text-muted my-auto">14 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="../../images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
                 <div class="info">
                   <p>James Richardson</p>
                   <p>Away</p>
@@ -253,7 +253,7 @@
                 <small class="text-muted my-auto">2 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="../../images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Madeline Kennedy</p>
                   <p>Available</p>
@@ -261,7 +261,7 @@
                 <small class="text-muted my-auto">5 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="../../images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Sarah Graves</p>
                   <p>Available</p>
@@ -274,10 +274,10 @@
         </div>
       </div>
       <!-- partial -->
-      <!-- partial:../../partials/_sidebar.html -->
+      <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/back">
                     <i class="ti-layout-grid2 menu-icon"></i>
                     <span class="menu-title">Dashboard</span>
@@ -322,7 +322,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Programmes & Cours</span>
@@ -331,7 +331,7 @@
                 <div class="collapse" id="programs">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="/back/programmes">Programmes</a></li>
-                        <li class="nav-item active"><a class="nav-link" href="/back/cours">Cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
                     </ul>
                 </div>
             </li>
@@ -361,172 +361,205 @@
             </li>
         </ul>
       </nav>
+
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-<<<<<<<< Updated upstream:templates/back/cours/allCours.html.twig
-                  <h4 class="card-title">Cours Table</h4>
-                  <p class="card-description">
-                    <a class="btn btn-primary text-white" href="/back/Cours/add">Add Cours</a>
-                    <a class="btn btn-primary text-white" href="/back/pdf">Generate PDF</a
-                  </p>
-                  <div class="table-responsive">
-                  
-                  <form class="mb-4 px-1" action="{{ path('app_back_Cours') }}" method="get">
-                    <div class="row">
-                    
-                      <div class="col-lg-2">
-                          <label for="search_by" class="form-label">Search By:</label>
-                          <select class="form-control" id="search_by" name="search_by">
-                              <option value="nom">Nom</option>
-                              <option value="coach">Coach</option>
-                              <option value="jours">Jours</option>
-                              <option value="duree">Duree</option>
-                              <option value="type">Type</option>
-                              <option value="prix">Prix</option>
-                          </select>
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Welcome Aamir</h3>
+                  <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                     <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                      <a class="dropdown-item" href="#">January - March</a>
+                      <a class="dropdown-item" href="#">March - June</a>
+                      <a class="dropdown-item" href="#">June - August</a>
+                      <a class="dropdown-item" href="#">August - November</a>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card tale-bg">
+                <div class="card-people mt-auto">
+                  <img src="images/dashboard/people.svg" alt="people">
+                  <div class="weather-info">
+                    <div class="d-flex">
+                      <div>
+                        <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
                       </div>
-                      <div class="mt-4 col-lg-10">
-                        <div class="mt-1 input-group">
-                        <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ app.request.query.get('search') }}">
-                        <button type="submit" class="btn btn-primary ml-4">Search</button>
-                        </div>
-                      </div>
-                      <div class="mt-2 col-lg-2">
-                          <label for="sort_by" class="form-label">Sort By:</label>
-                          <select class="form-control" id="sort_by" name="sort_by">
-                              <option value="nom">Nom</option>
-                              <option value="coach">Coach</option>
-                              <option value="jours">Jours</option>
-                              <option value="duree">Duree</option>
-                              <option value="type">Type</option>
-                              <option value="prix">Prix</option>
-                          </select>
-                      </div>
-                      <div class="mt-2 col-lg-2">
-                          <label for="sort_order" class="form-label">Sort Order:</label>
-                          <select class="form-control" id="sort_order" name="sort_order">
-                              <option value="asc">Ascending</option>
-                              <option value="desc">Descending</option>
-                          </select>
+                      <div class="ml-2">
+                        <h4 class="location font-weight-normal">Bangalore</h4>
+                        <h6 class="font-weight-normal">India</h6>
                       </div>
                     </div>
-            
-                    <button type="submit" class="btn btn-primary mt-2">Sort</button>
-                  </form>
-                    <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Name</th>
-  
-                              <th>Coach</th>
-                              <th>Days</th>
-                              <th>Duration</th>
-                                  <th>Type</th>
-                              <th>Price</th>
-                            
-                              <th>N° Programme </th>
-                              <th>Image</th>
-                                 <th>linkVideo</th>
-========
-                  <h4 class="card-title">gym Table</h4>
-                  <p class="card-description">
-                    <a class="btn btn-primary text-white" href="/back/gyms/add">Add gym</a>
-                  </p>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                          <tr>
-                              <th>Nom</th>
-                              <th>Description</th>
-                              <th>Lieu</th>
-                              <th>Numero</th>
-                              <th>Lien Video</th>
-                              <th>Gym Image</th>
-                              <th>Location</th>
->>>>>>>> Stashed changes:templates/back/gyms/allgyms.html.twig
-                              <th>Tools</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for cour in Cours %}
-                              <tr>
-                                  <td><strong>{{ cour.nom }}</strong></td>
-                                
-                                  <td>
-                                      <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                          <strong>{{ cour.coach }}</strong>
-                                      </p>
-                                  </td>                                  
-                                  <td>
-                                    <label class="badge badge-info">{{ cour.jours }}</label>
-                                  </td>                       
-                                  <td>
-                                    <label class="badge badge-info">{{ cour.duree }}</label>
-
-                                  </td> 
-                                   <td>
-                                    <label class="badge badge-info">{{ cour.type }}</label>
-                                  </td>        
-                                    <td>
-                                    <label class="badge badge-success">
-                                      {{ cour.prix }} DT
-                                    </label>
-                                  </td>
-                                 <td>
-                                   {% if cour.idProgramme is not null %}
-                <label class="badge badge-info">{{ cour.idProgramme.nom }}</label>
-            {% else %}
-                <label class="badge badge-danger">No Program</label>
-            {% endif %}
-                                  </td>   
-
-                                  <td>
-                                    <label class="badge badge-info">{{ cour.image }}</label>
-                                  </td>   
-                                  <td>
-<<<<<<<< Updated upstream:templates/back/cours/allCours.html.twig
-                                    <label class="badge badge-info">{{ cour.lienVideo }}</label>
-========
-                                    <label>{{ gym.getImage() }}</label>
-                                  </td>                                  
-                                  <td>
-                                    <label>{{ gym.getLocation() }}</label>
->>>>>>>> Stashed changes:templates/back/gyms/allgyms.html.twig
-                                  </td>
-                                  <td>
-                                      <a href="{{ path('update_Cours', {'id': cour.idCours }) }}">✏️</a>
-                                      <a href="{{ path('delete_Cours', {'id': cour.idCours }) }}">🗑️</a>
-                                  </td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Today’s Bookings</p>
+                      <p class="fs-30 mb-2">4006</p>
+                      <p>10.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Total Bookings</p>
+                      <p class="fs-30 mb-2">61344</p>
+                      <p>22.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Meetings</p>
+                      <p class="fs-30 mb-2">34040</p>
+                      <p>2.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Clients</p>
+                      <p class="fs-30 mb-2">47033</p>
+                      <p>0.22% (30 days)</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  
+          <div class="row"><head>
+    <title>Statistiques</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> {# Inclure Chart.js #}
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+            <div class="ml-xl-4 mt-3">
+                <p class="card-title">Statistics</p>
+                <!-- Affichage de Type-->
+              
+                <h3 class="font-weight-500 mb-xl-4 text-primary">Type</h3>
+                <!-- Description des statistiques -->
+                <p class="mb-2 mb-xl-0">Statistics by type of reclamations:</p>
+            </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- main-panel ends -->
+        <div class="col-md-12 col-xl-9">
+            <div class="row">
+                {% for type, count in statistics %}
+                    <div class="col-md-6 border-right">
+                        <div class="table-responsive mb-3 mb-md-0 mt-3">
+                            <table class="table table-borderless report-table">
+                                <!-- Affichage de chaque type  -->
+                                <tr>
+                                    <td class="text-muted">{{ type }}</td>
+                                    <td class="w-100 px-0">
+                                        <div class="progress progress-md mx-4">
+                                            <!-- Barre de progression avec la largeur dynamique en fonction du pourcentage -->
+                                       
+                                        </div>
+                                    </td>
+                                    <td><h5 class="font-weight-bold mb-0">{{ count }}</h5></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col-md-12">
+                    <canvas id="pieChart"></canvas> {# Conteneur pour la pie chart #}
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+
+    <script>
+        // Récupérer les données de Twig
+        var statistics = {{ statistics|json_encode|raw }};
+
+        // Extraire les étiquettes et les valeurs pour le graphique
+        var labels = [];
+        var values = [];
+        for (var type in statistics) {
+            labels.push(type);
+            values.push(statistics[type]);
+        }
+
+        // Configuration du graphique
+        var config = {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Reclamations',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        };
+
+        // Créer le graphique
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>
+                          
+                 
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
 </body>
 {% endblock %}
-
