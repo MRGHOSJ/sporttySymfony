@@ -25,7 +25,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use App\Form\UserAdminUpdateType;
-use App\Repository\EvenementsRepository;
+
 
 class UserController extends AbstractController
 {
@@ -211,7 +211,7 @@ if ($imageFile) {
 
 //front
 #[Route('/front/UserAbonnement/home/{id}', name: 'home_users')]
-public function home(Security $security, $id, EvenementsRepository $evenementsRepository): Response
+public function home(Security $security, $id): Response
 {
     // Récupérer l'utilisateur actuellement connecté
     $user = $security->getUser();
@@ -224,9 +224,7 @@ public function home(Security $security, $id, EvenementsRepository $evenementsRe
 $abonnementsRepository = $entityManager->getRepository(Abonnement::class);
 $abonnements = $abonnementsRepository->findAll(); 
 dump('abonnement reussi');
-    return $this->render('front/index.html.twig', ['user' => $user, 'abonnements' => $abonnements, 
-    
-    'events' => $evenementsRepository->findNewEvents()]);
+    return $this->render('front/index.html.twig', ['user' => $user, 'abonnements' => $abonnements]);
 }
 #[Route('/front/UserAbonnement/Profile/{id}', name: 'profile_users')]
 public function profile(Request $request, Security $security, $id): Response

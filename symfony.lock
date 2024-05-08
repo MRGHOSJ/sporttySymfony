@@ -25,18 +25,6 @@
             "./src/Repository/.gitignore"
         ]
     },
-    "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "3.0",
-            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
-        },
-        "files": [
-            "./src/DataFixtures/AppFixtures.php"
-        ]
-    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "3.3",
         "recipe": {
@@ -49,9 +37,6 @@
             "./config/packages/doctrine_migrations.yaml",
             "./migrations/.gitignore"
         ]
-    },
-    "endroid/qr-code-bundle": {
-        "version": "5.0.1"
     },
     "excelwebzone/recaptcha-bundle": {
         "version": "1.5",
@@ -73,16 +58,7 @@
             "branch": "main",
             "version": "1.1",
             "ref": "e5a4aa21f2e98d7440ae9aab6b56e307f99dd084"
-        },
-        "files": [
-            "./config/packages/google_recaptcha.yaml"
-        ]
-    },
-    "knplabs/knp-paginator-bundle": {
-        "version": "v5.9.0"
-    },
-    "php-flasher/flasher-symfony": {
-        "version": "v1.15.14"
+        }
     },
     "phpunit/phpunit": {
         "version": "9.6",
@@ -346,6 +322,18 @@
         "files": [
             "./config/packages/web_profiler.yaml",
             "./config/routes/web_profiler.yaml"
+        ]
+    },
+    "symfony/webapp-pack": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "7d5c5e282f7e2c36a2c3bbb1504f78456c352407"
+        },
+        "files": [
+            "./config/packages/messenger.yaml"
         ]
     },
     "twig/extra-bundle": {
