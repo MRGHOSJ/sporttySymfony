@@ -20,6 +20,31 @@ class AbonnementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Abonnement::class);
     }
+// Dans votre AbonnementRepository
+
+public function findMostUsedAbonnements(): array
+{
+    return $this->createQueryBuilder('au')
+        ->select('au.id_abonnement, COUNT(au.id_abonnement) as utilisateurs_count')
+        ->groupBy('au.id_abonnement')
+        ->orderBy('utilisateurs_count', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+public function findLeastUsedAbonnements(int $limit = 5): array
+{
+    return $this->createQueryBuilder('au')
+        ->select('au.id_abonnement, COUNT(au.id_abonnement) as utilisateurs_count')
+        ->groupBy('au.id_abonnement')
+        ->orderBy('utilisateurs_count', 'ASC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
+
+
 
 //    /**
 //     * @return Abonnement[] Returns an array of Abonnement objects

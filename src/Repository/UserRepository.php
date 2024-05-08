@@ -20,7 +20,60 @@ class UserRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+    public function countAllClients(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.role = :role')
+            ->setParameter('role', 'ADHERANT')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    public function hasSubscription($userId)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.abonnements', 'a')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function findAllSortedByRole($order = 'asc')
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->leftJoin('u.roles', 'r') 
+        
+            ->orderBy('r.name', $order); 
+    
+        return $qb->getQuery()->getResult();
+    }
+    public function findByUsernameStartingWith($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.nom LIKE :username')
+            ->setParameter('username', $username.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByPrenomStartingWith($prenom)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.prenom LIKE :prenom')
+            ->setParameter('prenom', $prenom.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
+    public function findByEmailStartingWith($email)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.email LIKE :email')
+            ->setParameter('email', $email.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

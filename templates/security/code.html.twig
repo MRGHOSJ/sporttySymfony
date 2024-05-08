@@ -1,0 +1,42 @@
+{% extends 'back.base.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block body %}
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="../../images/logos.svg" alt="logo">
+              </div>
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">put the code.</h6>
+                <form action="{{ path('reset_password') }}" method="post" novalidate>
+                                    <div class="col-12">
+                                        <label for="yourCode" class="form-label">Your Code</label>
+                                        <input type="code" id="yourCode" name="code" class="form-control">
+                                        <div class="invalid-feedback">Please enter a valid Codes!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">check</button>
+                                    </div>
+                                      <div class="col-12">
+                                        <p class="small mb-0">Already have an account? <a href="{{ path('app_login') }}">Log in</a></p>
+                                    </div>
+                                </form>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+{% endblock %}

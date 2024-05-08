@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\SaleDeSportRepository;
 
 #[ORM\Entity(repositoryClass: SaleDeSportRepository::class)]
@@ -15,24 +16,32 @@ class SaleDeSport
     private $idSalle;
 
     #[ORM\Column(name: "nom_salle", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern:"/^[A-Z]/",message:"Le nom de la cabine doit commencer par une lettre majuscule.")]
     private $nomSalle;
 
     #[ORM\Column(name: "descr", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern:"/^[A-Z]/",message:"Le nom de la cabine doit commencer par une lettre majuscule.")]
     private $descr;
 
     #[ORM\Column(name: "lieu_salle", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $lieuSalle;
 
     #[ORM\Column(name: "num_salle", type: "integer", nullable: false)]
+    #[Assert\NotBlank]
     private $numSalle;
 
     #[ORM\Column(name: "lienVideo", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $lienvideo;
 
     #[ORM\Column(name: "image", type: "string", length: 255, nullable: false)]
     private $image;
 
     #[ORM\Column(name: "location", type: "string", length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private $location;
 
     public function getIdSalle(): ?int

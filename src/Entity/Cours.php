@@ -39,6 +39,7 @@ class Cours
     private $lienvideo;
 
     #[ORM\ManyToOne(targetEntity: "Programme")]
+    #[ORM\JoinColumn(name:"id_programme", referencedColumnName:"id", nullable:false)]
     private $idProgramme;
 
     public function getIdCours(): ?int
