@@ -17,7 +17,7 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo" >
-                                    <a href="/index" >
+                                    <a href="/" >
                                         <img src="img/logo.png" style="width: 100px !important;" alt="">
                                     </a>
                                 </div>
@@ -26,16 +26,8 @@
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="{{ path('home_users', { 'id': user.id }) }}">home</a></li>
+                                            <li><a href="/">home</a></li>
                                             <li><a href="/about">about</a></li>
-                                            <li><a href="/">settings<i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                   <li><a href="{{ path('profile_users', { 'id': user.id }) }}">Profile</a></li>
-                                                     <li><a href="{{ path('profile_users', { 'id': user.id }) }}">edit Profile</a></li>
-                                                    <li><a href="/singleBlog">llo</a></li>
-                                                    <li><a href="{{path('editPassword',{'id':user.id }) }}">change password</a></li>
-                                                </ul>
-                                            </li>
                                             <li><a href="/pricing">pricing</a></li>
                                             <li><a href="/gallery">gallery</a></li>
                                             <li><a href="/">pages <i class="ti-angle-down"></i></a>
@@ -48,6 +40,7 @@
                                                 <ul class="submenu">
                                                     <li><a href="/blog">blog</a></li>
                                                     <li><a href="/singleBlog">single-blog</a></li>
+                                                     
                                                 </ul>
                                             </li>
                                             <li><a href="/contact">Contact</a></li>
@@ -58,7 +51,7 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="Appointment">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="/login">Join Us</a>
+                                        <a href="/">Join Us</a>
                                     </div>
                                 </div>
                             </div>
@@ -71,6 +64,7 @@
                 </div>
             </div>
         </div>
+        
     </header>
     <!-- header-end -->
 
@@ -82,10 +76,6 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-xl-12">
                             <div class="slider_text text-center">
-                                                 <h3> <p> {{ user.nom }}</p>
-    <p>{{ user.prenom }}</p></a></h3>
-
-     
                                 <span style="color: transparent;
                                 -webkit-text-stroke-width: 1px;
                                 -webkit-text-stroke-color: #19bcff;">Build Up Your</span>
@@ -237,50 +227,48 @@
 
 
 
-   <div class="priscing_area">
+  
+<div class="priscing_area">
+ <!-- Lien "View More" -->
+   <a href="moreEvent" style="float:  right; margin-top: 20px; color:#19bcff;">View More >> </a>
     <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="section_title text-center mb-73">
-                    <h3>Our subscriptions</h3>
-                    <p>There are many variations of passages of lorem Ipsum available, but the majority <br> have suffered alteration.</p>
-                </div>
+   
+      <div class="row d-flex">
+    {% for cour in cours |slice(0, 3) %}
+    <div class="col-lg-4 col-md-6">
+        <div class="single_prising text-center">
+            <div class="prising_header">
+                <h3 style="font-size: 20px;">{{ cour.nom }}</h3>
+            </div>
+            <div class="pricing_body">
+                <ul>
+              
+                    <li><strong>Jours:</strong> {{ cour.jours }} | <strong>Duration:</strong> {{cour.duree}} </li>
+                    <li><strong>Type:</strong> {{ cour.type}} </li>
+                </ul>
+            </div>
+            <div class="pricing_btn">
+                <a href="{{ path('CoursP', {'id': cour.idCours}) }}" class="boxed-btn3">  view  Program   </a>
+            
+              
             </div>
         </div>
-        <div class="row">
-    
-        {% for abonnement in abonnements %}
-        <div class="col-lg-4 col-md-6">
-       
-        
-           
-                 <div class="single_prising text-center">
-                 
-            <div class="prising_header">
-             <h3>{{ abonnement.getType() }}</h3>
-             <span>{{ abonnement.getPrix() }} </span>
-             </div>
-        <div class="pricing_body">
-            <p>{{ abonnement.getDescription() }}</p>
-        </div>
-        <div class="pricing_btn">
-             <a href="{{ path('register_for_abonnement', { 'idAbonnement': abonnement.getId() }) }}" class="boxed-btn3">Register</a>
+    </div>
 
+   
+
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endfor %}
-
-{% if app.flashes('success') is not empty %}
-    <div class="alert alert-success" role="alert">
-        {{ app.flashes('success')|first }}
-    </div>
-{% endif %}
 
 
 
-    </div>
-</div>
+
+
+
+
+
 
 
 
@@ -535,4 +523,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 </body>
+<link rel="stylesheet" href="/css/swiper-bundle.min.css">
+<script src="/js/swiper-bundle.min.js" ></script>
+<script src="/js/swiper.js" ></script>
 {% endblock %}

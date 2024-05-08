@@ -10,11 +10,8 @@ use App\Repository\PanierPanierRepository;
 use App\Repository\PanierProduitRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
-use App\Service\TwilioService;
 use Doctrine\Persistence\ManagerRegistry;
 use Dompdf\Dompdf;
-use Stripe\PaymentIntent;
-use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +23,7 @@ class PanierController extends AbstractController
     #[Route('/back/Paniers', name: 'app_back_Panier')]
     public function index(PanierRepository $PanierRepository): Response
     {
+
         return $this->render('back/Panier/allPanier.html.twig',[
             "Paniers"=>$PanierRepository->findAll(),
         ]);
@@ -100,8 +98,6 @@ class PanierController extends AbstractController
                             $em->flush();
                             return $this->redirectToRoute('app_front_Panier');
                         }  
-                        
-                        flash()->addError('Removed Product From Basket');
                      }
                 }
             }
@@ -126,7 +122,6 @@ class PanierController extends AbstractController
 
                         $em->remove($panierProduit);
                         $em->flush();
-                        flash()->addError('Removed Product From Basket');
                         return $this->redirectToRoute('app_front_Panier');
                           
                      }
@@ -136,10 +131,8 @@ class PanierController extends AbstractController
     }
 
     #[Route('/pay/{price}', name: 'app_front_Panier_produit_pay')]
-    public function pay($price,ProduitRepository $produitRepository, PanierRepository $panierRepository,SessionInterface $session, PanierProduitRepository $panierProduitRepository,ManagerRegistry $manager)
+    public function pay(ProduitRepository $produitRepository, PanierRepository $panierRepository,SessionInterface $session, PanierProduitRepository $panierProduitRepository,ManagerRegistry $manager)
     {
-        Stripe::setApiKey('sk_test_51PBoOb2LYYbUtOuQQfR9VV1RvG7ell2uW1ZCfttVtvQLeGyM2OpDxSFgPzqnIq0pWWlTiQOGiMsXCqPYFz7j13PF00wnqnFtG2');
-
         $panierId = $session->get('panier_id');
 
         if ($panierId) {
@@ -155,70 +148,22 @@ class PanierController extends AbstractController
                     $em->flush();
                     
                 }
-                $totalPriceTND = $price;
-
-                $conversionRate = 0.313;
-                $totalPriceEUR = $totalPriceTND * $conversionRate;
-
-                PaymentIntent::create([
-                    'amount' => $totalPriceEUR  * 100, 
-                    'currency' => 'eur',
-                ]);
-                
-                $recipient = '+21658067859';
-                $message = 'Payment Proccessed Successfully Total Price '.$totalPriceEUR.'Euro ( '.$totalPriceTND.'DT)';
-
-                $twilioService = new TwilioService('AC8178a69781ae3148d452506cf6469643', '05d71db859eb6709c6c1b7d4b7dcc8f3', '+13345132497');
-                $isSent = $twilioService->sendSMS($recipient, $message);
-
-                if ($isSent) {
-                    return $this->redirectToRoute('app_front_Panier');
-                } else {
-                    return new Response('Failed to send SMS.');
-                }
+                return $this->redirectToRoute('app_front_Panier');
 
             }
         }
     }
 
     #[Route('/panier/print', name:"app_panier_print")]
-    public function convertToPdf(ProduitRepository $produitRepository, PanierRepository $panierRepository,SessionInterface $session, PanierProduitRepository $panierProduitRepository): Response
+    public function convertToPdf(): Response
     {
-        $panierId = $session->get('panier_id');
-
-        if (!$panierId) {
-            throw $this->createNotFoundException('PanierId not found');
-        }
-
-        $panier = $panierRepository->find($panierId);
-        $prixTotal = 0;
-        
-        $productTableAffichage = "";
-
-        if($panier)
-        {
-            $panierProduits = $panierProduitRepository->findBy(['panierId' => $panierId]);
-            foreach ($panierProduits as $panierProduit) {
-                $quantite = $panierProduit->getQuantite();
-                $produit = $produitRepository->find($panierProduit->getProduitId());
-                $prixTotal += $quantite * $produit->getPrix();
-                $productTableAffichage .= "<tr>
-                                                <td>". $produit->getNom() ."</td>
-                                                <td>". $quantite ."x ". $produit->getPrix() ." DT</td>
-                                            </tr>";
-            }
-        }
         $htmlFilePath = $this->getParameter('kernel.project_dir') . '/public/pdf/payment_form.html';
 
-        $html = file_get_contents($htmlFilePath);
-
-            
-        $html = str_replace('{totalPrice}', $prixTotal, $html);
-        $html = str_replace('{items}', $productTableAffichage, $html);
+        $htmlContent = file_get_contents($htmlFilePath);
 
         $dompdf = new Dompdf();
 
-        $dompdf->loadHtml($html);
+        $dompdf->loadHtml($htmlContent);
 
         $dompdf->setPaper('A4', 'portrait');
 

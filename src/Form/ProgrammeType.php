@@ -17,7 +17,7 @@ class ProgrammeType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'form-control form-control-user'],
-                'label' => 'Nom',
+                'label' => 'Name',
             ])
             ->add('description', TextType::class, [
                 'attr' => ['class' => 'form-control form-control-user'],
@@ -25,7 +25,7 @@ class ProgrammeType extends AbstractType
             ])
             ->add('duree', IntegerType::class, [
                 'attr' => ['class' => 'form-control form-control-user'],
-                'label' => 'Duree',
+                'label' => 'Duration',
             ])
             ->add('Submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary btn-user btn-block mt-4'],

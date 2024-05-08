@@ -275,8 +275,6 @@
       </div>
       <!-- partial -->
       <!-- partial:../../partials/_sidebar.html -->
-      
-      
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -293,8 +291,8 @@
                 </a>
                 <div class="collapse" id="users">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/users">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/abonnements">Abonnements</a></li>
                     </ul>
                 </div>
             </li>
@@ -343,19 +341,11 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            
-           <li class="nav-item"{% if app.request.attributes.get('_route') starts with 'listEvents' %}active{% endif %}>
-                <a class="nav-link" data-toggle="collapse" href="#participation" aria-expanded="false" aria-controls="participation">
-                    <i class="ti-notepad menu-icon"></i>
-                    <span class="menu-title">Events & Participation</span>
-                    <i class="menu-arrow"></i>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/events">
+                    <i class="ti-ticket menu-icon"></i>
+                    <span class="menu-title">Events</span>
                 </a>
-                <div class="collapse" id="participation">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item" ><a class="nav-link" href="{{ path('listEvents') }}">Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{path('listPart')}}">Participation</a></li>
-                    </ul>
-                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/back/produits">
@@ -378,10 +368,11 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
+<<<<<<<< Updated upstream:templates/back/cours/allCours.html.twig
                   <h4 class="card-title">Cours Table</h4>
                   <p class="card-description">
                     <a class="btn btn-primary text-white" href="/back/Cours/add">Add Cours</a>
-                    <a class="btn btn-primary text-white" href="/back/pdf">Générer PDF</a
+                    <a class="btn btn-primary text-white" href="/back/pdf">Generate PDF</a
                   </p>
                   <div class="table-responsive">
                   
@@ -430,22 +421,39 @@
                     <table class="table">
                       <thead>
                           <tr>
-                              <th>Nom</th>
+                              <th>Name</th>
   
                               <th>Coach</th>
-                              <th>Jours</th>
-                              <th>Duree</th>
+                              <th>Days</th>
+                              <th>Duration</th>
                                   <th>Type</th>
-                              <th>Prix</th>
+                              <th>Price</th>
                             
                               <th>N° Programme </th>
                               <th>Image</th>
-                                 <th>lienVideo</th>
+                                 <th>linkVideo</th>
+========
+                  <h4 class="card-title">gym Table</h4>
+                  <p class="card-description">
+                    <a class="btn btn-primary text-white" href="/back/gyms/add">Add gym</a>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Nom</th>
+                              <th>Description</th>
+                              <th>Lieu</th>
+                              <th>Numero</th>
+                              <th>Lien Video</th>
+                              <th>Gym Image</th>
+                              <th>Location</th>
+>>>>>>>> Stashed changes:templates/back/gyms/allgyms.html.twig
                               <th>Tools</th>
                           </tr>
                       </thead>
                       <tbody>
-                          {% for cour in pagination %}
+                          {% for cour in Cours %}
                               <tr>
                                   <td><strong>{{ cour.nom }}</strong></td>
                                 
@@ -481,7 +489,14 @@
                                     <label class="badge badge-info">{{ cour.image }}</label>
                                   </td>   
                                   <td>
+<<<<<<<< Updated upstream:templates/back/cours/allCours.html.twig
                                     <label class="badge badge-info">{{ cour.lienVideo }}</label>
+========
+                                    <label>{{ gym.getImage() }}</label>
+                                  </td>                                  
+                                  <td>
+                                    <label>{{ gym.getLocation() }}</label>
+>>>>>>>> Stashed changes:templates/back/gyms/allgyms.html.twig
                                   </td>
                                   <td>
                                       <a href="{{ path('update_Cours', {'id': cour.idCours }) }}">✏️</a>
@@ -492,25 +507,6 @@
                       </tbody>
                   </table>
 
-                <div class="navigation" style="display:flex;margin-lef:auto;margin-right:auto">
-                    {% if pagination.currentPageNumber != 1 %}
-                        <a href="{{ path('app_back_cabine', {'page': 1}) }}" class="page-link">&laquo; First</a>
-                        <a href="{{ path('app_back_cabine', {'page': pagination.currentPageNumber - 1}) }}" class="page-link">&lsaquo; Previous</a>
-                    {% endif %}
-
-                    {% for page in 1..pagination.pageCount %}
-                        {% if page == pagination.currentPageNumber %}
-                            <span class="page-link current">{{ page }}</span>
-                        {% else %}
-                            <a href="{{ path('app_back_cabine', {'page': page}) }}" class="page-link">{{ page }}</a>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if pagination.currentPageNumber != pagination.pageCount %}
-                        <a href="{{ path('app_back_cabine', {'page': pagination.currentPageNumber + 1}) }}" class="page-link">Next &rsaquo;</a>
-                        <a href="{{ path('app_back_cabine', {'page': pagination.pageCount}) }}" class="page-link">Last &raquo;</a>
-                    {% endif %}
-                </div>
                   </div>
                 </div>
               </div>

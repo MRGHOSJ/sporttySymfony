@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ProduitRepository;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -16,6 +15,20 @@ class Produit
     private $id;
 
     #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
+<<<<<<< Updated upstream
+    private $nom;
+
+    #[ORM\Column(name: "prix", type: "float", precision: 10, scale: 0, nullable: false)]
+    private $prix;
+
+    #[ORM\Column(name: "qte", type: "integer", nullable: false)]
+    private $qte;
+
+    #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
+    private $description;
+
+    #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: false)]
+=======
     #[Assert\NotBlank]
     #[Assert\Length(min: 3)]
     #[Assert\Regex(pattern: '/^[A-Z][a-zA-Z]*$/', message: 'The value must start with a capital letter')]
@@ -34,11 +47,16 @@ class Produit
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 3)]
+    #[Assert\Regex(pattern: '/^[A-Z][a-zA-Z]*$/', message: 'The value must start with a capital letter')]
     private $description;
 
     #[ORM\Column(name: "categorie", type: "string", length: 255, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/^[A-Z][a-zA-Z]*$/', message: 'The value must start with a capital letter')]
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     private $categorie;
 
     #[ORM\Column(name: "image", type: "string", length: 255, nullable: false)]

@@ -48,6 +48,7 @@
                                         </nav>
                                     </div>
                                 </div>
+<<<<<<<< Updated upstream:templates/front/Programme/pricing.html.twig
                                 <div class="col-xl-1">
                                     <div class="btn-group pannier">
                                         <a class="btn btn-secondary pannier-icon" href="/panier">
@@ -55,6 +56,8 @@
                                         </a>
                                     </div>
                                 </div>
+========
+>>>>>>>> Stashed changes:templates/front/panier/pricing.html.twig
 
                                 <div class="col-xl-2 col-lg-3 d-none d-lg-block">
                                     <div class="Appointment">
@@ -74,6 +77,7 @@
             </div>
         </header>
         <!-- header-end -->
+<<<<<<<< Updated upstream:templates/front/Programme/pricing.html.twig
     <!-- bradcam_area -->
     <!-- bradcam_area end -->
 
@@ -138,6 +142,53 @@
                           
                         </div>
                     {% endfor %}
+========
+    <div class="priscing_area">
+            <div class="container">
+            <center>
+                <h2 class="text-white">Panier</h2>
+            </center>
+            <br/>
+                <div class="row">
+                    {% for panierProduit in panierProduits %}
+                        
+                        {% for produit in produits %}
+                            {% if produit.getId() == panierProduit.getProduitId() %}
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="single_prising text-center">
+                                        <div class="prising_header">
+                                                <h3>{{produit.getNom()}} <code>({{panierProduit.getQuantite()}})</code> <a href="/panier/produit/removeOne/{{ produit.getId() }}">⛔</a></h3>
+                                                <span>{{produit.getPrix()}} DT</span>
+                                        </div>
+                                        <div class="pricing_body p-4 text-justify">
+                                            <center>
+                                                <img style="width:200px;" src="https://static.vecteezy.com/ti/vecteur-libre/p1/4596307-gym-symbol-equipment-sport-equipment-gain-mass-supplement-digital-stopwatch-and-dumbbell-in-cartoon-flat-illustration-collection-set-vector-in-white-background-vectoriel.jpg"/>
+                                            </center>
+                                            <br/>
+                                            <p class="descriptionProduitFront">{{produit.getDescription()}}</p>
+                                            <p class="pt-4">Category: <strong>{{ produit.getCategorie() }}</strong></p>
+                                        </div>
+                                        <div class="pricing_btn">
+                                            <a href="/panier/produit/delete/{{ produit.getId() }}" class="boxed-btn3">Remove item</a>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}             
+                        
+                    {% endfor %}
+                </div>
+                
+                <div style="display: flex;" >
+                    {% if prixTotal > 0 %}
+                        <h4 class="text-white m-4">Prix Total:</h4>  
+                        <h2 class="pr-4" style="color:green"> {{ prixTotal }} DT</h2>
+                        <a href="/pay/{{ prixTotal }}" class="boxed-btn3 m-2">Pay</a>
+                        <a href="/panier/print" class="boxed-btn3 m-2">Print</a>
+                    {% else %}
+                        <h4 class="text-white m-4">Pannier Empty...</h4>  
+                    {% endif %}    
+>>>>>>>> Stashed changes:templates/front/panier/pricing.html.twig
                 </div>
             </div>
         </div>

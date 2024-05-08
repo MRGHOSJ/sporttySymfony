@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\PanierProduit;
 use App\Entity\Produit;
+<<<<<<< Updated upstream
+=======
 use App\Form\ProduitType;
 use App\Repository\PanierProduitRepository;
 use App\Repository\PanierRepository;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 use App\Repository\ProduitRepository;
-use App\Service\MailService;
-use App\Service\OpenAIChatService;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Paginator;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProduitController extends AbstractController
 {
     #[Route('/back/produits', name: 'app_back_produit')]
-    public function index(Request $request, ProduitRepository $produitRepository,PaginatorInterface $paginator): Response
+    public function index(Request $request, ProduitRepository $produitRepository): Response
+<<<<<<< Updated upstream
     {
         $searchQuery = $request->query->get('search');
         $searchBy = $request->query->get('search_by', 'id');
@@ -33,118 +36,50 @@ class ProduitController extends AbstractController
 
         $items = $produitRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
-        
-        $pagination = $paginator->paginate(
-            $items,
-            $request->query->getInt('page', 1),
-            5
-        );
-
         return $this->render('back/produit/allProduit.html.twig',[
             "produits"=>$items,
-            "pagination"=>$pagination,
         ]);
     }
 
     #[Route('/back/produits/add', name: 'app_back_produit_add')]
-    public function addProduit  (Request $request, ManagerRegistry $manager): Response
+    public function addProduit(ProduitRepository $produitRepository): Response
+=======
+>>>>>>> Stashed changes
     {
-        $produit = new Produit();
-        $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
+        $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération de l'image
-            $imageFile = $form->get('image')->getData();
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
 
-            // Vérification et traitement de l'image
-            if ($imageFile) {
-                $nomFichier = md5(uniqid()) . '.' . $imageFile->guessExtension();
+        $items = $produitRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
-                // Déplacement du fichier vers le dossier approprié
-                $imageFile->move(
-                    $this->getParameter('dossier_images'), // Paramètre défini dans config/services.yaml
-                    $nomFichier
-                );
-
-                // Stockage du nom du fichier dans l'entité     
-                $produit->setImage($nomFichier);
-            }
-
-            $em=$manager->getManager();
-            $em->persist($produit);
-            $em->flush();
-            
-            $mailService = new MailService(); 
-            $recipient = 'bouzouitayassine@gmail.com';
-            $subject = 'Product Added';
-            $htmlContent = $mailService->readHTMLFile('mail/notification/SUCCESS.html');
-            $htmlContent = str_replace("{Title}", "Product Added", $htmlContent);
-            $htmlContent = str_replace("{Description}", 
-            "Name: ".$produit->getNom().   "<br>". 
-            "Price: ".$produit->getPrix().   "<br>". 
-            "Quantite: ".$produit->getQte().   "<br>". 
-            "Description: ".$produit->getDescription().   "<br>"
-            
-            , $htmlContent);
-            
-            $mailService->sendMail($recipient, $subject, $htmlContent);
-            return $this->redirectToRoute('app_back_produit');
-        }
-
-        return $this->render('back/produit/formProduit.html.twig', [
-            'form' => $form->createView()
+        return $this->render('back/produit/allProduit.html.twig',[
+            "produits"=>$items,
         ]);
     }
 
     #[Route('/back/produits/{id}/edit', name: 'update_product')]
-    public function edit(Request $request, ManagerRegistry $manager,ProduitRepository $produitRepository,int $id)
+    public function edit(Produit $produit, Request $request)
     {
-        $produit = $produitRepository->find($id);
-        $form = $this->createForm(ProduitType::class, $produit);
-        $form->handleRequest($request);
+        // Handle the form submission for updating the product
+        // You can use Symfony forms to create and handle the update form
+        
+        // Example:
+        // $form = $this->createForm(ProduitType::class, $produit);
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $this->getDoctrine()->getManager()->flush();
+        //     return $this->redirectToRoute('app_back');
+        // }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
+        // Render the update form template
+        // Example:
+        // return $this->render('back/produit/editProduit.html.twig', [
+        //     'form' => $form->createView(),
+        // ]);
 
-            // Vérification et traitement de l'image
-            if ($imageFile) {
-                $nomFichier = md5(uniqid()) . '.' . $imageFile->guessExtension();
-
-                // Déplacement du fichier vers le dossier approprié
-                $imageFile->move(
-                    $this->getParameter('dossier_images'), // Paramètre défini dans config/services.yaml
-                    $nomFichier
-                );
-
-                // Stockage du nom du fichier dans l'entité     
-                $produit->setImage($nomFichier);
-            }
-
-            $em=$manager->getManager();
-            $em->persist($produit);
-            $em->flush();
-            
-            $mailService = new MailService(); 
-            $recipient = 'bouzouitayassine@gmail.com';
-            $subject = 'Product Updated';
-            $htmlContent = $mailService->readHTMLFile('mail/notification/SUCCESS.html');
-            $htmlContent = str_replace("{Title}", "Product Updated", $htmlContent);
-            $htmlContent = str_replace("{Description}", 
-            "Name: ".$produit->getNom().   "<br>". 
-            "Price: ".$produit->getPrix().   "<br>". 
-            "Quantite: ".$produit->getQte().   "<br>". 
-            "Description: ".$produit->getDescription().   "<br>"
-            
-            , $htmlContent);
-            
-            $mailService->sendMail($recipient, $subject, $htmlContent);
-            return $this->redirectToRoute('app_back_produit');
-        }
-
-        return $this->render('back/produit/formProduit.html.twig', [
-            'form' => $form->createView()
-        ]);
+        // Replace the above with your actual implementation
     }
 
     #[Route('/back/produits/{id}/delete', name: 'delete_product')]
@@ -155,45 +90,16 @@ class ProduitController extends AbstractController
         $entityManager->remove($produit);
         $entityManager->flush();
 
-        $mailService = new MailService(); 
-        $recipient = 'bouzouitayassine@gmail.com';
-        $subject = 'Product Deleted';
-        $htmlContent = $mailService->readHTMLFile('mail/notification/ALERT.html');
-        $htmlContent = str_replace("{Title}", "Product Deleted", $htmlContent);
-        $htmlContent = str_replace("{Description}", 
-        "Name: ".$produit->getNom().   "<br>". 
-        "Price: ".$produit->getPrix().   "<br>". 
-        "Quantite: ".$produit->getQte().   "<br>". 
-        "Description: ".$produit->getDescription().   "<br>"
-        
-        , $htmlContent);
-        
-        $mailService->sendMail($recipient, $subject, $htmlContent);
         return $this->redirectToRoute('app_back_produit');
     }
+<<<<<<< Updated upstream
+=======
 
 
-    #[Route('/chat', name: 'app_front_chat')]
-    public function FrontChatBot(
-        Request $request,
-        OpenAIChatService $chatService
-    ): Response {
-        $userMessage = $request->get('message'); 
-        if ($userMessage) {
-            $chatResponse = $chatService->sendMessage($userMessage);
-        } else {
-            $chatResponse = '';
-        }
 
-        // Render the chat page with the conversation history
-        return $this->render('front/produit/chatBot.html.twig', [
-            'userMessage' => $userMessage,
-            'chatResponse' => $chatResponse,
-        ]);
-    }
     
     #[Route('/produit', name: 'app_front_produit')]
-    public function produitFront(Request $request,ProduitRepository $produitRepository, PanierRepository $panierRepository,SessionInterface $session, PanierProduitRepository $panierProduitRepository,PaginatorInterface $paginator): Response
+    public function produitFront(Request $request,ProduitRepository $produitRepository, PanierRepository $panierRepository,SessionInterface $session, PanierProduitRepository $panierProduitRepository): Response
     {
         $numberPanier = 0;
         $panierId = $session->get('panier_id');
@@ -217,17 +123,9 @@ class ProduitController extends AbstractController
 
         $items = $produitRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
-        
-        $pagination = $paginator->paginate(
-            $items,
-            $request->query->getInt('page', 1),
-            6
-        );
-
         return $this->render('front/produit/pricing.html.twig',[
             'produits'=>$items,
             'numberPanier' => $numberPanier,
-            'pagination' => $pagination,
         ]);
     }
 
@@ -236,16 +134,7 @@ class ProduitController extends AbstractController
     {
         $panierId = $session->get('panier_id');
 
-
-        if (!$panierId) {
-            $biggestPanierId = $panierProduitRepository->findBiggestPanierId();
-            
-            $panierId = $biggestPanierId ? $biggestPanierId + 1 : 1;
-
-            $session->set('panier_id', $panierId);
-
-        }
-
+        //search panier for user
         $panier = $panierRepository->find($panierId);
 
         if(!$panier)
@@ -257,6 +146,15 @@ class ProduitController extends AbstractController
             $em = $mr->getManager();
             $em->persist($panier);
             $em->flush();
+        }
+
+        if (!$panierId) {
+            $biggestPanierId = $panierProduitRepository->findBiggestPanierId();
+            
+            $panierId = $biggestPanierId ? $biggestPanierId + 1 : 1;
+
+            $session->set('panier_id', $panierId);
+
         }
 
         $produit = $produitRepository->find($idProduit);
@@ -286,7 +184,6 @@ class ProduitController extends AbstractController
                 $em->persist($existingPanierProduit);
                 $em->flush();
             }
-            flash()->addSuccess('Added '. $produit->getNom() .' To Basket Successfully');
             $produit->setQte($produit->getQte() - 1);
             
             $em = $mr->getManager();
@@ -296,16 +193,9 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_front_produit');
     }
-
-
-
-    
-    #[Route('/produit', name: 'app_front_produit')]
-    public function produitFront(ProduitRepository $produitRepository): Response
-    {
-        return $this->render('front/produit/pricing.html.twig',[
-            'produits'=>$produitRepository->findAll(),
-        ]);
-    }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     
 }

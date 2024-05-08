@@ -5,19 +5,17 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\CoursRepository;
+
+
 
 class FrontController extends AbstractController
 {
     #[Route('/', name: 'app_front')]
-    public function index(): Response
+    public function index(CoursRepository $coursRepository): Response
     {
-        $user = $security->getUser();
-        $entityManager = $this->getDoctrine()->getManager();
-    
-        $userRepository = $entityManager->getRepository(User::class);
-        $user = $userRepository->find($id);
-        dump('abonnement reussi');
-        return $this->render('front/index.html.twig');
+        return $this->render('front/index.html.twig' ,['cours' =>$coursRepository-> findAll(),]) ;
+
     }
     #[Route('/about', name: 'app_front_about')]
     public function about(): Response
@@ -28,7 +26,7 @@ class FrontController extends AbstractController
     public function blog(): Response
     {
         return $this->render('front/pages/blog.html.twig');
-    }       
+    }
     #[Route('/contact', name: 'app_front_contact')]
     public function contact(): Response
     {

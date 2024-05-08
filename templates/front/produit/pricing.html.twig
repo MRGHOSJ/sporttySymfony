@@ -83,12 +83,27 @@
                 </div>
             </div>
         </header>
+        <!-- header-end -->
+    <!-- bradcam_area -->
+    <div class="bradcam_area">
+            <div class="single_bradcam  d-flex align-items-center bradcam_bg_2 overlay">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-9">
+                                <div class="bradcam_text text-center">
+                                    <h3>Products</h3>
+                                    <p>There are many variations of passages of lorem Ipsum available, but the majority have suffered alteration unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <!-- bradcam_area end -->
 
     <div class="priscing_area">
             <div class="container">
-                <div class="bradcam_text text-center">
-                    <h2 style="color:white !important;font-size:80px !important;">Products</h2>
-                </div>
                   <form class="mb-4 px-1" action="{{ path('app_front_produit') }}" method="get">
                     <div class="row">
                     
@@ -131,8 +146,7 @@
                   </form>
             <br/>
                 <div class="row">
-                    {% for produit in pagination %}
-
+                    {% for produit in produits %}
                         <div class="col-lg-4 col-md-6">
                             <div class="single_prising text-center">
                                 <div class="prising_header">
@@ -141,17 +155,10 @@
                                 </div>
                                 <div class="pricing_body p-4 text-justify">
                                     <center>
-                                    {% if produit.getImage() %}
-                                        <img style="width:200px;" src="images/{{ produit.getImage() }}" />
-                                    {% else %}
-                                        <img style="width:200px;" 
-                                            src="https://static.vecteezy.com/ti/vecteur-libre/p1/4596307-gym-symbol-equipment-sport-equipment-gain-mass-supplement-digital-stopwatch-and-dumbbell-in-cartoon-flat-illustration-collection-set-vector-in-white-background-vectoriel.jpg"/>
-                                    {% endif %}
-                                    
+                                        <img style="width:200px;" src="https://static.vecteezy.com/ti/vecteur-libre/p1/4596307-gym-symbol-equipment-sport-equipment-gain-mass-supplement-digital-stopwatch-and-dumbbell-in-cartoon-flat-illustration-collection-set-vector-in-white-background-vectoriel.jpg"/>
                                     </center>
                                     <br/>
-                                    <p >{{produit.getDescription()}}</p>
-
+                                    <p class="descriptionProduitFront">{{produit.getDescription()}}</p>
                                     <p class="pt-4">Category: <strong>{{ produit.getCategorie() }}</strong></p>
                                 </div>
                                 <div class="pricing_btn">
@@ -159,7 +166,6 @@
                                         <a class="badge badge-danger text-white" style="padding:20px 40px;">Out Of Stock</a>
                                     {% else %}
                                         <a href="/produit/panier/add/{{produit.getId()}}" class="boxed-btn3">Buy Now</a>
-
                                     {% endif %}
                                     
                                 </div>
@@ -167,27 +173,6 @@
                         </div>
                     {% endfor %}
                 </div>
-                
-                <div class="navigation" style="display:flex;margin-lef:auto;margin-right:auto">
-                    {% if pagination.currentPageNumber != 1 %}
-                        <a href="{{ path('app_front_produit', {'page': 1}) }}" class="page-link">&laquo; First</a>
-                        <a href="{{ path('app_front_produit', {'page': pagination.currentPageNumber - 1}) }}" class="page-link">&lsaquo; Previous</a>
-                    {% endif %}
-
-                    {% for page in 1..pagination.pageCount %}
-                        {% if page == pagination.currentPageNumber %}
-                            <span class="page-link current">{{ page }}</span>
-                        {% else %}
-                            <a href="{{ path('app_front_produit', {'page': page}) }}" class="page-link">{{ page }}</a>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if pagination.currentPageNumber != pagination.pageCount %}
-                        <a href="{{ path('app_front_produit', {'page': pagination.currentPageNumber + 1}) }}" class="page-link">Next &rsaquo;</a>
-                        <a href="{{ path('app_front_produit', {'page': pagination.pageCount}) }}" class="page-link">Last &raquo;</a>
-                    {% endif %}
-                </div>
-
             </div>
         </div>
 
