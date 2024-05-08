@@ -26,6 +26,9 @@ class Evenements
 
     #[ORM\Column(name: "date_event", type: "date", nullable: false)]
     private $dateEvent;
+    #[ORM\Column(name: "heure_event", type: "time", nullable: true)]
+    private $heureEvent;
+
 
     #[ORM\Column(name: "lieu_event", type: "string", length: 255, nullable: false)]
     private $lieuEvent;
@@ -86,6 +89,18 @@ class Evenements
         return $this;
     }
 
+    public function getHeureEvent(): ?\DateTimeInterface
+{
+    return $this->heureEvent;
+}
+
+public function setHeureEvent(?\DateTimeInterface $heureEvent): self
+{
+    $this->heureEvent = $heureEvent;
+
+    return $this;
+}
+
     public function getLieuEvent(): ?string
     {
         return $this->lieuEvent;
@@ -109,5 +124,6 @@ class Evenements
 
         return $this;
     }
+
 
 }

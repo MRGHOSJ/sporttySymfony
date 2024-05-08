@@ -20,7 +20,33 @@ class SaleDeSportRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SaleDeSport::class);
     }
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('s');
 
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('s.'.$searchBy.' LIKE :searchQuery') 
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('s.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('s.'.$searchBy.' LIKE :searchQuery') 
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('s.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
 //    /**
 //     * @return SaleDeSport[] Returns an array of SaleDeSport objects
 //     */
@@ -45,4 +71,13 @@ class SaleDeSportRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findBySearchTerm($searchTerm)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.nomSalle LIKE :search')
+            ->setParameter('search', '%'.$searchTerm.'%')
+            ->orderBy('m.nomSalle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

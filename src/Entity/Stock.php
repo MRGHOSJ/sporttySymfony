@@ -25,6 +25,8 @@ class Stock
 
     #[ORM\Column(name: "cordonnet", type: "string", length: 255, nullable: false)]
     private $cordonnet;
+    #[ORM\ManyToOne(targetEntity: "Materiel")]
+    #[ORM\JoinColumn(name:"id", referencedColumnName:"id", nullable:false)]
 
     public function getId(): ?int
     {

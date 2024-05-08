@@ -30,6 +30,7 @@ class Materiel
     private $video;
 
     #[ORM\ManyToOne(targetEntity: "Stock")]
+    #[ORM\JoinColumn(name:"id_stock", referencedColumnName:"id", nullable:false)]
     private $idStock;
 
     public function getId(): ?int
