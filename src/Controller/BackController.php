@@ -2,40 +2,25 @@
 
 namespace App\Controller;
 
-use App\Repository\ReclamationRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
+
+// Assurez-vous d'importer la classe User si ce n'est pas déjà fait
+
 
 class BackController extends AbstractController
 {
     #[Route('/back', name: 'app_back')]
-    public function index(ReclamationRepository $reclamationRepository,UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository): Response
     {
-        flash()->addSuccess('Connected As An Administrator Successfully');
-
-       // Récupérer les statistiques par type de réclamation
-       $statistics = $reclamationRepository->countReclamationsByType();
-       // Calculer le total des réclamations
-      $totalReclamations = array_sum($statistics);
-
         $numberOfClients = $userRepository->countAllClients(); // Assumez que countAllClients est une méthode de votre repository qui compte tous les clients
-        return $this->render('back/index.html.twig', ['numberOfClients' => $numberOfClients,
-        'statistics' => $statistics,
-        'totalReclamations' => $totalReclamations,]);
+        return $this->render('back/index.html.twig', ['numberOfClients' => $numberOfClients]);
     }
-    #[Route('/login', name: 'app_login')]
-    public function login(): Response
-    {
-        return $this->render('back/pages/login.html.twig');
-    }
-    #[Route('/register', name: 'app_register')]
-    public function register(): Response
-    {
-        return $this->render('back/pages/register.html.twig');
-    }
-    #[Route('/back/basicElements', name: 'app_back_basicElements')]
+
+ 
+   /* #[Route('/back/basicElements', name: 'app_back_basicElements')]
     public function basicElements(): Response
     {
         return $this->render('back/pages/basicElements.html.twig');
@@ -74,5 +59,5 @@ class BackController extends AbstractController
     public function typography(): Response
     {
         return $this->render('back/pages/typography.html.twig');
-    }
+    }*/
 }
