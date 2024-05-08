@@ -68,8 +68,10 @@
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal" >New user registration</h6>
-                 
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
                 </div>
               </a>
             </div>
@@ -83,7 +85,7 @@
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-               <a href="{{ path('app_logout') }}" class="dropdown-item">
+              <a class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -238,7 +240,7 @@
                                              <label for="YourLastNameName" class="form-label">Your LastName</label>
                                                
                                                 {{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
-                                        
+                                            
                                                     {% if form.nom.vars.errors|length > 0 %}
                                          <div class="invalid-feedback">{{ form.nom.vars.errors|first.message }}</div>
                                                    {% endif %}
@@ -253,11 +255,11 @@
                                                                 
 
                                             <div class="form-group">
-                                                 <label for="YourEmail" class="form-label">Your Email</label>
+                                                {{ form_label(form.email) }}
                                                 {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
                                             {% if form.email.vars.errors|length > 0 %}
-                                          <div class="invalid-feedback">{{ form.email.vars.errors|first.message }}</div>
-                                                   {% endif %}
+                          <div class="invalid-feedback">{{ form.email.vars.errors|first.message }}</div>
+                        {% endif %}
                                             </div>
                                           
                                             <div class="form-group">
@@ -290,7 +292,7 @@
     {% endif %}
 </div>
 
-                                                      <div class="form-group">
+<div class="form-group">
                                                      <button type="submit" class="btn btn-primary">Save</button>
                                       
                                                     </div>

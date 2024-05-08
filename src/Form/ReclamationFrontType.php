@@ -11,7 +11,10 @@ use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\Length;
+<<<<<<< Updated upstream
+=======
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+>>>>>>> Stashed changes
 
 
 class ReclamationFrontType extends AbstractType
@@ -50,11 +53,34 @@ class ReclamationFrontType extends AbstractType
                     ]) 
                 ]
                 ])
+<<<<<<< Updated upstream
+                ->add('nbrEtoile', ChoiceType::class, [
+                    'choices' => [
+                        'Rate Us 1/5' => 'Rate Us 1/5',
+                        'Rate Us 2/5' => 'Rate Us 2/5',
+                        'Rate Us 3/5' => 'Rate Us 3/5',
+                        'Rate Us 4/5' => 'Rate Us 4/5',
+                        'Rate Us 5/5' => 'Rate Us 5/5'
+                    ],
+                    'label' => 'Rate Us',
+                    'expanded' => true,
+                    'multiple' => false,
+                    'constraints' => [
+                        new NotBlank(['message' => 'Please select a rating.']),
+                    ],
+                    'choice_label' => function ($choice, $key, $value) {
+                        // Générer les étoiles selon la valeur
+                        $rating = intval(substr($value, -3, 1));  // Extrait le chiffre de X/5
+                        $stars = str_repeat('★', $rating) . str_repeat('☆', 5 - $rating);
+                        return $stars;
+                    },
+=======
                 ->add('nbrEtoile', TextType::class, [
                     'label' => 'Rate Us',
                     'constraints' => [
                         new NotBlank(['message' => 'Please select a rating.']),
                     ],
+>>>>>>> Stashed changes
                 ]);
                 
                 

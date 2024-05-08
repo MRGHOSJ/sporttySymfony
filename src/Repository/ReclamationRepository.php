@@ -45,6 +45,16 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+<<<<<<< Updated upstream
+public function getReclamationCountByNom(): array
+    {
+        return $this->createQueryBuilder('r')
+        ->select('r.nom as nom, COUNT(r) as count')
+        ->groupBy('r.nom')
+        ->getQuery()
+        ->getResult();
+    }
+=======
 /*
 public function countReclamationsByType(): array
     {
@@ -81,6 +91,7 @@ public function countReclamationsByType(): array
         return $counts;
     }
     
+>>>>>>> Stashed changes
     public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
     {
         $qb = $this->createQueryBuilder('r');

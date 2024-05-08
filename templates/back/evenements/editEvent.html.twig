@@ -275,7 +275,6 @@
       </div>
       <!-- partial -->
       <!-- partial:../../partials/_sidebar.html -->
-      
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -292,8 +291,8 @@
                 </a>
                 <div class="collapse" id="users">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/users">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/abonnements">Abonnements</a></li>
                     </ul>
                 </div>
             </li>
@@ -318,7 +317,7 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
@@ -337,13 +336,12 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/back/reclamation">
+                <a class="nav-link" href="{{ path('listRec') }}">
                     <i class="ti-headphone-alt menu-icon"></i>
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            
-           <li class="nav-item active"{% if app.request.attributes.get('_route') starts with 'listEvents' %}active{% endif %}>
+            <li class="nav-item" active>
                 <a class="nav-link" data-toggle="collapse" href="#participation" aria-expanded="false" aria-controls="participation">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Events & Participation</span>
@@ -351,13 +349,13 @@
                 </a>
                 <div class="collapse" id="participation">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item active" ><a class="nav-link" href="{{ path('listEvents') }}">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('listEvents') }}">Events</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{path('listPart')}}">Participation</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/back/produits">
+            <li class="nav-item ">
+                <a class="nav-link" href="/back/produit">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
                 </a>

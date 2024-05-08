@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Security;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -15,20 +16,22 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Guard\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait; // Ajout de l'import
+
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\InvalidCredentialsException;
+
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 
-use ReCaptcha\ReCaptcha;
 
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -58,24 +61,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
    
     
     public function getUser($credentials, UserProviderInterface $userProvider)
-    {// Vérification du jeton CSRF
-    $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-    if (!$this->csrfTokenManager->isTokenValid($token)) {
-        throw new InvalidCsrfTokenException();
-    }
-
-  
-    $recaptchaResponse = $credentials['g-recaptcha-response'];
-    $recaptcha = new ReCaptcha($_ENV['RECAPTCHA_SECRET_KEY']);
-    $response = $recaptcha->verify($recaptchaResponse);
-
-    if (!$response->isSuccess()) {
-        throw new CustomUserMessageAuthenticationException('Invalid captcha.');
-    }
-
-    if (!$response->isSuccess()) {
-        throw new CustomUserMessageAuthenticationException('Invalid captcha.');
-    }
+    {
+        // Vérification du jeton CSRF
+        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+        if (!$this->csrfTokenManager->isTokenValid($token)) {
+            throw new InvalidCsrfTokenException();
+        }
     
         try {
             // Récupération de l'utilisateur en fonction de l'email
@@ -156,8 +147,6 @@ public function getCredentials(Request $request): array
         'email' => $request->request->get('email'),
         'password' => $request->request->get('password'),
         'csrf_token' => $request->request->get('_csrf_token'),
-        'g-recaptcha-response' => $request->request->get('g-recaptcha-response'),// Ajouter cette ligne
-    
     ];
 }
 

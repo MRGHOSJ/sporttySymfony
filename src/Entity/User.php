@@ -23,18 +23,10 @@ class User implements UserInterface
     private $id;
 
     #[ORM\Column(name:"nom", type:"string", length:255, nullable:false)]
-    #[Assert\NotBlank(message: "This value should not be blank.")]
-#[Assert\Length(min: 2, minMessage: "The Firstname must contain at least {{ limit }} characters.")]
     private $nom;
-  
-   
 
     #[ORM\Column(name:"prenom", type:"string", length:255, nullable:false)]
-
-    #[Assert\NotBlank(message: "This value should not be blank.")]
-#[Assert\Length(min: 2, minMessage: "The Lastname must contain at least {{ limit }} characters.")]
     private $prenom;
-
     #[Assert\Email]
     #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
    
@@ -42,11 +34,8 @@ class User implements UserInterface
     private $email;
 
     #[ORM\Column(name:"password", type:"string", length:255, nullable:false)]
-  #[Assert\NotBlank(message: "This value should not be blank.")]
+  
     private $password;
- 
-#[ORM\Column(name:"reset_token", type:"string", length:180, nullable:false)]
-private string $reset_token;
 
     #[ORM\Column(name:"role", type:"string", length:255, nullable:true)]
     private $role;
@@ -54,8 +43,8 @@ private string $reset_token;
     #[ORM\Column(name:"image_user", type:"string", length:255, nullable:true)]
     private $imageUser;
 
-    #[ORM\OneToMany(targetEntity: AbonnementUtilisateur::class, mappedBy: "utilisateur", cascade: ["persist"])]
-private $abonnements;
+    #[ORM\OneToMany(targetEntity: AbonnementUtilisateur::class, mappedBy: "utilisateur")]
+    private $abonnements;
 
     /**
      * Constructor
@@ -144,6 +133,7 @@ private $abonnements;
         return $this->password;
     }
     
+
     public function setPassword(string $password): static
     {
         $this->password = $password;
@@ -221,27 +211,5 @@ private $abonnements;
         // Supprimer les informations sensibles du mot de passe
         // Cette méthode est appelée après que l'authentification ait eu lieu pour effacer les informations sensibles.
     }
-
-     /**
-     * @return mixed
-     */
-    public function getResetToken()
-    {
-        return $this->reset_token;
-    }
-
-    /**
-     * @param mixed $reset_token
-     */
-    public function setResetToken($reset_token): void
-    {
-        $this->reset_token = $reset_token;
-    }
-
-    public function hasSubscription(): bool
-    {
-        return !$this->abonnements->isEmpty();
-    }
-    
 
 }

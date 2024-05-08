@@ -103,14 +103,11 @@
     <div class="row">
         <div class="col-lg-8 col-md-8">
             <h3 class="mb-30">Modifier les informations</h3>
-            <form action="{{ path('profile_users', {'id': user.id}) }}" method="post" novalidate>
+            <form action="{{ path('profile_users', {'id': user.id}) }}" method="post">
                 {{ form_start(form) }}
                 <div class="form-group mt-10">
                     {{ form_label(form.nom) }}
-                    {{ form_widget(form.nom, { 'attr': {'class': ' form-control'} }) }}
-                {% if form.nom.vars.errors|length > 0 %}
-                                         <div class="invalid-feedback">{{ form.nom.vars.errors|first.message }}</div>
-                                                   {% endif %}
+                    {{ form_widget(form.nom, { 'attr': {'class': 'single-input form-control'} }) }}
                 </div>
                 <div class="form-group mt-10">
                     {{ form_label(form.prenom) }}
@@ -120,11 +117,10 @@
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email, { 'attr': {'class': 'single-input form-control'} }) }}
                 </div>
-                
-<div class="form-group">
-                                                     <button type="submit" class="btn btn-primary">Save</button>
-                                      
-                                                    </div>
+                 <div class="form-group mt-10">
+                    {{ form_label(form.password) }}
+                    {{ form_widget(form.password, { 'attr': {'class': 'single-input form-control'} }) }}
+                </div>
                
                 {{ form_end(form) }}
             </form>

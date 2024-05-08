@@ -247,6 +247,8 @@
                     <li><strong>Place:</strong> {{ event.lieuEvent }} | <strong>Date:</strong> {{ event.dateEvent|date('Y-m-d') }}</li>
                 </ul>
             </div>
+<<<<<<< Updated upstream
+=======
              <div class="pricing_btn">
                 {% if participationExists[event.idEvent] %}
                     <p style="color: green; font-weight: bold;">You have already participated</p>
@@ -256,6 +258,7 @@
                     <a href="{{ path('participate', {'id': event.idEvent}) }}" class="boxed-btn3">Participate</a>
                 {% endif %}
             </div>
+>>>>>>> Stashed changes
             <div class="pricing_btn">
                 <a href="{{ path('EventsF', {'id': event.idEvent}) }}" class="boxed-btn3">Participer</a>
             </div>

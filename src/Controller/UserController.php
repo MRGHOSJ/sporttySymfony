@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\UserType;
 use App\Form\UserAdminType;
-use App\Form\UserfrontType;
-use App\Repository\UserRepository;
-
-use App\Form\UserPasswordType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,63 +18,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Form\LoginFormType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use App\Form\UserAdminUpdateType;
-
-
+use App\Repository\EvenementsRepository;
 class UserController extends AbstractController
 {
    /**
      * @Route("/back/UserAbonnement/users", name="back_users")
      */
-  
-   #[Route('/back/UserAbonnement/users', name: 'back_users')]
-   public function users(UserRepository $userRepository, Request $request): Response
-   {
-       $roleFilter = $request->query->get('role', 'ALL');
-       $searchTerm = $request->query->get('search', '');
-       $criteria = $request->query->get('criteria', 'nom'); // Par défaut, le critère est 'nom'
-   
-       $users = [];
-   
-       if (!empty($searchTerm)) {
-           switch ($criteria) {
-               case 'nom':
-                   $users = $userRepository->findByUsernameStartingWith($searchTerm);
-                   break;
-               case 'prenom':
-                   $users = $userRepository->findByPrenomStartingWith($searchTerm);
-                   break;
-               case 'email':
-                   $users = $userRepository->findByEmailStartingWith($searchTerm);
-                   break;
-               // Ajoutez d'autres cas pour d'autres critères si nécessaire
-               default:
-                   $users = $userRepository->findByUsernameStartingWith($searchTerm);
-           }
-       } elseif ($roleFilter === 'ALL') {
-           $users = $userRepository->findAll();
-       } else {
-           $users = $userRepository->findBy(['role' => $roleFilter]);
-       }
-   
-       $usersWithSubscription = [];
-       foreach ($users as $user) {
-           $hasSubscription = $userRepository->hasSubscription($user->getId());
-           $usersWithSubscription[$user->getId()] = $hasSubscription ? 'Completed' : 'Cancelled';
-       }
-   
-       return $this->render('back/UserAbonnement/users.html.twig', [
-           'users' => $users,
-           'usersWithSubscription' => $usersWithSubscription,
-           'selectedRole' => $roleFilter,
-       ]);
-   }
-   
-   
- 
- 
+    #[Route('/back/UserAbonnement/users', name: 'back_users')]
+    public function users(): Response
+    {  
+        $users = $this->getDoctrine()->getRepository(User::class)->createQueryBuilder('u')
+        ->select('u.id','u.nom', 'u.prenom', 'u.email', 'u.password', 'u.role')
+        ->getQuery()
+        ->getResult();
+        dump('ddd');
+    return $this->render('back/UserAbonnement/users.html.twig', ['users' => $users]);
+
+    }
     #[Route('/back/user/delete/{id}', name: 'delete_user')]
 public function deleteUser($id): Response
 {
@@ -122,7 +78,7 @@ public function updateUser(Request $request, $id): Response{
         throw $this->createNotFoundException('Utilisateur non trouvé avec l\'id '.$id);
     }
 
-    $form = $this->createForm(UserAdminUpdateType::class, $user);
+    $form = $this->createForm(UserAdminType::class, $user);
 
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
@@ -211,7 +167,7 @@ if ($imageFile) {
 
 //front
 #[Route('/front/UserAbonnement/home/{id}', name: 'home_users')]
-public function home(Security $security, $id): Response
+public function home(Security $security, $id, EvenementsRepository $evenementsRepository): Response
 {
     // Récupérer l'utilisateur actuellement connecté
     $user = $security->getUser();
@@ -223,8 +179,10 @@ public function home(Security $security, $id): Response
 // Récupérer tous les abonnements
 $abonnementsRepository = $entityManager->getRepository(Abonnement::class);
 $abonnements = $abonnementsRepository->findAll(); 
-dump('abonnement reussi');
-    return $this->render('front/index.html.twig', ['user' => $user, 'abonnements' => $abonnements]);
+
+    return $this->render('front/index.html.twig', ['user' => $user, 'abonnements' => $abonnements , 
+    
+    'events' => $evenementsRepository->findNewEvents(),]);
 }
 #[Route('/front/UserAbonnement/Profile/{id}', name: 'profile_users')]
 public function profile(Request $request, Security $security, $id): Response
@@ -233,9 +191,10 @@ public function profile(Request $request, Security $security, $id): Response
     $userRepository = $entityManager->getRepository(User::class);
     $user = $userRepository->find($id);
 
+    // Créer le formulaire en utilisant le UserType que vous avez créé
+    $form = $this->createForm(UserType::class, $user);
 
-    $form = $this->createForm(UserfrontType::class, $user);
-
+    // Traiter le formulaire soumis
     $form->handleRequest($request);
 
     
@@ -244,7 +203,7 @@ public function profile(Request $request, Security $security, $id): Response
         $user->setPassword(hash('sha256', $user->getPassword())); // Hacher le mot de passe avec SHA-256
         $entityManager->flush();
 
-        // Rediriger l'utilisateur vers  son profil
+        // Rediriger l'utilisateur vers une autre page, par exemple son profil
         return $this->redirectToRoute('home_users', ['id' => $user->getId()]);
     }
 
@@ -262,87 +221,19 @@ public function registerForAbonnement(Request $request, $idAbonnement): Response
 
     // Récupérer l'utilisateur à partir de la session ou d'une autre méthode
     $user = $this->getUser();
-    dump('dd');
 
     // Récupérer l'abonnement en fonction de son ID
     $abonnement = $abonnementRepository->find($idAbonnement);
-dump('recupere abonnement');
 
     if (!$user || !$abonnement) {
         throw $this->createNotFoundException('Utilisateur ou abonnement non trouvé.');
     }
 
-    // Créer une instance de AbonnementUtilisateur et l'associer à l'utilisateur et à l'abonnement
-    $abonnementUtilisateur = new AbonnementUtilisateur();
-    $abonnementUtilisateur->setUtilisateur($user);
-    $abonnementUtilisateur->setAbonnement($abonnement);
-    // Ajouter l'abonnementUtilisateur à l'utilisateur
-    $user->addAbonnement($abonnementUtilisateur);
-dump('assure persist');
+    // Ajouter l'abonnement à l'utilisateur
+    $user->addAbonnement($abonnement);
 
-    // Persist l'entité AbonnementUtilisateur
-    $entityManager->persist($abonnementUtilisateur);
-
-    // Mettre à jour l'entité User
-    $entityManager->persist($user);
     $entityManager->flush();
 
-    // Après avoir persisté l'entité AbonnementUtilisateur
-    $this->addFlash('success', 'Votre inscription a été enregistrée avec succès.');
-
-    // Rediriger vers la page d'accueil des utilisateurs avec l'ID de l'utilisateur
-    return $this->redirectToRoute('home_users', ['id' => $user->getId()]);
-
+    return $this->redirectToRoute('back_users');
 }
-
-#[Route('/edit_password/{id}', name: 'editPassword', methods: ['GET', 'POST'])]
-public function editPassword(Request $request, Security $security, $id): Response
-{
-    $entityManager = $this->getDoctrine()->getManager();
-    $userRepository = $entityManager->getRepository(User::class);
-    $user = $userRepository->find($id);
-
-    $form = $this->createForm(UserPasswordType::class);
-
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $oldPassword = $form->get('oldPassword')->getData();
-        $oldPasswordHash = hash('sha256', $oldPassword);
-
-        if ($oldPasswordHash !== $user->getPassword()) {
-            $form->get('oldPassword')->addError(new FormError('Mot de passe incorrect.'));
-            return $this->render('front/UserAbonnement/edit_password.html.twig', [
-                'form' => $form->createView(),
-              
-            ]);
-        }
-
-        // Mettre à jour le nouveau mot de passe
-        $newPassword = $form->get('newPassword')->getData();
-        $user->setPassword(hash('sha256', $newPassword));
-        $entityManager->flush();
-
-        return $this->redirectToRoute('home_users', ['id' => $user->getId()]);
-    }
-
-    return $this->render('front/UserAbonnement/edit_password.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
-
-#[Route('/mailer', name: 'mail')]
-public function sendEmail(MailerInterface $mailer)
-{
-    $email = (new Email())
-        ->from('serviceclientsporty@gmail.com')
-        ->to('serviceclientsporty@gmail.com')
-        ->subject('Test d\'envoi d\'e-mail avec Symfony')
-        ->text('Ceci est un e-mail de test.');
-
-    $mailer->send($email);
-
-    return new Response('E-mail envoyé.');
-}
-
 }

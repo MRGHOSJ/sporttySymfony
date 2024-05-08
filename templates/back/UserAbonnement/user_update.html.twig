@@ -85,7 +85,7 @@
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-              <a href="{{ path('app_logout') }}" class="dropdown-item">
+              <a class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -266,9 +266,23 @@
                                                 {{ form_label(form.role) }}
                                                 {{ form_widget(form.role, { 'attr': {'class': 'form-control'} }) }}
                                             </div>
-                                            
+                                              <div class="form-group">
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                        {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
+                                       
+                                         {% if form.password.first.vars.errors|length > 0 %}
+                          <div class="invalid-feedback">{{ form.password.first.vars.errors|first.message }}</div>
+                        {% endif %}
+                      </div>
+                                    </div>
 
-                                 
+                                     <div class="form-group">
+    <label for="yourConfirmPassword" class="form-label">Confirm Password</label>
+    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}, 'invalid_message': 'Please confirm your password!'}) }}
+    {% if form.password.second.vars.errors|length > 0 %}
+        <div class="invalid-feedback">{{ form.password.second.vars.errors|first.message }}</div>
+    {% endif %}
+</div>
 
 <div class="form-group">
                                                      <button type="submit" class="btn btn-primary">Save</button>

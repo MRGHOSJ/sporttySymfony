@@ -85,7 +85,7 @@
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-              <a href="{{ path('app_logout') }}" class="dropdown-item">
+              <a class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -225,14 +225,12 @@
 
                  </div>
                  <div class="table-responsive">
-              <form action="{{ path('add_abonnements') }}" method="post" novalidate>
+              <form action="{{ path('add_abonnements') }}" method="post">
 
                                             {{ form_start(form) }}
                                             <div class="form-group">
                                                 {{ form_label(form.Type) }}
                                                 {{ form_widget(form.Type, { 'attr': {'class': 'form-control'} }) }}
-
-                                    </div>
                                             </div>
                                             <div class="form-group">
                                                 {{ form_label(form.prix) }}

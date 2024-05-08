@@ -2,6 +2,23 @@
 
 namespace App\Controller;
 
+<<<<<<< Updated upstream
+use App\Entity\Reclamation;
+use App\Entity\User;
+use App\Form\ReclamationType;
+use App\Form\ReclamationFrontType;
+
+use App\Repository\ReclamationRepository;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+=======
 use App\Entity\User;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
@@ -12,7 +29,6 @@ use App\Form\ReclamationFrontType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReclamationRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -20,10 +36,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
+>>>>>>> Stashed changes
 
 
 class ReclamationController extends AbstractController
 {
+<<<<<<< Updated upstream
+    #[Route('/admin/reservation', name: 'app_back_reservation')]
+    public function index(Request $request,ReclamationRepository $reclamationRepository): Response
+    {
+        $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
+
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $reclamationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+
+
+       
+
+        return $this->render('back/pages/reservation/index.html.twig', [
+            "items" => $items,
+            
+        ]);
+    }
+=======
     /*
     #[Route('/validate-email', name: 'validate_email')]
     public function validateEmail(Request $request, MailerInterface $mailer)  : Response    {
@@ -59,6 +97,7 @@ class ReclamationController extends AbstractController
         ]);
     }
    
+>>>>>>> Stashed changes
    /* #[Route("/generate-pdf", name: "app_generate_pdf")]
     public function generatePdf(Request $request): Response
     {
@@ -95,11 +134,32 @@ class ReclamationController extends AbstractController
         // Retourner la réponse
         return $response;
     }*/
+<<<<<<< Updated upstream
+    #[Route('/back/reclamation/stat', name: 'reclamation_stats')]
+    public function reclamationStats(ReclamationRepository $reclamationRepository): Response
+    {
+        // Récupérer les données des réclamations par nom
+        $reclamationCounts = $reclamationRepository->getReclamationCountByNom();
+        dump($reclamationCounts);
     
+        // Préparer les données pour le graphique
+        $chartData = [];
+        foreach ($reclamationCounts as $reclamationCount) {
+            $chartData[] = [$reclamationCount['nom'], $reclamationCount['count']];
+        }
+    
+        // Rendre la vue Twig avec les données du graphique
+        return $this->render('back/reclamation/stat.html.twig', [
+            'chartData' => $chartData,
+        ]);
+    }
+=======
+    
+>>>>>>> Stashed changes
 
     
-    #[Route('/back/reclamation', name: 'listRec')]
-    public function show(ReclamationRepository $reclamationRepository,Request $request,PaginatorInterface $paginator): Response
+    #[Route('/back/reclamation/showRec', name: 'listRec')]
+    public function show(ReclamationRepository $reclamationRepository,Request $request): Response
     {  $searchQuery = $request->query->get('search');
         $searchBy = $request->query->get('search_by', 'id');
 
@@ -108,18 +168,15 @@ class ReclamationController extends AbstractController
 
         $items = $reclamationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
-        
-        $pagination = $paginator->paginate(
-            $items,
-            $request->query->getInt('page', 1),
-            5
-        );
         return $this->render('back/reclamation/allRec.html.twig', [
             'reclamations' => $items,
-            "pagination"=>$pagination,
         ]);
     }
+<<<<<<< Updated upstream
+
+=======
     
+>>>>>>> Stashed changes
     #[Route('/front/reclamation/new', name: 'new_reclamation')]
     public function new(Request $request, ManagerRegistry $mr): Response
     {
@@ -138,6 +195,8 @@ class ReclamationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< Updated upstream
+=======
             // Récupérer la description de la réclamation depuis le formulaire
             $description = $reclamation->getDescription();
 
@@ -146,6 +205,7 @@ class ReclamationController extends AbstractController
 
             // Enregistrer la description censurée dans la réclamation
             $reclamation->setDescription($censoredDescription);
+>>>>>>> Stashed changes
             // Si le formulaire est soumis et valide, enregistrez la réclamation en base de données
             $entityManager = $mr->getManager();
             $entityManager->persist($reclamation);
@@ -161,6 +221,9 @@ class ReclamationController extends AbstractController
             'reclamation' => $reclamation,
         ]);
     }
+<<<<<<< Updated upstream
+
+=======
     private function censorBadWords($text)
     {
         $badWords = ['inappropriate', 'insult', 'offensive', 'forbidden'];
@@ -176,6 +239,7 @@ class ReclamationController extends AbstractController
     }
 
 /*
+>>>>>>> Stashed changes
 #[Route('/back/reclamation/{id}/edit', name: 'editRec')]
 public function edit(Request $request, ReclamationRepository $reclamationRepository, EntityManagerInterface $entityManager, int $id): Response
 {
@@ -200,6 +264,8 @@ public function edit(Request $request, ReclamationRepository $reclamationReposit
         'reclamation' => $reclamation,
     ]);
 }
+<<<<<<< Updated upstream
+=======
 */
 #[Route('/back/reclamation/{id}/edit', name: 'editRec')]
 public function edit(Request $request, ReclamationRepository $reclamationRepository, EntityManagerInterface $entityManager, MailerInterface $mailer, int $id): Response
@@ -236,6 +302,7 @@ public function edit(Request $request, ReclamationRepository $reclamationReposit
         'reclamation' => $reclamation,
     ]);
 }
+>>>>>>> Stashed changes
 
    
     #[Route('/back/reclamation/{id}', name: 'deleteRec')]

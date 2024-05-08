@@ -12,8 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+<<<<<<< Updated upstream
+=======
 use Dompdf\Dompdf;
-use Knp\Component\Pager\PaginatorInterface;
+>>>>>>> Stashed changes
 
 class ParticipationController extends AbstractController
 {
@@ -100,6 +102,26 @@ public function participate(int $id, EntityManagerInterface $entityManager, Requ
 
     // Ajouter un message de succès et rediriger vers la page de détail de l'événement
     $this->addFlash('success', 'You have successfully participated in the event.');
+<<<<<<< Updated upstream
+    return $this->redirectToRoute('moreEvent', ['id' => $id]);
+}
+
+#[Route('/back/showPart', name: 'listPart')]
+public function showPart(ParticipationRepository $participationRepository, Request $request): Response
+{     
+    $searchQuery = $request->query->get('search');
+        $searchBy = $request->query->get('search_by', 'id');
+
+        $sortBy = $request->query->get('sort_by', 'id');
+        $sortOrder = $request->query->get('sort_order', 'asc');
+
+        $items = $participationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
+    // Retourner la réponse avec la vue
+    return $this->render('back/allParticipants.html.twig', [
+        'participations' => $items,
+    ]);
+}
+=======
    // return $this->redirectToRoute('moreEvent', ['id' => $id]);
     // Générer le PDF et rediriger vers la page de téléchargement du PDF
     return $this->redirectToRoute('app_front_participation_pdf', ['id' => $participation->getId()]);
@@ -159,7 +181,7 @@ public function participate(int $id, EntityManagerInterface $entityManager, Requ
     }
 
     #[Route('/back/showPart', name: 'listPart')]
-    public function showPart(ParticipationRepository $participationRepository, Request $request,PaginatorInterface $paginator): Response
+    public function showPart(ParticipationRepository $participationRepository, Request $request): Response
     {     
         $searchQuery = $request->query->get('search');
             $searchBy = $request->query->get('search_by', 'id');
@@ -168,19 +190,12 @@ public function participate(int $id, EntityManagerInterface $entityManager, Requ
             $sortOrder = $request->query->get('sort_order', 'asc');
     
             $items = $participationRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
-        
-            $pagination = $paginator->paginate(
-                $items,
-                $request->query->getInt('page', 1),
-                5
-            );
-
         // Retourner la réponse avec la vue
         return $this->render('back/allParticipants.html.twig', [
             'participations' => $items,
-            "pagination"=>$pagination,
         ]);
     }
 
+>>>>>>> Stashed changes
 
 }

@@ -111,10 +111,14 @@
                         
                        <!-- Vérifier si l'utilisateur a déjà participé à cet événement -->
            {% if participationExists[event.idEvent] %}
+<<<<<<< Updated upstream
+    <p style="color: green; font-weight: bold;">You have already participated</p>
+=======
              <a href="{{ path('app_front_participation_pdf', {'id': event.idEvent}) }}"  target="_blank"></a>
     <p style="color: green; font-weight: bold;">You have already participated</p>
              <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('moreEvent', {'id_event': event.idEvent})|url_encode }}&title={{ event.nomEvent|url_encode }}&summary={{ event.descriEvent|default('Check out this publication!')|url_encode }}" target="_blank" class="px-6 py-2 text-base font-medium text-white duration-300 ease-in-out rounded-md signUpBtn bg-primary hover:bg-blue-dark">Share on Facebook</a>
     
+>>>>>>> Stashed changes
              {% elseif event.dateEvent <  date() %}
                     <p style="color: red; font-weight: bold;">The event has already passed</p>
 {% else %}

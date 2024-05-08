@@ -12,21 +12,40 @@ use App\Entity\Participation;
 use App\Form\EvenementsType;
 use App\Repository\EvenementsRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Security;
+
+
 
 class EvenementsController extends AbstractController
 {   
    
-    #[Route('/showFront', name: 'EventsF')]
-    public function showF(Security $security,EvenementsRepository $evenementsRepository): Response
-    {
-        $user = $security->getUser();
+<<<<<<< Updated upstream
+    #[Route('/front/evenements/search', name: 'evenement_search')]
+public function search(Request $request, EvenementsRepository $repository): JsonResponse
+{
+    // Récupérer les critères de recherche depuis la requête
+    $keyword = $request->query->get('keyword');
+    // Autres critères de recherche si nécessaire
 
-        return $this->render('front/evenements/index.html.twig', [
+    // Effectuer la recherche dans la base de données
+    $results = $repository->search($keyword);
+    // Autres critères de recherche si nécessaire
+
+    // Retourner les résultats au format JSON
+    return new JsonResponse($results);
+}
+
+
+
+
+=======
+>>>>>>> Stashed changes
+    #[Route('/showFront', name: 'EventsF')]
+    public function showF(EvenementsRepository $evenementsRepository): Response
+    {
+        
+        return $this->render('front/index.html.twig', [
             'events' => $evenementsRepository->findNewEvents(),
-            'user'=>$user
         ]);
     }
 
@@ -63,7 +82,7 @@ public function showMore(EvenementsRepository $evenementsRepository, EntityManag
 
 
     #[Route('/back/evenements/show', name: 'listEvents')]
-    public function show(EvenementsRepository $evenementsRepository, Request $request,PaginatorInterface $paginator): Response
+    public function show(EvenementsRepository $evenementsRepository, Request $request): Response
     {
         $searchQuery = $request->query->get('search');
         $searchBy = $request->query->get('search_by', 'idEvent');
@@ -72,16 +91,9 @@ public function showMore(EvenementsRepository $evenementsRepository, EntityManag
         $sortOrder = $request->query->get('sort_order', 'asc');
 
         $items = $evenementsRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
-        
-        $pagination = $paginator->paginate(
-            $items,
-            $request->query->getInt('page', 1),
-            5
-        );
 
         return $this->render('back/evenements/allEvents.html.twig', [
             'evenements' => $items,
-            "pagination"=>$pagination,
         ]);
     }
 

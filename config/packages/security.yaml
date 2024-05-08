@@ -21,6 +21,6 @@ security:
           
             logout:
                 path: app_logout
-                target: /login
+                target: /
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

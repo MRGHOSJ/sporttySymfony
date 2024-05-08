@@ -85,7 +85,7 @@
                 <i class="ti-settings text-primary"></i>
                 Settings
               </a>
-               <a href="{{ path('app_logout') }}" class="dropdown-item">
+              <a class="dropdown-item">
                 <i class="ti-power-off text-primary"></i>
                 Logout
               </a>
@@ -225,32 +225,15 @@
                  </div>
                  <div class="card-body">
                                         <p class="card-title mb-0">New Abonnement</p>
-                                       
-
-                                    <form action="{{ path('update_abonnement', {'id': abonnement.id}) }}" method="post" novalidate>
-                                    {% if form_errors(form) %}
-    <div class="alert alert-danger">
-        {{ form_errors(form) }}
-    </div>
-{% endif %}
+                                    <form action="{{ path('update_abonnement', {'id': abonnement.id}) }}" method="post">
                                              {{ form_start(form) }}
-                                                       <div class="form-group">
-    {{ form_label(form.Type) }}
-    {{ form_widget(form.Type, { 'attr': {'class': 'form-control'} }) }}
-    {% if form_errors(form.Type) %}
-        <div class="alert alert-danger">
-            {{ form_errors(form.Type) }}
-        </div>
-    {% endif %}
-</div>
-
+                                            <div class="form-group">
+                                                {{ form_label(form.Type) }}
+                                                {{ form_widget(form.Type, { 'attr': {'class': 'form-control'} }) }}
+                                            </div>
                                             <div class="form-group">
                                                 {{ form_label(form.prix) }}
                                                 {{ form_widget(form.prix, { 'attr': {'class': 'form-control'} }) }}
-                                                
-                                                   {% if form.prix.vars.errors|length > 0 %}
-                                                  <div class="invalid-feedback">{{ form.prix.vars.errors|first.message }}</div>
-                                                        {% endif %}
                                             </div>
                                             <div class="form-group">
                                                 {{ form_label(form.description) }}

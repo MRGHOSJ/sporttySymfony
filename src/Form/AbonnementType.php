@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Abonnement;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,7 +28,7 @@ class AbonnementType extends AbstractType
                 'placeholder' => 'Entrez votre type',
             ],
             'constraints' => [
-                new Assert\NotBlank(),
+                new NotBlank(),
                 new Length(['min' => 2]),
             ],
         ])
@@ -40,7 +40,7 @@ class AbonnementType extends AbstractType
             ],
             'scale' => 2, // Nombre de décimales à afficher
             'constraints' => [
-                new Assert\NotBlank(),
+                new NotBlank(['message' => 'Ce champ ne peut pas être vide.']),
               
             ],
         ])
@@ -51,7 +51,7 @@ class AbonnementType extends AbstractType
                 'placeholder' => 'Entrez votre description',
             ],
             'constraints' => [
-                new Assert\NotBlank(),
+                new NotBlank(),
                 new Length(['min' => 2]),
             ],
         ])

@@ -1,16 +1,13 @@
 <?php 
 namespace App\Entity;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AbonnementRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: AbonnementRepository::class)]
 #[ORM\Table(name: "abonnement")]
-
-
-#[UniqueEntity(fields: ['type'], message: 'Type already exists')]
 class Abonnement
 {
     #[ORM\Id]
@@ -18,14 +15,10 @@ class Abonnement
     #[ORM\Column(name: "id", type: "integer", nullable: false)]
     private $id;
 
-
- 
-    #[ORM\Column(name: "type", type: "string", length: 255, unique: true)]
+    #[ORM\Column(name: "type", type: "string", length: 255, nullable: false)]
     private $type;
 
     #[ORM\Column(name: "prix", type: "float", nullable: false)]
-    #[Assert\NotBlank(message: "Le prix ne peut pas être vide.")]
-#[Assert\GreaterThan(value: 0, message: "Le prix doit être supérieur à zéro.")]
     private $prix;
 
     #[ORM\Column(name: "description", type: "string", length: 255, nullable: false)]
@@ -105,14 +98,5 @@ public function setType(string $type): self
 
         return $this;
     }
-    public function hasSubscription(Abonnement $abonnement): bool
-    {
-        foreach ($this->abonnements as $abonnementUtilisateur) {
-            if ($abonnementUtilisateur->getAbonnement() === $abonnement) {
-                return true;
-            }
-        }
 
-        return false;
-    }
 }

@@ -22,24 +22,9 @@ class UserAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nom', null, [
-            'constraints' => [
-              
-            ],
-        ])
-        ->add('prenom', null, [
-            'constraints' => [
-                new Assert\NotBlank(),
-            ],
-        ])
-        ->add('email',null,[
-            'constraints' => [
-                new  Assert\NotBlank(),
-               new Assert\Email(),
-            
-            ],
-          
-        ])
+            ->add('nom')
+            ->add('prenom')
+            ->add('email')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],

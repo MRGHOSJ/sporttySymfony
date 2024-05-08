@@ -5,32 +5,29 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CoursRepository;
-
-
 
 class FrontController extends AbstractController
 {
     #[Route('/', name: 'app_front')]
-    public function index(CoursRepository $coursRepository): Response
+    public function index(): Response
     {
-        return $this->render('front/index.html.twig' ,['cours' =>$coursRepository-> findAll(),]) ;
-
+        return $this->render('front/index.html.twig');
     }
     #[Route('/about', name: 'app_front_about')]
     public function about(): Response
     {
         return $this->render('front/pages/about.html.twig');
     }
-    #[Route('/blog', name: 'app_front_blog')]
+    #[Route('/front/evenements/moreEvent', name: 'app_front_blog')]
     public function blog(): Response
     {
-        return $this->render('front/pages/blog.html.twig');
+        return $this->render('front/evenements/viewMore.html.twig');
     }
-    #[Route('/contact', name: 'app_front_contact')]
+    #[Route('/front/reclamation/contact', name: 'app_front_contact')]
     public function contact(): Response
     {
-        return $this->render('front/pages/contact.html.twig');
+       /* return $this->render('front/pages/contact.html.twig');*/
+       return $this->render('front/reclamation/contact.html.twig');
     }
     #[Route('/elements', name: 'app_front_elements')]
     public function elements(): Response

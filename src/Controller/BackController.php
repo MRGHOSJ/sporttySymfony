@@ -5,20 +5,42 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\UserRepository;
+use App\Repository\ReclamationRepository;
+
+// Assurez-vous d'importer la classe User si ce n'est pas déjà fait
+
 
 // Assurez-vous d'importer la classe User si ce n'est pas déjà fait
 
 
 class BackController extends AbstractController
 {
-    #[Route('/back', name: 'app_back')]
-    public function index(UserRepository $userRepository): Response
+   /* #[Route('/back', name: 'app_back')]
+    public function index(): Response
     {
-        $numberOfClients = $userRepository->countAllClients(); // Assumez que countAllClients est une méthode de votre repository qui compte tous les clients
-        return $this->render('back/index.html.twig', ['numberOfClients' => $numberOfClients]);
-    }
+       return $this->render('back/index.html.twig');
+       
+    }*/
+    #[Route('/back', name: 'app_back')]
+    public function showStatistics(ReclamationRepository $reclamationRepository): Response
+   {
+       // Récupérer les statistiques par type de réclamation
+       $statistics = $reclamationRepository->countReclamationsByType();
+       // Calculer le total des réclamations
+      $totalReclamations = array_sum($statistics);
 
+       // Rendre la vue avec les statistiques
+       return $this->render('back/index.html.twig', [
+           'statistics' => $statistics,
+           'totalReclamations' => $totalReclamations,
+       ]);
+    }
+<<<<<<< Updated upstream
+=======
+   
+>>>>>>> Stashed changes
+
+   
  
    /* #[Route('/back/basicElements', name: 'app_back_basicElements')]
     public function basicElements(): Response
