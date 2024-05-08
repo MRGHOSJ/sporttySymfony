@@ -20,7 +20,13 @@ class PanierProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PanierProduit::class);
     }
-
+    public function findBiggestPanierId(): ?int
+    {
+        return $this->createQueryBuilder('pp')
+            ->select('MAX(pp.panierId) as max_panier_id')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //    /**
 //     * @return PanierProduit[] Returns an array of PanierProduit objects
 //     */

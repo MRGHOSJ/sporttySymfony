@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Receipt</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .receipt-container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .receipt-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .course {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .course-details h3 {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .course-details p {
+            margin: 0;
+            color: #777;
+        }
+
+        .course-price {
+            color: green;
+            font-weight: bold;
+        }
+
+        .receipt-total {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .receipt-details {
+            margin-top: 20px;
+        }
+
+        .receipt-details p {
+            margin-bottom: 10px;
+            color: #777;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .pay-now {
+            background-color: green;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .print {
+            background-color: orange;
+            color: #fff;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="receipt-container">
+
+    <h1 class="receipt-header">Your Course</h1>
+    {cours}
+
+
+</div>
+</body>
+</html>

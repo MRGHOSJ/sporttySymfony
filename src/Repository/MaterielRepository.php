@@ -21,6 +21,19 @@ class MaterielRepository extends ServiceEntityRepository
         parent::__construct($registry, Materiel::class);
     }
 
+    public function findBySearchAndSort($searchBy, $searchQuery, $sortBy, $sortOrder)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        if ($searchQuery && $searchBy) {
+            $qb->andWhere('m.'.$searchBy.' LIKE :searchQuery')
+            ->setParameter('searchQuery', '%'.$searchQuery.'%');
+        }
+
+        $qb->orderBy('m.'.$sortBy, $sortOrder);
+
+        return $qb->getQuery()->getResult();
+    }
 //    /**
 //     * @return Materiel[] Returns an array of Materiel objects
 //     */

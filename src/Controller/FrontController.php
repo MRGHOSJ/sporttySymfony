@@ -11,6 +11,12 @@ class FrontController extends AbstractController
     #[Route('/', name: 'app_front')]
     public function index(): Response
     {
+        $user = $security->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+    
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->find($id);
+        dump('abonnement reussi');
         return $this->render('front/index.html.twig');
     }
     #[Route('/about', name: 'app_front_about')]
@@ -22,7 +28,7 @@ class FrontController extends AbstractController
     public function blog(): Response
     {
         return $this->render('front/pages/blog.html.twig');
-    }
+    }       
     #[Route('/contact', name: 'app_front_contact')]
     public function contact(): Response
     {
