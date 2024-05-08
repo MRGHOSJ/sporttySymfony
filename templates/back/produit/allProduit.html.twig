@@ -275,7 +275,6 @@
       </div>
       <!-- partial -->
       <!-- partial:../../partials/_sidebar.html -->
-      
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -292,8 +291,8 @@
                 </a>
                 <div class="collapse" id="users">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/UserAbonnement/abonnements">Abonnements</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/users">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/abonnements">Abonnements</a></li>
                     </ul>
                 </div>
             </li>
@@ -318,7 +317,7 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
@@ -333,6 +332,7 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"><a class="nav-link" href="/back/programmes">Programmes</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/cours">Add cours</a></li>
                     </ul>
                 </div>
             </li>
@@ -342,22 +342,14 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            
-           <li class="nav-item"{% if app.request.attributes.get('_route') starts with 'listEvents' %}active{% endif %}>
-                <a class="nav-link" data-toggle="collapse" href="#participation" aria-expanded="false" aria-controls="participation">
-                    <i class="ti-notepad menu-icon"></i>
-                    <span class="menu-title">Events & Participation</span>
-                    <i class="menu-arrow"></i>
+            <li class="nav-item">
+                <a class="nav-link" href="/back/events">
+                    <i class="ti-ticket menu-icon"></i>
+                    <span class="menu-title">Events</span>
                 </a>
-                <div class="collapse" id="participation">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item" ><a class="nav-link" href="{{ path('listEvents') }}">Events</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{path('listPart')}}">Participation</a></li>
-                    </ul>
-                </div>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/back/produits">
+                <a class="nav-link" href="/back/produit">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
                 </a>
@@ -379,7 +371,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Produit Table</h4>
                   <p class="card-description">
-                    <a class="btn btn-primary text-white" href="/back/produits/add">Add Produit</a>
+                    Add class <code>.table</code>
                   </p>
                   <div class="table-responsive">
                   
@@ -428,15 +420,20 @@
                           <tr>
                               <th>Nom</th>
                               <th>Prix</th>
-                              <th>Quantite</th>
+                              <th>Qte</th>
                               <th>Description</th>
                               <th>Categorie</th>
                               <th>Tools</th>
                           </tr>
                       </thead>
                       <tbody>
-                          {% for produit in pagination %}
+                          {% for produit in produits %}
                               <tr>
+<<<<<<< Updated upstream
+                                  <td>{{ produit.getNom() }}</td>
+                                  <td>{{ produit.getPrix() }}</td>
+                                  <td>{{ produit.getQte() }}</td>
+=======
                                   <td><strong>{{ produit.getNom() }}</strong></td>
                                   <td>
                                     <label class="badge badge-success">
@@ -453,21 +450,18 @@
                                       Out Of Stock ({{ produit.getQte() }})
                                     </label>
                                   {% elseif produit.getQte() <= 10 %}
-
                                     <label class="badge badge-warning container">
                                       Out Of Stock Soon ({{ produit.getQte() }})
                                     </label>
                                   {% endif %}
                                     
                                   </td>
+>>>>>>> Stashed changes
                                   <td>
                                       <p style="max-width:200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                          <strong>{{ produit.getDescription() }}</strong>
+                                          {{ produit.getDescription() }}
                                       </p>
-                                  </td>                                  
-                                  <td>
-                                    <label class="badge badge-info">{{ produit.getCategorie() }}</label>
-                                  </td>
+                                  </td>                                  <td><label class="badge badge-info">{{ produit.getCategorie() }}</label></td>
                                   <td>
                                       <a href="{{ path('update_product', {'id': produit.getId()}) }}">✏️</a>
                                       <a href="{{ path('delete_product', {'id': produit.getId()}) }}">🗑️</a>
@@ -477,25 +471,6 @@
                       </tbody>
                   </table>
 
-                <div class="navigation" style="display:flex;margin-lef:auto;margin-right:auto">
-                    {% if pagination.currentPageNumber != 1 %}
-                        <a href="{{ path('app_back_produit', {'page': 1}) }}" class="page-link">&laquo; First</a>
-                        <a href="{{ path('app_back_produit', {'page': pagination.currentPageNumber - 1}) }}" class="page-link">&lsaquo; Previous</a>
-                    {% endif %}
-
-                    {% for page in 1..pagination.pageCount %}
-                        {% if page == pagination.currentPageNumber %}
-                            <span class="page-link current">{{ page }}</span>
-                        {% else %}
-                            <a href="{{ path('app_back_produit', {'page': page}) }}" class="page-link">{{ page }}</a>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if pagination.currentPageNumber != pagination.pageCount %}
-                        <a href="{{ path('app_back_produit', {'page': pagination.currentPageNumber + 1}) }}" class="page-link">Next &rsaquo;</a>
-                        <a href="{{ path('app_back_produit', {'page': pagination.pageCount}) }}" class="page-link">Last &raquo;</a>
-                    {% endif %}
-                </div>
                   </div>
                 </div>
               </div>

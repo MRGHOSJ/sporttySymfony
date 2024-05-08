@@ -1,0 +1,11 @@
+sensio_framework_extra:
+    router:
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        annotations: False
+=======
+        annotations: false
+>>>>>>> Stashed changes
+=======
+        annotations: false
+>>>>>>> Stashed changes

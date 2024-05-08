@@ -1,6 +1,6 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}Hello Produit!{% endblock %}
+{% block title %}Cours!{% endblock %}
 
 {% block body %}
 <body>
@@ -8,8 +8,8 @@
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="../../index.html"><img src="../../images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="../../index.html"><img src="../../img/logo.png" class="mr-2" alt="logo"/></a>
+       
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -317,12 +317,12 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item" active>
                 <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Programmes & Cours</span>
@@ -330,7 +330,7 @@
                 </a>
                 <div class="collapse" id="programs">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item active"><a class="nav-link" href="/back/programmes">Programmes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_programme_show')}}">Programmes</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
                     </ul>
                 </div>
@@ -341,14 +341,14 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="/back/events">
                     <i class="ti-ticket menu-icon"></i>
                     <span class="menu-title">Events</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/back/produits">
+            <li class="nav-item ">
+                <a class="nav-link" href="/back/produit">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
                 </a>
@@ -361,23 +361,77 @@
             </li>
         </ul>
       </nav>
-      <!-- partial -->
-      <div class="main-panel">        
+        <!-- partial -->
+      <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
+            <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Programme form</h4>
+<<<<<<< Updated upstream:templates/back/cours/show.html.twig
+                 <h4 class="card-title">Course</h4>
                   <p class="card-description">
-                    Programme form layout
+    <a href="{{ path('app_cours_new') }}" class="btn btn-info" style="background-color: #5bc0de;">Add</a>
+</p>
+                  <div class="table-responsive">
+
+    <table class="table">
+         <thead>
+=======
+                  <h4 class="card-title">cabine Table</h4>
+                  <p class="card-description">
+                    <a class="btn btn-primary text-white" href="/back/cabines/add">Add cabine</a>
                   </p>
-                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
-                                
-                                
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                   <a href="{{ path('app_back_Programme') }}"     class="btn btn-light mt-4 container">Cancel</a>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+>>>>>>> Stashed changes:templates/back/cabines/allcabine.html.twig
+                          <tr>
+                              <th>Name</th>
+                              <th>Coach</th>
+                              <th>Days</th>
+                              <th>Date</th>
+                              <th>Type</th>
+                              <th>Price</th>
+                            <th>Programme</th>
+                                <th>Image</th>
+                                 <th>Video</th>
+                             
+                               <th>Tools</th>
+                              
+                          </tr>
+                      </thead>
+                      <tbody>{% for cour  in cours %}
+                       
+            
+                       <tr>
+             
+                <td>{{ cour.nom }}</td>
+                <td>{{ cour.coach }}</td>
+                <td>{{ cour.jours }}</td>
+                <td>{{ cour.duree }}</td>
+                <td>{{ cour.type }}</td>
+                <td>{{ cour.prix }}</td>
+                <td>{{ cour.programme.nom}}</td>
+         
+              <td>
+                                                        {% if cour.getImage() %}
+                                                            <img src="{{ asset('images/' ~ cour.getImage()) }}" alt="Image de cours">
+                                                        {% else %}
+                                                            <span>Aucune image disponible</span>
+                                                        {% endif %}
+                                                    </td>
+                <td> <video src="{{ cour.getLienvideo() }}" controls></video></td>
+             <td>
+                                      <a href="{{ path('app_cours_edit', {'idCours': cour.getIdCours()}) }}">✏️</a>
+                                     <a href="{{ path('app_cours_delete', {'idCours': cour.getIdCours()}) }}" onclick="return confirm('Are you sure you want to delete this course?')">🗑️</a>
+                                  </td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+
+     </div>
                 </div>
               </div>
             </div>
@@ -399,3 +453,4 @@
   </div>
 </body>
 {% endblock %}
+

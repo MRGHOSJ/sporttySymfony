@@ -1,10 +1,10 @@
 {% extends 'back.base.html.twig' %}
 
-{% block title %}Hello Produit!{% endblock %}
+{% block title %}New Program!{% endblock %}
 
 {% block body %}
 <body>
-  <div class="container-scroller">
+   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -317,12 +317,12 @@
                 </a>
                 <div class="collapse" id="sales">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="/back/gyms">Sales De Sport</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/back/salesdesport">Sales De Sport</a></li>
                         <li class="nav-item"><a class="nav-link" href="/back/cabines">Cabines</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item "active>
                 <a class="nav-link" data-toggle="collapse" href="#programs" aria-expanded="false" aria-controls="programs">
                     <i class="ti-notepad menu-icon"></i>
                     <span class="menu-title">Programmes & Cours</span>
@@ -330,8 +330,8 @@
                 </a>
                 <div class="collapse" id="programs">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item active"><a class="nav-link" href="/back/programmes">Programmes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/back/cours">Cours</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_programme_show')}}">Programmes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{path('app_cours_show')}}">Cours</a></li>
                     </ul>
                 </div>
             </li>
@@ -341,14 +341,14 @@
                     <span class="menu-title">Reclamation</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="/back/events">
                     <i class="ti-ticket menu-icon"></i>
                     <span class="menu-title">Events</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/back/produits">
+            <li class="nav-item ">
+                <a class="nav-link" href="/back/produit">
                     <i class="ti-package menu-icon"></i>
                     <span class="menu-title">Produit</span>
                 </a>
@@ -361,41 +361,60 @@
             </li>
         </ul>
       </nav>
-      <!-- partial -->
-      <div class="main-panel">        
+      
+ <!-- partial form -->
+      <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
+            <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Programme form</h4>
-                  <p class="card-description">
-                    Programme form layout
-                  </p>
-                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}                  
-                                
-                                
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                   <a href="{{ path('app_back_Programme') }}"     class="btn btn-light mt-4 container">Cancel</a>
+                  <h4 class="card-title">New Program</h4>
+                  <p class="card-description">Form Program</p>
+                
+                   {{ form_start(form, {'attr': {'class': 'my-4', 'novalidate': 'novalidate'}}) }}
+                  <div class="form-group">
+                  <label for="nom" class="form-label">Name</label>
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                     {% if form.nom.vars.errors|length > 0 %}
+                                                    <div class="invalid-feedback">{{ form.nom.vars.errors|first.message }}</div>
+                                                   {% endif %}
+                  </div>
+                  <div class="form-group">
+                 <label for="description" class="form-label">Description</label>
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                     {% if form.description.vars.errors|length > 0 %}
+                                                    <div class="invalid-feedback">{{ form.description.vars.errors|first.message }}</div>
+                                                   {% endif %}
+                  </div>
+                  
+                  <div class="form-group">
+                 <label for="duree" class="form-label">Duration</label>
+                    {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.duree.vars.errors|length > 0 %}
+                                                    <div class="invalid-feedback">{{ form.duree.vars.errors|first.message }}</div>
+                                                   {% endif %}
+                 
+                 
+                
+                 
+                  <button type="submit" class="btn btn-primary">Save</button>
+                   <a href="{{ path('app_programme_show') }}" class="btn btn-secondary">Cancel</a>
+                  {{ form_end(form) }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+        
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
-        <!-- partial -->
       </div>
-      <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
 </body>
 {% endblock %}

@@ -28,44 +28,20 @@ class CoursType extends AbstractType
     {
         $builder
         ->add('nom', TextType::class, [
-            'label' => 'Name of course',
-            'attr' => [
-                'class' => 'form-control'
-            ],
-            'constraints' => [
-                new NotBlank(['message' => 'Please enter a name.']),
+            'attr' => ['class' => 'form-control form-control-user'],
+            'label' => 'Name',
+        ])
             
-                new Length([
-                    'min' => 2,
-                    'max' => 255,
-                    'minMessage' => 'L\'adresse doit contenir au moins {{ limit }} caractères',
-                    'maxMessage' => 'L\'adresse ne doit pas dépasser {{ limit }} caractères',
-                ]),
-            ],
-            ])
            
             
             ->add('coach' ,TextType::class,[
-                'label' => 'Name of coach',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'constraints' => [
-                    
-                    new  Assert\NotBlank(['message' => 'Please enter a name of the coach']),
-                    new Length([
-                        'min' => 2,
-                        'max' => 255,
-                        'minMessage' => 'L\'adresse doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'L\'adresse ne doit pas dépasser {{ limit }} caractères',
-                    ]),
-                ],
-                ])
+                'attr' => ['class' => 'form-control form-control-user'],
+                'label' => 'Coach',
+            ])
             ->add('jours', ChoiceType::class, [
-                'label' => 'Jours',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
+                'label' => 'Days',
+                'attr' => ['class' => 'form-control form-control-user'],
+                
                 'choices' => [
                     'Monday' => 'Monday',
                     'Tuesday' => 'Tuesday',
@@ -76,7 +52,7 @@ class CoursType extends AbstractType
                     'Sunday' => 'Sunday',
                 ],
                 'placeholder' => 'Choose an option', // Optionnel : affiche un texte vide par défaut
-            'label' => 'jours', // Optionnel : pour ne pas répéter le label
+            'label' => ' Days', // Optionnel : pour ne pas répéter le label
             'constraints' => [
                 new NotBlank(['message' => 'Please select a Day']),
                 new Choice([
@@ -95,44 +71,35 @@ class CoursType extends AbstractType
                         ])  ,], ])
                  
             ->add('duree', IntegerType::class, [
-                    'label' => 'Durée',
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
-                    'constraints' => [
-                        new Type(['type' => 'integer', 'message' => 'La durée doit être un nombre entier.']),
-                        new Positive(['message' => 'Duration must be a positive number.'])
-                    ]
-                ])
+                'attr' => ['class' => 'form-control form-control-user'],
+                    'label' => 'Duration',
+                  
+              ])
+                  
             ->add('type', ChoiceType::class, [
+                'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Type',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
+                
                 'choices' => [
-                    'In groups' => 'In groups',
-                    'individuel' => 'individuel',
+                    'Par groupe' => 'groupe',
+                    'Individuelle' => 'individuelle',
                 ],
                 'placeholder' => 'Choose an option', // Optionnel : affiche un texte vide par défaut
                 'constraints' => [
                     new NotBlank(['message' => 'Please select a type']), // Correction : changer le message pour le type
                     new Choice([
                         'choices' => [
-                            'In groups', // Correction : changer les choix pour les types
-                            'individuel',
+                            'groupe', // Correction : changer les choix pour les types
+                            'individuelle',
                         ]
                     ])
                 ],
             ])
           
             ->add('prix',IntegerType::class, [
+                'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Price',
-                'attr' => [
-                    'class' => 'form-control'
-                ],                'constraints' => [
-                    new NotBlank(['message' => 'Please enter a price ']),
-                    new Type(['type' => 'integer', 'message' => 'Le prix doit être un nombre']),
-                ],
+               
             ])
             ->add('image', FileType::class, [
                 'required' => false,
@@ -151,21 +118,15 @@ class CoursType extends AbstractType
                 'invalid_message' => 'Le prix doit être un nombre à virgule flottante (float).', // Message personnalisé
                 ])
             ->add('lienvideo', TextType::class, [
-                'label' => 'Lien vidéo',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'constraints' => [
-                    new NotBlank(['message' => 'Please enter a valid video link.']),
-                    new Url(['message' => 'Please enter a valid video link.']),
-                ],
+                'attr' => ['class' => 'form-control form-control-user'],
+                'label' => 'Link video',
+               
             ])
             ->add('idProgramme', EntityType::class, [
                 'class' => Programme::class,
+                'attr' => ['class' => 'form-control form-control-user'],
                 'choice_label' => 'nom',
-                'attr' => [
-                    'class' => 'form-control'
-                ],
+               
                 'label' => 'Programme',
             ])
             ->add('Submit', SubmitType::class, [

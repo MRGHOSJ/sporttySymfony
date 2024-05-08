@@ -3,11 +3,128 @@
 namespace App\Controller;
 
 use App\Entity\Programme;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+use App\Form\Programme1Type;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\ProgrammeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+
+class ProgrammeController extends AbstractController
+{
+    #[Route('/show1', name: 'app_programme_index')]
+    public function index(ProgrammeRepository $programmeRepository): Response
+    {
+        return $this->render('/back/programme/index.html.twig', [
+            'programmes' => $programmeRepository->findAll(),
+        ]);
+    }
+
+
+ 
+
+    #[Route('/back/programme/new1', name: 'app_programme_new')]
+    public function new(Request $request, ManagerRegistry $pr): Response
+    {
+        $programme = new Programme();
+        $form = $this->createForm(Programme1Type::class, $programme);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager=$pr->getManager();
+            $entityManager->persist($programme);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_programme_show');
+        }
+
+        return $this->renderForm('back/programme/new.html.twig', [
+            'programme' => $programme,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/back/programme/show1', name: 'app_programme_show')]
+    public function show(ProgrammeRepository $programmeRepository): Response
+    {
+        return $this->render('back/programme/show.html.twig', [
+            'programme' =>$programmeRepository ->findAll(),
+        ]);
+    }
+/*
+    #[Route('/{id}/edit', name: 'app_programme_edit')]
+    public function edit(Request $request, Programme $programme, ManagerRegistry $pr): Response
+    {
+        $form = $this->createForm(Programme1Type::class, $programme);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager=$pr->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_programme_index');
+        }
+
+        return $this->renderForm('programme/edit.html.twig', [
+            'programme' => $programme,
+            'form' => $form,
+        ]);
+    }
+*/
+
+#[Route('/back/programme/{id}/edit', name: 'app_programme_edit')]
+public function edit(Request $request, ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager, int $id): Response
+{
+    $programme = $programmeRepository->find($id);
+
+    if (!$programme) {
+        throw $this->createNotFoundException('No event found for id '.$id);
+    }
+   
+
+    $form = $this->createForm(Programme1Type::class, $programme);
+  
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
+        return $this->redirectToRoute('app_programme_show');
+    }
+
+    return $this->render('back/programme/edit.html.twig', [
+        'form' => $form->createView(),
+        'programme' => $programme,
+    ]);
+}
+
+#[Route('/back/programme/{id}', name: 'app_programme_delete')]
+public function deleteEvent(ProgrammeRepository $programmeRepository, EntityManagerInterface $entityManager, int $id): Response
+{
+    $programme = $programmeRepository->find($id);
+
+    if (!$programme) {
+        throw $this->createNotFoundException('No event found for id '.$id);
+    }
+
+    $entityManager->remove($programme);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_programme_show');
+}
+=======
+use App\Form\ProgrammeType;
+
+=======
 use App\Form\ProgrammeType;
 use App\service\TwilioService;
+>>>>>>> Stashed changes
 use App\Repository\ProgrammeRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +133,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProgrammeController extends AbstractController
 {
     #[Route('/back/programmes', name: 'app_back_Programme')]
-    public function index(Request $request,ProgrammeRepository $ProgrammeRepository,PaginatorInterface $paginator): Response
+    public function index(Request $request,ProgrammeRepository $ProgrammeRepository): Response
     {
 
         $searchQuery = $request->query->get('search');
@@ -27,16 +144,8 @@ class ProgrammeController extends AbstractController
 
         $items = $ProgrammeRepository->findBySearchAndSort($searchBy,$searchQuery, $sortBy, $sortOrder);
 
-        
-        $pagination = $paginator->paginate(
-            $items,
-            $request->query->getInt('page', 1),
-            5
-        );
-
         return $this->render('back/programmes/allprogramme.html.twig',[
-            "programmes"=>$items,
-            "pagination"=>$pagination,
+            "programmes"=>$items
         ]);
     }
 
@@ -120,8 +229,12 @@ class ProgrammeController extends AbstractController
         $recipient = '+21651252843';
         $message = 'Reminder you have a reservation at Program: ';
 
-        $twilioService = new TwilioService('AC7e7550dbac39a38fa598c162d7d14166', '4dedcfbb5cbf770959e024fecc70afbc', '+13375141925');
-        $isSent = $twilioService->sendSMS($recipient, $message);
+       // $twilioService = new TwilioService('AC7e7550dbac39a38fa598c162d7d14166', '4dedcfbb5cbf770959e024fecc70afbc', '+13375141925');
+<<<<<<< Updated upstream
+       // $isSent = $twilioService->sendSMS($recipient, $message);
+=======
+      //  $isSent = $twilioService->sendSMS($recipient, $message);
+>>>>>>> Stashed changes
 
         if ($isSent) {
             return $this->redirectToRoute('app_front_Programme');
@@ -131,4 +244,8 @@ class ProgrammeController extends AbstractController
     }
 
     
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 }
